@@ -94,6 +94,61 @@ public class Binary
 
 
 
+    public Binary multiplyBinary(Binary inBinary)
+    {
+        Binary answer = new Binary();
+        Binary binaryTemp = new Binary();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.binaryString);
+        sb.reverse();
+        String a = sb.toString();
+
+        // Reset sb
+        sb.setLength(0);
+
+        sb.append(inBinary.binaryString);
+        sb.reverse();
+        String b = sb.toString();
+
+        if (b.length() > a.length())
+        {
+            String stringTemp = a;
+            a = b;
+            b = stringTemp;
+        }
+
+        int aLength = a.length();
+        int bLength = b.length();
+
+        // Reset sb
+        sb.setLength(0);
+
+        for (int i = 0; i < aLength; i++)
+        {
+            // Add placeholder zeroes
+            sb.append("0".repeat(i));
+
+            for (int j = 0; j < bLength; j++)
+            {
+                sb.append((a.charAt(j) - '0') * (b.charAt(i) - '0'));
+            }
+
+            binaryTemp.binaryString = sb.reverse().toString();
+
+            System.out.println("binaryTemp: ");
+            System.out.println(binaryTemp.binaryString);
+
+            answer = answer.addBinary(binaryTemp);
+            sb.delete(0, bLength + i);
+        }
+
+        return answer;
+    }
+
+
+
     public Binary onesComplement()
     {
         int binaryLength = this.binaryString.length();
