@@ -75,6 +75,20 @@ public class Binary
     {
         Binary answer = new Binary();
 
+        StringBuilder sb = new StringBuilder();
+
+        inBinary = inBinary.twosComplement();
+
+        sb.append(this.addBinary(inBinary));
+
+        // if there was overflow, remove leftmost bit
+        if (sb.length() > answer.binaryString.length())
+        {
+            sb.deleteCharAt(0);
+        }
+
+        answer.binaryString = sb.toString();
+
         return answer;
     }
 
