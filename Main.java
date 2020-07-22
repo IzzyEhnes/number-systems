@@ -29,14 +29,23 @@ public class Main
         Binary b7 = new Binary("1111");
         Binary b8 = new Binary("00011100");
 
+        System.out.println("addBinary: ");
         System.out.println(b2.addBinary(b3));
         System.out.println(b5.addBinary(b4));
         System.out.println(b6.addBinary(b7));
 
+        System.out.println("onesComplement: ");
         System.out.println(b4.onesComplement());
         System.out.println(b6.onesComplement());
 
+        System.out.println("twosComplement: ");
         System.out.println(b8.twosComplement());
+        System.out.println(b2.twosComplement());
+        System.out.println(b3.twosComplement());
         System.out.println(b6.twosComplement());
+
+        System.out.println("subtractBinary: ");
+        System.out.println(b2.subtractBinary(b3));
+        System.out.println(b4.subtractBinary(b5));
     }
 }
