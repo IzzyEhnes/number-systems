@@ -8,7 +8,11 @@ public class Main
 
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(2.5);
-        Decimal d3 = new Decimal(3.5);
+        Decimal d3 = new Decimal(9.5);
+        Decimal d4 = new Decimal(50.0);
+        Decimal d5 = new Decimal(64.0);
+        Decimal d6 = new Decimal(140.7);
+        Decimal d7 = new Decimal(261.98);
 
         System.out.println(d1);
         System.out.println(d2);
@@ -17,6 +21,17 @@ public class Main
         System.out.println(d2.multiplyDecimal(d3));
         System.out.println(d2.divideDecimal(d3));
         // System.out.println(d2.divideDecimal(d1)); // should throw divide by zero error
+
+        System.out.println("\ndecimalToBinary: ");
+        System.out.println(d3.decimalToBinary());
+        System.out.println(d4.decimalToBinary());
+        System.out.println(d5.decimalToBinary());
+        System.out.println(d6.decimalToBinary());
+        System.out.println(d7.decimalToBinary());
+
+
+
+
 
         System.out.println("\nTests for Binary class");
 
