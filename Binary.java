@@ -1,5 +1,7 @@
 package Ehnes.Izzy.NumberSystems;
 
+import java.lang.Math;
+
 public class Binary
 {
     private String binaryString = "";
@@ -137,9 +139,6 @@ public class Binary
 
             binaryTemp.binaryString = sb.reverse().toString();
 
-            System.out.println("binaryTemp: ");
-            System.out.println(binaryTemp.binaryString);
-
             answer = answer.addBinary(binaryTemp);
             sb.delete(0, bLength + i);
         }
@@ -182,6 +181,27 @@ public class Binary
         return answer;
     }
 
+
+
+    public Decimal binaryToDecimal()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.binaryString);
+
+        double sum = 0;
+
+        String reversedBinaryString = sb.reverse().toString();
+
+        for (int i = 0; i < reversedBinaryString.length(); i++)
+        {
+            if (reversedBinaryString.charAt(i) == '1')
+            {
+                sum += Math.pow(2, i);
+            }
+        }
+
+        return new Decimal(sum);
+    }
 
 
 
