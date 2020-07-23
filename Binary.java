@@ -6,6 +6,8 @@ public class Binary
 {
     private String binaryString = "";
 
+
+
     public Binary()
     {
     }
@@ -29,6 +31,21 @@ public class Binary
     public void setBinaryString(String inString)
     {
         binaryString = inString;
+    }
+
+
+
+    public boolean isBinary()
+    {
+        for (int i = 0; i < this.binaryString.length(); i++)
+        {
+            if (this.binaryString.charAt(i) != '0' && this.binaryString.charAt(i) != '1')
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
