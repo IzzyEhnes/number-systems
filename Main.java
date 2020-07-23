@@ -51,5 +51,9 @@ public class Main
         System.out.println("\nmultiplyBinary: ");
         System.out.println(b2.multiplyBinary(b3));
         System.out.println(b3.multiplyBinary(b2));
+
+        System.out.println("\nbinaryToDecimal: ");
+        System.out.println(b2.binaryToDecimal());
+        System.out.println(b4.binaryToDecimal());
     }
 }
