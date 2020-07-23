@@ -1,6 +1,9 @@
 package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
+import java.lang.Math;
+
+
 
 public class Decimal
 {
@@ -28,7 +31,7 @@ public class Decimal
 
 
 
-    public void setDecimal(double inDouble)
+    public void setDecimal(Double inDouble)
     {
         this.decimal = inDouble;
     }
@@ -121,6 +124,42 @@ public class Decimal
         }
 
         return answer;
+    }
+
+
+
+    public Binary decimalToBinary()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        int integerValue = this.decimal.intValue();
+
+        // Find the maximum power of two that "fits" into the given integer
+        int n = 1;
+        while (integerValue % Math.pow(2, n) < integerValue)
+        {
+            n++;
+        }
+
+        n--;
+
+        while (integerValue % Math.pow(2, n) >= 0 && n >= 0)
+        {
+            if (integerValue % Math.pow(2, n) < integerValue)
+            {
+                sb.append("1");
+                integerValue %= Math.pow(2, n);
+            }
+
+            else
+            {
+                sb.append("0");
+            }
+
+            n--;
+        }
+
+        return new Binary(sb.toString());
     }
 
 
