@@ -43,6 +43,11 @@ public class Main
         Binary b6 = new Binary("1111");
         Binary b7 = new Binary("1111");
         Binary b8 = new Binary("00011100");
+        Binary b9 = new Binary("0012001");
+
+        System.out.println("\nisBinary: ");
+        System.out.println(b8.isBinary());
+        System.out.println(b9.isBinary());
 
         System.out.println("\naddBinary: ");
         System.out.println(b2.addBinary(b3));
