@@ -104,6 +104,17 @@ public class Main
         System.out.println(o3.isOctal());
         System.out.println(o8.isOctal());
 
+        System.out.println("\nsevensComplement: ");
+        System.out.println(o3);
+        System.out.println(o3.sevensComplement());
+        System.out.println(o5);
+        System.out.println(o5.sevensComplement());
+
+        System.out.println("\neightsComplement: ");
+        System.out.println(o3);
+        System.out.println(o3.eightsComplement());
+        System.out.println(o5);
+        System.out.println(o5.eightsComplement());
 
     }
 }
