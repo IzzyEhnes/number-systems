@@ -75,5 +75,35 @@ public class Main
         System.out.println("\nbinaryToDecimal: ");
         System.out.println(b2.binaryToDecimal());
         System.out.println(b4.binaryToDecimal());
+
+
+
+
+
+        System.out.println("\nTests for Octal class");
+        Octal o1 = new Octal();
+        Octal o2 = new Octal("16.0");
+        Octal o3 = new Octal("275.12");
+        Octal o4 = new Octal("1.0");
+        Octal o5 = new Octal("37513.127314");
+        Octal o6 = new Octal("35.57");
+        Octal o7 = new Octal("642.351");
+        Octal o8 = new Octal("1679.0");
+
+        o1.setOctal("3.0");
+        System.out.println(o1);
+
+        System.out.println("\naddOctal: ");
+        System.out.println(o2.addOctal(o3));
+        System.out.println(o4.addOctal(o5));
+        System.out.println(o6.addOctal(o7));
+
+        System.out.println("\nisOctal: ");
+        System.out.println(o1.isOctal());
+        System.out.println(o2.isOctal());
+        System.out.println(o3.isOctal());
+        System.out.println(o8.isOctal());
+
+
     }
 }
