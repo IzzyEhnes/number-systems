@@ -215,6 +215,144 @@ public class Octal
     }
 
 
+
+    public Octal multiplyOctal(Octal inOctal)
+    {
+        Octal currentOctal = new Octal();
+        Octal answer = new Octal();
+        currentOctal = this;
+
+        int aDecimalPosition = currentOctal.getDecimalPosition();
+        int bDecimalPosition = inOctal.getDecimalPosition();
+
+        // Add placeholder zeroes so the Octals "line up"
+        if (aDecimalPosition > bDecimalPosition)
+        {
+            inOctal = currentOctal.addPlaceholders(inOctal);
+
+            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
+            bDecimalPosition = inOctal.getDecimalPosition();
+        }
+
+        else if (bDecimalPosition > aDecimalPosition)
+        {
+            currentOctal = inOctal.addPlaceholders(currentOctal);
+
+            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
+            aDecimalPosition = currentOctal.getDecimalPosition();
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentOctal.octal);
+
+        // Remove decimal point from first Octal
+        sb.reverse().deleteCharAt(aDecimalPosition);
+
+        String a = sb.toString();
+
+        // Reset sb
+        sb.setLength(0);
+
+        sb.append(inOctal.octal);
+
+        // Remove decimal point from second Octal
+        sb.reverse().deleteCharAt(bDecimalPosition);
+
+        String b = sb.toString();
+
+        // Reset sb
+        sb.setLength(0);
+
+        /*
+        System.out.println("\ncurrentOctal.octal: ");
+        System.out.println(currentOctal.octal);
+        System.out.println("inOctal.octal: ");
+        System.out.println(inOctal.octal);
+        System.out.println("a: ");
+        System.out.println(a);
+        System.out.println("b: ");
+        System.out.println(b);
+         */
+
+
+        int aLength = a.length();
+        int bLength = b.length();
+
+        /*
+        if (bLength > aLength)
+        {
+            String stringTemp = a;
+            a = b;
+            b = stringTemp;
+        }
+         */
+
+        // Add placeholder zeroes to smaller string so both binary strings are
+        // the same size as to avoid out of bounds error
+        if (aLength > bLength)
+        {
+            sb.append(b).append("0".repeat(aLength - bLength));
+            b = sb.toString();
+
+            bLength = b.length();
+        }
+
+        else if (bLength > aLength)
+        {
+            sb.append(a).append("0".repeat(bLength - aLength));
+            a = sb.toString();
+
+            aLength = a.length();
+        }
+
+        int arraySize = aLength + bLength;
+        int currentIndex = arraySize - 1;
+        int result = 0;
+        int[] sumArray = new int[arraySize];
+
+        for (int i = 0; i < aLength; i++)
+        {
+            // Add placeholder zeroes
+            sb.append("0".repeat(i));
+
+            for (int j = 0; j < bLength; j++)
+            {
+                result = (a.charAt(j) - '0') * (b.charAt(i) - '0');
+                System.out.println("RESULT: ");
+                System.out.println(result);
+                //System.out.println("CURRENTINDEX");
+                //System.out.println(currentIndex);
+                sumArray[currentIndex] += result;
+                System.out.println("sumArray[currentIndex]: ");
+                System.out.println(sumArray[currentIndex]);
+                currentIndex--;
+            }
+
+            System.out.println("\n\nARRAY");
+
+            for (int k = 0; k < arraySize; k++)
+            {
+                System.out.println(sumArray[k]);
+            }
+
+            System.out.println("END ARRAY \n\n");
+
+            currentIndex = arraySize - 1;
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < arraySize; i++)
+        {
+            System.out.println(sumArray[i]);
+        }
+
+        return new Octal();
+    }
+
+
+
     public Octal sevensComplement()
     {
         int decimalPosition = this.getDecimalPosition();
