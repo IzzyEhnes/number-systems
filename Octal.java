@@ -134,6 +134,87 @@ public class Octal
 
 
 
+    public Octal subtractOctal(Octal inOctal)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Octal eightsComplement = inOctal.eightsComplement();
+        System.out.println("\neightsComplement: ");
+        System.out.println(eightsComplement.octal);
+
+        Octal answer = new Octal();
+
+        //System.out.println(eightsComplement.octal);
+
+        sb.append(eightsComplement.addOctal(this));
+        //System.out.println(sb.toString());
+        //answer.octal = sb.toString();
+
+        //System.out.println("\nanswer: ");
+        //System.out.println(answer.octal);
+        //System.out.println("answer length: ");
+        //System.out.println(answer.octal.length());
+
+        System.out.println("inOctal: ");
+        System.out.println(inOctal.octal);
+        System.out.println("inOctal length: ");
+        System.out.println(inOctal.octal.length());
+        System.out.println("this: ");
+        System.out.println(this.octal);
+        System.out.println("this length: ");
+        System.out.println(this.octal.length());
+        System.out.println("END OF SUBTRACTOCTAL");
+
+        if (Double.parseDouble(inOctal.octal) > Double.parseDouble(this.octal))
+        {
+            answer.octal = sb.toString();
+
+            // Reset sb
+            sb.setLength(0);
+
+            answer = answer.eightsComplement();
+            sb.append('-').append(answer.octal);
+            answer.octal = sb.toString();
+        }
+
+        else
+        {
+            if (sb.toString().length() > eightsComplement.octal.length() &&
+                sb.toString().length() > this.octal.length())
+            {
+                sb.deleteCharAt(0);
+            }
+
+            answer.octal = sb.toString();
+        }
+
+        // Remove any leading zeroes
+        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+
+            if (sb.toString().charAt(0) == '-')
+            {
+                System.out.println("IN - IF");
+
+                System.out.println(sb.toString().charAt(1));
+
+                while (sb.toString().charAt(1) == '0')
+                {
+                    sb.deleteCharAt(1);
+                }
+            }
+
+            answer.octal = sb.toString();
+        }
+
+        return answer;
+    }
+
+
     public Octal sevensComplement()
     {
         int decimalPosition = this.getDecimalPosition();
