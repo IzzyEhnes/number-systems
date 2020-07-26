@@ -1,5 +1,7 @@
 package Ehnes.Izzy.NumberSystems;
 
+import java.lang.Math;
+
 public class Octal
 {
 
@@ -264,29 +266,8 @@ public class Octal
         // Reset sb
         sb.setLength(0);
 
-        /*
-        System.out.println("\ncurrentOctal.octal: ");
-        System.out.println(currentOctal.octal);
-        System.out.println("inOctal.octal: ");
-        System.out.println(inOctal.octal);
-        System.out.println("a: ");
-        System.out.println(a);
-        System.out.println("b: ");
-        System.out.println(b);
-         */
-
-
         int aLength = a.length();
         int bLength = b.length();
-
-        /*
-        if (bLength > aLength)
-        {
-            String stringTemp = a;
-            a = b;
-            b = stringTemp;
-        }
-         */
 
         // Add placeholder zeroes to smaller string so both binary strings are
         // the same size as to avoid out of bounds error
@@ -306,49 +287,63 @@ public class Octal
             aLength = a.length();
         }
 
-        int arraySize = aLength + bLength;
+        // Reset sb
+        sb.setLength(0);
+
+        int arraySize = aLength + bLength - 1;
         int currentIndex = arraySize - 1;
         int result = 0;
         int[] sumArray = new int[arraySize];
 
+        // Do standard long multiplication (without carrying)
         for (int i = 0; i < aLength; i++)
         {
-            // Add placeholder zeroes
-            sb.append("0".repeat(i));
+            // "Add" placeholder zeroes
+            currentIndex -= i;
 
             for (int j = 0; j < bLength; j++)
             {
                 result = (a.charAt(j) - '0') * (b.charAt(i) - '0');
-                System.out.println("RESULT: ");
-                System.out.println(result);
-                //System.out.println("CURRENTINDEX");
-                //System.out.println(currentIndex);
                 sumArray[currentIndex] += result;
-                System.out.println("sumArray[currentIndex]: ");
-                System.out.println(sumArray[currentIndex]);
                 currentIndex--;
             }
-
-            System.out.println("\n\nARRAY");
-
-            for (int k = 0; k < arraySize; k++)
-            {
-                System.out.println(sumArray[k]);
-            }
-
-            System.out.println("END ARRAY \n\n");
 
             currentIndex = arraySize - 1;
         }
 
-        System.out.println();
+        int[] closestMultipleOfEight = new int[arraySize];
 
-        for (int i = 0; i < arraySize; i++)
+        // Fill array with the largest multiple of eight that "fits"
+        // into each individual element in sumArray, adding the power
+        // of eight (n) associated with said multiple of eight to
+        // the element to the left of the current index
+        for (int i = arraySize - 1; i > 0; i--)
         {
-            System.out.println(sumArray[i]);
+            int n = getClosestPowerOfEight(sumArray[i]);
+            closestMultipleOfEight[i] = n * 8;
+
+            sumArray[i-1] += n;
         }
 
-        return new Octal();
+        // Find the difference of both arrays
+        for (int i = 0; i < arraySize; i++)
+        {
+            sumArray[i] -= closestMultipleOfEight[i];
+        }
+
+        // Add answer to sb
+        for (int i = 0; i < arraySize; i++)
+        {
+            // Add decimal point
+            if (i == (arraySize - (aDecimalPosition + bDecimalPosition)))
+            {
+                sb.append('.');
+            }
+
+            sb.append(sumArray[i]);
+        }
+
+        return new Octal(sb.toString());
     }
 
 
@@ -455,6 +450,21 @@ public class Octal
 
             return this;
         }
+    }
+
+
+
+    public int getClosestPowerOfEight(int inInt)
+    {
+        int n = 1;
+        while (inInt % (8 * n) < inInt)
+        {
+            n++;
+        }
+
+        n--;
+
+        return n;
     }
 
 
