@@ -218,31 +218,19 @@ public class Octal
 
 
 
-    public Octal multiplyOctal(Octal inOctal)
+        public Octal multiplyOctal(Octal inOctal)
     {
-        Octal currentOctal = new Octal();
         Octal answer = new Octal();
+
+        Octal currentOctal = new Octal();
         currentOctal = this;
 
         int aDecimalPosition = currentOctal.getDecimalPosition();
         int bDecimalPosition = inOctal.getDecimalPosition();
 
-        // Add placeholder zeroes so the Octals "line up"
-        if (aDecimalPosition > bDecimalPosition)
-        {
-            inOctal = currentOctal.addPlaceholders(inOctal);
-
-            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
-            bDecimalPosition = inOctal.getDecimalPosition();
-        }
-
-        else if (bDecimalPosition > aDecimalPosition)
-        {
-            currentOctal = inOctal.addPlaceholders(currentOctal);
-
-            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
-            aDecimalPosition = currentOctal.getDecimalPosition();
-        }
+        // Add placeholder zeroes if needed
+        currentOctal = currentOctal.addPlaceholders(inOctal);
+        inOctal = inOctal.addPlaceholders(currentOctal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -269,7 +257,7 @@ public class Octal
         int aLength = a.length();
         int bLength = b.length();
 
-        // Add placeholder zeroes to smaller string so both binary strings are
+        // Add placeholder zeroes to smaller string so both octal strings are
         // the same size as to avoid out of bounds error
         if (aLength > bLength)
         {
@@ -295,7 +283,7 @@ public class Octal
         int result = 0;
         int[] sumArray = new int[arraySize];
 
-        // Do standard long multiplication (without carrying)
+        // Do standard long multiplication in decimal (without carrying)
         for (int i = 0; i < aLength; i++)
         {
             // "Add" placeholder zeroes
@@ -311,18 +299,29 @@ public class Octal
             currentIndex = arraySize - 1;
         }
 
+        // Reverse sumArray
+        for (int i = 0; i < arraySize / 2; i++)
+        {
+            int temp = sumArray[i];
+            sumArray[i] = sumArray[sumArray.length - i - 1];
+            sumArray[sumArray.length - i - 1] = temp;
+        }
+
         int[] closestMultipleOfEight = new int[arraySize];
 
         // Fill array with the largest multiple of eight that "fits"
         // into each individual element in sumArray, adding the power
         // of eight (n) associated with said multiple of eight to
-        // the element to the left of the current index
-        for (int i = arraySize - 1; i > 0; i--)
+        // the element to the right of the current index
+        for (int i = 0; i < arraySize; i++)
         {
             int n = getClosestPowerOfEight(sumArray[i]);
             closestMultipleOfEight[i] = n * 8;
 
-            sumArray[i-1] += n;
+            if (i < arraySize - 1)
+            {
+                sumArray[i + 1] += n;
+            }
         }
 
         // Find the difference of both arrays
@@ -331,11 +330,11 @@ public class Octal
             sumArray[i] -= closestMultipleOfEight[i];
         }
 
-        // Add answer to sb
+        // Add sb to answer
         for (int i = 0; i < arraySize; i++)
         {
             // Add decimal point
-            if (i == (arraySize - (aDecimalPosition + bDecimalPosition)))
+            if (i == ((aDecimalPosition + bDecimalPosition)))
             {
                 sb.append('.');
             }
@@ -343,9 +342,17 @@ public class Octal
             sb.append(sumArray[i]);
         }
 
+        sb.reverse();
+
+        // Remove any leading zeroes
+        while (sb.toString().charAt(0) == '0')
+        {
+            sb.deleteCharAt(0);
+        }
+
         return new Octal(sb.toString());
     }
-
+    
 
 
     public Octal sevensComplement()
@@ -426,8 +433,28 @@ public class Octal
     {
         StringBuilder sb = new StringBuilder();
 
-        int aDecimalPosition = this.getDecimalPosition();
+        Octal currentOctal = new Octal(this.octal);
+
+        int aDecimalPosition = currentOctal.getDecimalPosition();
         int bDecimalPosition = inOctal.getDecimalPosition();
+
+        // If currentOctal.octal has only one digit in front of the octal point,
+        // add a placeholder zero in front of digit
+        if ((aDecimalPosition + 2) == currentOctal.octal.length())
+        {
+            sb.append('0').append(currentOctal.octal);
+            currentOctal.octal = sb.toString();
+            sb.setLength(0);
+        }
+
+        // If inOctal.octal has only one digit in front of the octal point,
+        // add a placeholder zero in front of digit
+        if ((bDecimalPosition + 2) == inOctal.octal.length())
+        {
+            sb.append('0').append(inOctal.octal);
+            inOctal.octal = sb.toString();
+            sb.setLength(0);
+        }
 
         if (aDecimalPosition > bDecimalPosition)
         {
@@ -452,7 +479,7 @@ public class Octal
         }
     }
 
-
+    
 
     public int getClosestPowerOfEight(int inInt)
     {
