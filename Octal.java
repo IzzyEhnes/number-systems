@@ -17,7 +17,7 @@ public class Octal
 
     public Octal(String inString)
     {
-        octal = inString;
+        this.octal = inString;
     }
 
 
@@ -57,16 +57,18 @@ public class Octal
         StringBuilder sb = new StringBuilder();
         int carry = 0;
 
-        // Create local reference to 'this' so it can be manipulated
-        Octal currentOctal = this;
+        // Create local reference to Octals so they can be manipulated
+        // without changing original objects
+        Octal currentOctal = new Octal(this.octal);
+        Octal addend = new Octal(inOctal.octal);
 
         int aDecimalPosition = currentOctal.getPointPosition();
-        int bDecimalPosition = inOctal.getPointPosition();
+        int bDecimalPosition = addend.getPointPosition();
 
-        currentOctal.addPlaceholders(inOctal);
+        currentOctal.addPlaceholders(addend);
 
         aDecimalPosition = currentOctal.getPointPosition();
-        bDecimalPosition = inOctal.getPointPosition();
+        bDecimalPosition = addend.getPointPosition();
 
         sb.append(currentOctal);
 
@@ -78,7 +80,7 @@ public class Octal
         // Reset sb
         sb.setLength(0);
 
-        sb.append(inOctal.octal);
+        sb.append(addend.octal);
 
         // Remove decimal point from second Octal
         sb.reverse().deleteCharAt(bDecimalPosition);
@@ -124,27 +126,28 @@ public class Octal
 
 
 
-    public Octal subtractOctal(Octal subtrahend)
+    public Octal subtractOctal(Octal inOctal)
     {
-        Octal minuend = this;
+        Octal minuend = new Octal(this.octal);
+        Octal subtrahend = new Octal(inOctal.octal);
 
         Octal difference = new Octal();
 
         boolean negative = false;
 
-        System.out.println("minuend");
-        System.out.println(minuend);
-        System.out.println("subtrahend");
-        System.out.println(subtrahend);
+        //System.out.println("minuend");
+        //System.out.println(minuend);
+        //System.out.println("subtrahend");
+        //System.out.println(subtrahend);
 
         // Add placeholder zeroes if needed
         minuend.addPlaceholders(subtrahend);
         //minuend.addPlaceHoldersBeforePoint(subtrahend);
 
-        System.out.println("NEW minuend");
-        System.out.println(minuend);
-        System.out.println("NEW subtrahend");
-        System.out.println(subtrahend);
+        //System.out.println("NEW minuend");
+        //System.out.println(minuend);
+        //System.out.println("NEW subtrahend");
+        //System.out.println(subtrahend);
 
         int pointPosition = 0;
         if (Double.parseDouble(subtrahend.octal) > Double.parseDouble(minuend.octal))
@@ -162,13 +165,13 @@ public class Octal
             subtrahend = subtrahend.removePoint();
         }
 
-        System.out.println("negative");
-        System.out.println(negative);
+        //System.out.println("negative");
+        //System.out.println(negative);
 
         subtrahend = subtrahend.eightsComplement();
 
-        System.out.println("8s subtrahend");
-        System.out.println(subtrahend);
+        //System.out.println("8s subtrahend");
+        //System.out.println(subtrahend);
 
         difference = minuend.addOctal(subtrahend);
 
@@ -411,11 +414,17 @@ public class Octal
 
         Octal quotient = new Octal();
 
-        Octal dividend = new Octal();
-        dividend = this;
+        Octal dividend = new Octal(this.octal);
 
-        System.out.println("THIS");
-        System.out.println(this);
+        System.out.println("DIVISOR");
+        System.out.println(divisor);
+
+        //System.out.println("QUOTIENT");
+        //System.out.println(quotient);
+
+        System.out.println("DIVIDEND");
+        System.out.println(dividend);
+
 
         Octal multiplier = getLargestMultiplier(divisor, dividend);
 
@@ -424,19 +433,27 @@ public class Octal
         // Add whole number and decimal point to answer, remove trailing zeroes
         sb.append(quotient.octal);
         sb.reverse().delete(0, 2).reverse();
+        quotient.octal = sb.toString();
 
         System.out.println("QUOTIENT");
         System.out.println(quotient);
 
-        System.out.println("DIVIDEND");
-        System.out.println(dividend);
+        //System.out.println("DIVIDEND");
+        //System.out.println(dividend);
+
 
         Octal remainder = new Octal();
 
         remainder = dividend.subtractOctal(quotient);
 
+        divisor = divisor.removePoint();
+        remainder = remainder.removePoint();
+
         System.out.println("remainder");
         System.out.println(remainder);
+
+        System.out.println("DIVISOR");
+        System.out.println(divisor);
 
         return new Octal();
     }
@@ -540,9 +557,6 @@ public class Octal
         Octal currentOctal = this;
 
         StringBuilder sb = new StringBuilder();
-
-        System.out.println("pointPosition");
-        System.out.println(pointPosition);
 
         sb.append(currentOctal);
 
@@ -676,8 +690,8 @@ public class Octal
     {
         int numDigits = 0;
 
-        System.out.println("inOctal.octal.length()");
-        System.out.println(inOctal.octal.length());
+        //System.out.println("inOctal.octal.length()");
+        //System.out.println(inOctal.octal.length());
 
         while (numDigits < inOctal.octal.length() && inOctal.octal.charAt(numDigits) != '.')
         {
@@ -706,9 +720,9 @@ public class Octal
 
             if (sb.toString().charAt(0) == '-')
             {
-                System.out.println("IN - IF");
+                //System.out.println("IN - IF");
 
-                System.out.println(sb.toString().charAt(1));
+                //System.out.println(sb.toString().charAt(1));
 
                 while (sb.toString().charAt(1) == '0')
                 {
@@ -726,6 +740,6 @@ public class Octal
     @Override
     public String toString()
     {
-        return octal;
+        return this.octal;
     }
 }
