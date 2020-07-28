@@ -60,25 +60,13 @@ public class Octal
         // Create local reference to 'this' so it can be manipulated
         Octal currentOctal = this;
 
-        int aDecimalPosition = currentOctal.getDecimalPosition();
-        int bDecimalPosition = inOctal.getDecimalPosition();
+        int aDecimalPosition = currentOctal.getPointPosition();
+        int bDecimalPosition = inOctal.getPointPosition();
 
-        // Add placeholder zeroes so the Octals "line up"
-        if (aDecimalPosition > bDecimalPosition)
-        {
-            inOctal = currentOctal.addPlaceholders(inOctal);
+        currentOctal.addPlaceholders(inOctal);
 
-            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
-            bDecimalPosition = inOctal.getDecimalPosition();
-        }
-
-        else if (bDecimalPosition > aDecimalPosition)
-        {
-            currentOctal = inOctal.addPlaceholders(currentOctal);
-
-            // After addPlaceholders method call, aDecimalPosition = bDecimalPosition
-            aDecimalPosition = currentOctal.getDecimalPosition();
-        }
+        aDecimalPosition = currentOctal.getPointPosition();
+        bDecimalPosition = inOctal.getPointPosition();
 
         sb.append(currentOctal);
 
@@ -136,6 +124,85 @@ public class Octal
 
 
 
+    public Octal subtractOctal(Octal subtrahend)
+    {
+        Octal minuend = this;
+
+        Octal difference = new Octal();
+
+        boolean negative = false;
+
+        System.out.println("minuend");
+        System.out.println(minuend);
+        System.out.println("subtrahend");
+        System.out.println(subtrahend);
+
+        // Add placeholder zeroes if needed
+        minuend.addPlaceholders(subtrahend);
+        //minuend.addPlaceHoldersBeforePoint(subtrahend);
+
+        System.out.println("NEW minuend");
+        System.out.println(minuend);
+        System.out.println("NEW subtrahend");
+        System.out.println(subtrahend);
+
+        int pointPosition = 0;
+        if (Double.parseDouble(subtrahend.octal) > Double.parseDouble(minuend.octal))
+        {
+            negative = true;
+        }
+
+        else
+        {
+            // Get final point position (the same value in both the minuend and subtrahend)
+            pointPosition = minuend.getPointPosition();
+
+            // Remove point to treat as whole number
+            minuend = minuend.removePoint();
+            subtrahend = subtrahend.removePoint();
+        }
+
+        System.out.println("negative");
+        System.out.println(negative);
+
+        subtrahend = subtrahend.eightsComplement();
+
+        System.out.println("8s subtrahend");
+        System.out.println(subtrahend);
+
+        difference = minuend.addOctal(subtrahend);
+
+        StringBuilder sb = new StringBuilder();
+
+        if (negative)
+        {
+            difference = difference.eightsComplement();
+            sb.append('-').append(difference.octal);
+            difference.octal = sb.toString();
+        }
+
+        else
+        {
+            sb.append(difference.octal);
+            int firstDigit = sb.charAt(0) - '0' - 1;
+
+            sb.deleteCharAt(0);
+            sb.reverse().append(firstDigit).reverse();
+
+            difference.octal = sb.toString();
+
+            difference = difference.insertPoint(pointPosition);
+        }
+
+        System.out.println("difference");
+
+        difference = difference.removeLeadingZeroes();
+
+        return difference;
+    }
+
+
+    /*
     public Octal subtractOctal(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
@@ -146,26 +213,9 @@ public class Octal
 
         Octal answer = new Octal();
 
-        //System.out.println(eightsComplement.octal);
-
         sb.append(eightsComplement.addOctal(this));
-        //System.out.println(sb.toString());
-        //answer.octal = sb.toString();
 
-        //System.out.println("\nanswer: ");
-        //System.out.println(answer.octal);
-        //System.out.println("answer length: ");
-        //System.out.println(answer.octal.length());
-
-        System.out.println("inOctal: ");
-        System.out.println(inOctal.octal);
-        System.out.println("inOctal length: ");
-        System.out.println(inOctal.octal.length());
-        System.out.println("this: ");
-        System.out.println(this.octal);
-        System.out.println("this length: ");
-        System.out.println(this.octal.length());
-        System.out.println("END OF SUBTRACTOCTAL");
+        System.out.println();
 
         if (Double.parseDouble(inOctal.octal) > Double.parseDouble(this.octal))
         {
@@ -215,22 +265,22 @@ public class Octal
 
         return answer;
     }
+*/
 
 
-
-        public Octal multiplyOctal(Octal inOctal)
+    public Octal multiplyOctal(Octal inOctal)
     {
         Octal answer = new Octal();
 
         Octal currentOctal = new Octal();
         currentOctal = this;
 
-        int aDecimalPosition = currentOctal.getDecimalPosition();
-        int bDecimalPosition = inOctal.getDecimalPosition();
+        int aDecimalPosition = currentOctal.getPointPosition();
+        int bDecimalPosition = inOctal.getPointPosition();
 
         // Add placeholder zeroes if needed
-        currentOctal = currentOctal.addPlaceholders(inOctal);
-        inOctal = inOctal.addPlaceholders(currentOctal);
+        currentOctal.addPlaceholders(inOctal);
+        inOctal.addPlaceholders(currentOctal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -352,12 +402,50 @@ public class Octal
 
         return new Octal(sb.toString());
     }
-    
+
+
+
+    public Octal divideOctal(Octal divisor)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Octal quotient = new Octal();
+
+        Octal dividend = new Octal();
+        dividend = this;
+
+        System.out.println("THIS");
+        System.out.println(this);
+
+        Octal multiplier = getLargestMultiplier(divisor, dividend);
+
+        quotient = multiplier.multiplyOctal(divisor);
+
+        // Add whole number and decimal point to answer, remove trailing zeroes
+        sb.append(quotient.octal);
+        sb.reverse().delete(0, 2).reverse();
+
+        System.out.println("QUOTIENT");
+        System.out.println(quotient);
+
+        System.out.println("DIVIDEND");
+        System.out.println(dividend);
+
+        Octal remainder = new Octal();
+
+        remainder = dividend.subtractOctal(quotient);
+
+        System.out.println("remainder");
+        System.out.println(remainder);
+
+        return new Octal();
+    }
+
 
 
     public Octal sevensComplement()
     {
-        int decimalPosition = this.getDecimalPosition();
+        int decimalPosition = this.getPointPosition();
 
         StringBuilder sb = new StringBuilder();
 
@@ -406,7 +494,7 @@ public class Octal
 
 
 
-    public int getDecimalPosition()
+    public int getPointPosition()
     {
         StringBuilder sb = new StringBuilder();
 
@@ -414,33 +502,75 @@ public class Octal
 
         String a = sb.reverse().toString();
 
-        // Find decimal position with respect to rightmost digit
-        int decimalPosition = 0;
+        // Find point position with respect to rightmost digit
+        int pointPosition = 0;
         for (int i = 0; i < a.length(); i++)
         {
             if (a.charAt(i) == '.')
             {
-                decimalPosition = i;
+                pointPosition = i;
             }
         }
 
-        return decimalPosition;
+        return pointPosition;
     }
 
 
 
-    public Octal addPlaceholders(Octal inOctal)
+    public Octal removePoint()
+    {
+        Octal currentOctal = this;
+
+        int pointPosition = currentOctal.getPointPosition();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentOctal);
+        sb.reverse().deleteCharAt(pointPosition).reverse();
+
+        currentOctal.octal = sb.toString();
+
+        return currentOctal;
+    }
+
+
+
+    public Octal insertPoint(int pointPosition)
+    {
+        Octal currentOctal = this;
+
+        StringBuilder sb = new StringBuilder();
+
+        System.out.println("pointPosition");
+        System.out.println(pointPosition);
+
+        sb.append(currentOctal);
+
+        // Remove existing default point
+        sb.reverse().deleteCharAt(0);
+
+        // Insert point at pointPosition
+        sb.insert(pointPosition, '.').reverse();
+
+        currentOctal.octal = sb.toString();
+
+        return currentOctal;
+    }
+
+
+
+    public void addPlaceholders(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
 
         Octal currentOctal = new Octal(this.octal);
 
-        int aDecimalPosition = currentOctal.getDecimalPosition();
-        int bDecimalPosition = inOctal.getDecimalPosition();
+        int aPointPosition = currentOctal.getPointPosition();
+        int bPointPosition = inOctal.getPointPosition();
 
         // If currentOctal.octal has only one digit in front of the octal point,
         // add a placeholder zero in front of digit
-        if ((aDecimalPosition + 2) == currentOctal.octal.length())
+        if ((aPointPosition + 2) == currentOctal.octal.length())
         {
             sb.append('0').append(currentOctal.octal);
             currentOctal.octal = sb.toString();
@@ -449,37 +579,62 @@ public class Octal
 
         // If inOctal.octal has only one digit in front of the octal point,
         // add a placeholder zero in front of digit
-        if ((bDecimalPosition + 2) == inOctal.octal.length())
+        if ((bPointPosition + 2) == inOctal.octal.length())
         {
             sb.append('0').append(inOctal.octal);
             inOctal.octal = sb.toString();
             sb.setLength(0);
         }
 
-        if (aDecimalPosition > bDecimalPosition)
-        {
-            sb.append(inOctal.octal);
 
-            sb.append("0".repeat(aDecimalPosition - bDecimalPosition));
+
+        int aDigitsBeforePoint = getDigitsBeforePoint(currentOctal);
+        int bDigitsBeforePoint = getDigitsBeforePoint(inOctal);
+        // If needed, add placeholder zeroes so both Octals
+        // have same number of digits in front of point
+        if (aDigitsBeforePoint > bDigitsBeforePoint)
+        {
+            sb.append("0".repeat(aDigitsBeforePoint - bDigitsBeforePoint));
+            sb.append(inOctal);
 
             inOctal.octal = sb.toString();
 
-            return inOctal;
+            sb.setLength(0);
+        }
+
+        else if (bDigitsBeforePoint > aDigitsBeforePoint) {
+            sb.append("0".repeat(bDigitsBeforePoint - aDigitsBeforePoint));
+            sb.append(currentOctal);
+
+            currentOctal.octal = sb.toString();
+
+            sb.setLength(0);
+        }
+
+
+
+        // If needed, add placeholder zeroes so both Octals
+        // have same number of digits behind point
+        if (aPointPosition > bPointPosition)
+        {
+            sb.append(inOctal.octal);
+
+            sb.append("0".repeat(aPointPosition - bPointPosition));
+
+            inOctal.octal = sb.toString();
         }
 
         else
         {
             sb.append(this.octal);
 
-            sb.append("0".repeat(bDecimalPosition - aDecimalPosition));
+            sb.append("0".repeat(bPointPosition - aPointPosition));
 
             this.octal = sb.toString();
-
-            return this;
         }
     }
 
-    
+
 
     public int getClosestPowerOfEight(int inInt)
     {
@@ -494,6 +649,78 @@ public class Octal
         return n;
     }
 
+
+
+    public Octal getLargestMultiplier(Octal divisor, Octal dividend)
+    {
+        int n = 1;
+        Octal multiplier = new Octal(Double.toString(n));
+
+        while (Double.parseDouble((multiplier.multiplyOctal(divisor).octal)) <=
+                Double.parseDouble(dividend.octal))
+        {
+            n++;
+            multiplier.octal = Double.toString(n);
+        }
+
+        n--;
+
+        multiplier.octal = Double.toString(n);
+
+        return multiplier;
+    }
+
+
+
+    public int getDigitsBeforePoint(Octal inOctal)
+    {
+        int numDigits = 0;
+
+        System.out.println("inOctal.octal.length()");
+        System.out.println(inOctal.octal.length());
+
+        while (numDigits < inOctal.octal.length() && inOctal.octal.charAt(numDigits) != '.')
+        {
+            numDigits++;
+        }
+
+        return numDigits;
+    }
+
+
+
+    public Octal removeLeadingZeroes()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Octal currentOctal = this;
+
+        sb.append(currentOctal);
+
+        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+
+            if (sb.toString().charAt(0) == '-')
+            {
+                System.out.println("IN - IF");
+
+                System.out.println(sb.toString().charAt(1));
+
+                while (sb.toString().charAt(1) == '0')
+                {
+                    sb.deleteCharAt(1);
+                }
+            }
+
+            currentOctal.octal = sb.toString();
+        }
+
+        return currentOctal;
+    }
 
 
     @Override
