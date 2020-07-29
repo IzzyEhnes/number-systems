@@ -142,7 +142,6 @@ public class Octal
 
         // Add placeholder zeroes if needed
         minuend.addPlaceholders(subtrahend);
-        //minuend.addPlaceHoldersBeforePoint(subtrahend);
 
         //System.out.println("NEW minuend");
         //System.out.println(minuend);
@@ -275,15 +274,15 @@ public class Octal
     {
         Octal answer = new Octal();
 
-        Octal currentOctal = new Octal();
-        currentOctal = this;
+        Octal currentOctal = new Octal(this.octal);
+        Octal multiplier = new Octal(inOctal.octal);
 
         int aDecimalPosition = currentOctal.getPointPosition();
         int bDecimalPosition = inOctal.getPointPosition();
 
         // Add placeholder zeroes if needed
-        currentOctal.addPlaceholders(inOctal);
-        inOctal.addPlaceholders(currentOctal);
+        currentOctal.addPlaceholders(multiplier);
+        multiplier.addPlaceholders(currentOctal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -297,7 +296,7 @@ public class Octal
         // Reset sb
         sb.setLength(0);
 
-        sb.append(inOctal.octal);
+        sb.append(multiplier.octal);
 
         // Remove decimal point from second Octal
         sb.reverse().deleteCharAt(bDecimalPosition);
@@ -331,7 +330,7 @@ public class Octal
         // Reset sb
         sb.setLength(0);
 
-        int arraySize = aLength + bLength - 1;
+        int arraySize = aLength + bLength;
         int currentIndex = arraySize - 1;
         int result = 0;
         int[] sumArray = new int[arraySize];
@@ -352,6 +351,7 @@ public class Octal
             currentIndex = arraySize - 1;
         }
 
+
         // Reverse sumArray
         for (int i = 0; i < arraySize / 2; i++)
         {
@@ -359,6 +359,8 @@ public class Octal
             sumArray[i] = sumArray[sumArray.length - i - 1];
             sumArray[sumArray.length - i - 1] = temp;
         }
+
+
 
         int[] closestMultipleOfEight = new int[arraySize];
 
@@ -398,10 +400,13 @@ public class Octal
         sb.reverse();
 
         // Remove any leading zeroes
+        /*
         while (sb.toString().charAt(0) == '0')
         {
             sb.deleteCharAt(0);
         }
+
+         */
 
         return new Octal(sb.toString());
     }
@@ -435,6 +440,9 @@ public class Octal
         sb.reverse().delete(0, 2).reverse();
         quotient.octal = sb.toString();
 
+        // Reset sb
+        sb.setLength(0);
+
         System.out.println("QUOTIENT");
         System.out.println(quotient);
 
@@ -449,11 +457,88 @@ public class Octal
         divisor = divisor.removePoint();
         remainder = remainder.removePoint();
 
-        System.out.println("remainder");
-        System.out.println(remainder);
+        //System.out.println("remainder");
+        //System.out.println(remainder);
 
-        System.out.println("DIVISOR");
-        System.out.println(divisor);
+        //System.out.println("DIVISOR");
+        //System.out.println(divisor);
+
+        sb.append(remainder.octal).append("0");
+        remainder.octal = sb.toString();
+
+        // Reset sb
+        sb.setLength(0);
+
+        //System.out.println("REMAINDER");
+        //System.out.println(remainder);
+
+        //System.out.println("Double.parseDouble(remainder.octal) != 0");
+        //System.out.println(Double.parseDouble(remainder.octal) != 0);
+
+        //System.out.println("1 REMAINDER");
+        //System.out.println(remainder);
+
+        //System.out.println("1 DIVISOR");
+        //System.out.println(divisor);
+
+        multiplier = getLargestMultiplier(divisor, remainder);
+
+        //System.out.println("MULTIPLIER");
+        //System.out.println(multiplier);
+
+        //System.out.println("QUOTIENT");
+        quotient = multiplier.multiplyOctal(divisor);
+
+        remainder = remainder.subtractOctal(quotient);
+        remainder = remainder.removePoint();
+
+        //System.out.println("REMAINDER");
+        //System.out.println(remainder);
+
+        //System.out.println("Double.parseDouble(remainder.octal) != 0");
+        //System.out.println(Double.parseDouble(remainder.octal) != 0);
+
+
+        while (Double.parseDouble(remainder.octal) != 0)
+        {
+            System.out.println("1REMAINDER");
+            System.out.println(remainder);
+
+            sb.append(remainder.octal).append(".0");
+
+            remainder.octal = sb.toString();
+
+            System.out.println("REMAINDER");
+            System.out.println(remainder);
+
+            // Reset sb
+            sb.setLength(0);
+
+            sb.append(divisor.octal).append(".0");
+            divisor.octal = sb.toString();
+
+            System.out.println("DIVISOR");
+            System.out.println(divisor);
+
+            // Reset sb
+            sb.setLength(0);
+
+
+
+            multiplier = getLargestMultiplier(divisor, remainder);
+
+            System.out.println("MULTIPLIER");
+            System.out.println(multiplier);
+
+            quotient = multiplier.multiplyOctal(divisor);
+
+            remainder = remainder.subtractOctal(quotient);
+
+            System.out.println("QUOTIENT");
+            System.out.println(quotient);
+        }
+
+
 
         return new Octal();
     }
@@ -581,26 +666,6 @@ public class Octal
 
         int aPointPosition = currentOctal.getPointPosition();
         int bPointPosition = inOctal.getPointPosition();
-
-        // If currentOctal.octal has only one digit in front of the octal point,
-        // add a placeholder zero in front of digit
-        if ((aPointPosition + 2) == currentOctal.octal.length())
-        {
-            sb.append('0').append(currentOctal.octal);
-            currentOctal.octal = sb.toString();
-            sb.setLength(0);
-        }
-
-        // If inOctal.octal has only one digit in front of the octal point,
-        // add a placeholder zero in front of digit
-        if ((bPointPosition + 2) == inOctal.octal.length())
-        {
-            sb.append('0').append(inOctal.octal);
-            inOctal.octal = sb.toString();
-            sb.setLength(0);
-        }
-
-
 
         int aDigitsBeforePoint = getDigitsBeforePoint(currentOctal);
         int bDigitsBeforePoint = getDigitsBeforePoint(inOctal);
