@@ -135,18 +135,8 @@ public class Octal
 
         boolean negative = false;
 
-        //System.out.println("minuend");
-        //System.out.println(minuend);
-        //System.out.println("subtrahend");
-        //System.out.println(subtrahend);
-
         // Add placeholder zeroes if needed
         minuend.addPlaceholders(subtrahend);
-
-        //System.out.println("NEW minuend");
-        //System.out.println(minuend);
-        //System.out.println("NEW subtrahend");
-        //System.out.println(subtrahend);
 
         int pointPosition = 0;
         if (Double.parseDouble(subtrahend.octal) > Double.parseDouble(minuend.octal))
@@ -164,13 +154,7 @@ public class Octal
             subtrahend = subtrahend.removePoint();
         }
 
-        //System.out.println("negative");
-        //System.out.println(negative);
-
         subtrahend = subtrahend.eightsComplement();
-
-        //System.out.println("8s subtrahend");
-        //System.out.println(subtrahend);
 
         difference = minuend.addOctal(subtrahend);
 
@@ -202,76 +186,9 @@ public class Octal
     }
 
 
-    /*
-    public Octal subtractOctal(Octal inOctal)
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Octal eightsComplement = inOctal.eightsComplement();
-        System.out.println("\neightsComplement: ");
-        System.out.println(eightsComplement.octal);
-
-        Octal answer = new Octal();
-
-        sb.append(eightsComplement.addOctal(this));
-
-        System.out.println();
-
-        if (Double.parseDouble(inOctal.octal) > Double.parseDouble(this.octal))
-        {
-            answer.octal = sb.toString();
-
-            // Reset sb
-            sb.setLength(0);
-
-            answer = answer.eightsComplement();
-            sb.append('-').append(answer.octal);
-            answer.octal = sb.toString();
-        }
-
-        else
-        {
-            if (sb.toString().length() > eightsComplement.octal.length() &&
-                sb.toString().length() > this.octal.length())
-            {
-                sb.deleteCharAt(0);
-            }
-
-            answer.octal = sb.toString();
-        }
-
-        // Remove any leading zeroes
-        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-
-            if (sb.toString().charAt(0) == '-')
-            {
-                System.out.println("IN - IF");
-
-                System.out.println(sb.toString().charAt(1));
-
-                while (sb.toString().charAt(1) == '0')
-                {
-                    sb.deleteCharAt(1);
-                }
-            }
-
-            answer.octal = sb.toString();
-        }
-
-        return answer;
-    }
-*/
-
 
     public Octal multiplyOctal(Octal inOctal)
     {
-        Octal answer = new Octal();
-
         Octal multiplicand = new Octal(this.octal);
         Octal multiplier = new Octal(inOctal.octal);
 
@@ -741,9 +658,6 @@ public class Octal
         int numDigits = 0;
 
         Octal currentOctal = new Octal(this.octal);
-
-        //System.out.println("inOctal.octal.length()");
-        //System.out.println(inOctal.octal.length());
 
         while (numDigits < currentOctal.octal.length() && currentOctal.octal.charAt(numDigits) != '.')
         {
