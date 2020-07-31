@@ -42,7 +42,7 @@ public class Main
         Binary b5 = new Binary("10101");
         Binary b6 = new Binary("1111");
         Binary b7 = new Binary("1111");
-        Binary b8 = new Binary("00011100");
+        Binary b8 = new Binary("11100");
         Binary b9 = new Binary("0012001");
 
         System.out.println("\nisBinary: ");
@@ -71,6 +71,7 @@ public class Main
         System.out.println("\nmultiplyBinary: ");
         System.out.println(b2.multiplyBinary(b3));
         System.out.println(b3.multiplyBinary(b2));
+        System.out.println(b2.multiplyBinary(b8));
 
         System.out.println("\nbinaryToDecimal: ");
         System.out.println(b2.binaryToDecimal());
@@ -82,16 +83,18 @@ public class Main
 
         System.out.println("\nTests for Octal class");
         Octal o1 = new Octal();
-        Octal o2 = new Octal("565.00");
-        Octal o3 = new Octal("234.00");
+        Octal o2 = new Octal("7.0");
+        Octal o3 = new Octal("2.0");
+        //Octal o2 = new Octal("23.14");
+        //Octal o3 = new Octal("6.35");
         Octal o4 = new Octal("1.0");
         Octal o5 = new Octal("37513.127314");
         Octal o6 = new Octal("35.57");
         Octal o7 = new Octal("345.0");
         Octal o8 = new Octal("146.0");
 
+
         o1.setOctal("3.0");
-        System.out.println(o1);
 
         System.out.println("\naddOctal: ");
         System.out.println(o2.addOctal(o3));
@@ -104,22 +107,35 @@ public class Main
         System.out.println(o3.isOctal());
         System.out.println(o8.isOctal());
 
-        System.out.println("\nsevensComplement: ");
-        System.out.println(o3);
-        System.out.println(o3.sevensComplement());
-        System.out.println(o5);
-        System.out.println(o5.sevensComplement());
+        //System.out.println("\nsevensComplement: ");
+        //System.out.println(o3);
+        //System.out.println(o3.sevensComplement());
+        //System.out.println(o5);
+        //System.out.println(o5.sevensComplement());
 
-        System.out.println("\neightsComplement: ");
-        System.out.println(o3);
-        System.out.println(o3.eightsComplement());
-        System.out.println(o5);
-        System.out.println(o5.eightsComplement());
+        //System.out.println("\neightsComplement: ");
+        //System.out.println(o3);
+        //System.out.println(o3.eightsComplement());
+        //System.out.println(o5);
+        //System.out.println(o5.eightsComplement());
 
         System.out.println("\nsubtractOctal: ");
         System.out.println(o2.subtractOctal(o3));
         System.out.println(o4.subtractOctal(o5));
         System.out.println(o7.subtractOctal(o6));
         System.out.println(o7.subtractOctal(o8));
+
+        //System.out.println("\nmultiplyOctal: ");
+        //System.out.println(o2.multiplyOctal(o3));
+        //System.out.println(o4.subtractOctal(o5));
+        //System.out.println(o7.subtractOctal(o6));
+        //System.out.println(o7.subtractOctal(o8));
+
+        Octal o9 = new Octal("524.104");
+        Octal o10 = new Octal("23.75");
+
+        System.out.println("\ndivideOctal: ");
+        System.out.println(o9.divideOctal(o10, 3));
+
     }
 }
