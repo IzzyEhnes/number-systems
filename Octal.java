@@ -1,6 +1,6 @@
 package Ehnes.Izzy.NumberSystems;
 
-import java.lang.Math;
+import java.security.InvalidParameterException;
 
 public class Octal
 {
@@ -410,11 +410,36 @@ public class Octal
     {
         StringBuilder sb = new StringBuilder();
 
+        boolean negative = false;
+
         Octal quotient = new Octal();
         Octal remainder = new Octal();
         Octal dividend = new Octal(this.octal);
         Octal multiplier = new Octal();
         Octal product = new Octal();
+
+        if (divisor.octal.charAt(0) == '-')
+        {
+            sb.append(divisor);
+            sb.deleteCharAt(0);
+
+            divisor.octal = sb.toString();
+
+            // Reset sb
+            sb.setLength(0);
+
+            negative = true;
+        }
+
+        if (Double.parseDouble(divisor.octal) == 0)
+        {
+            throw new InvalidParameterException("Error: Cannot divide by zero.");
+        }
+
+        else if (Double.parseDouble(dividend.octal) < 0)
+        {
+            throw new InvalidParameterException("Error: Cannot divide a negative Octal.");
+        }
 
         // Add placeholder zeroes, if needed
         divisor.addPlaceholders(dividend);
@@ -492,6 +517,13 @@ public class Octal
 
                 digitsAfterPoint++;
             }
+        }
+
+        if (negative)
+        {
+            sb.append(quotient).insert(0, '-');
+
+            quotient.octal = sb.toString();
         }
         
         return quotient;
