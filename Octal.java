@@ -192,12 +192,17 @@ public class Octal
         Octal multiplicand = new Octal(this.octal);
         Octal multiplier = new Octal(inOctal.octal);
 
-        int aDecimalPosition = multiplicand.getPointPosition();
-        int bDecimalPosition = inOctal.getPointPosition();
-
         // Add placeholder zeroes if needed
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
+
+        int aDecimalPosition = multiplicand.getPointPosition();
+        int bDecimalPosition = inOctal.getPointPosition();
+
+        System.out.println("\nmultiplicand");
+        System.out.println(multiplicand);
+        System.out.println("multiplier");
+        System.out.println(multiplier);
 
         StringBuilder sb = new StringBuilder();
 
@@ -316,7 +321,7 @@ public class Octal
 
         Octal product = new Octal(sb.toString());
 
-        product.removeLeadingZeroes();
+        product = product.removeLeadingZeroes();
 
         return product;
     }
@@ -335,7 +340,7 @@ public class Octal
         Octal multiplier = new Octal();
         Octal product = new Octal();
 
-        if (divisor.octal.charAt(0) == '-')
+        if (divisor.isNegative())
         {
             sb.append(divisor);
             sb.deleteCharAt(0);
@@ -756,6 +761,23 @@ public class Octal
         currentOctal.octal = sb.toString();
 
         return currentOctal;
+    }
+
+
+
+    public boolean isNegative()
+    {
+        Octal currentOctal = new Octal(this.octal);
+
+        if (currentOctal.octal.charAt(0) == '-')
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
     }
 
 
