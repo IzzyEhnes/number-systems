@@ -41,7 +41,7 @@ public class Octal
         for (int i = 0; i < this.octal.length(); i++)
         {
             if ((this.octal.charAt(i) < '0' || this.octal.charAt(i) > '7')
-                    && this.octal.charAt(i) != '.')
+                    && this.octal.charAt(i) != '.' && this.octal.charAt(i) != '-')
             {
                 return false;
             }
@@ -56,11 +56,57 @@ public class Octal
     {
         StringBuilder sb = new StringBuilder();
         int carry = 0;
+        Octal answer = new Octal();
+        boolean negative = false;
 
         // Create local reference to Octals so they can be manipulated
         // without changing original objects
         Octal currentOctal = new Octal(this.octal);
         Octal addend = new Octal(inOctal.octal);
+
+        if (currentOctal.isNegative() && addend.isNegative())
+        {
+            negative = true;
+
+            currentOctal = currentOctal.removeNegativeSign();
+            addend = addend.removeNegativeSign();
+        }
+
+        else if (currentOctal.isNegative() && !addend.isNegative())
+        {
+            currentOctal = currentOctal.removeNegativeSign();
+
+            if (Double.parseDouble(currentOctal.octal) > Double.parseDouble(addend.octal))
+            {
+                answer = currentOctal.subtractOctal(addend);
+                answer = answer.insertNegativeSign();
+            }
+
+            else
+            {
+                answer = addend.subtractOctal(currentOctal);
+            }
+
+            return answer;
+        }
+
+        else if (addend.isNegative() && !currentOctal.isNegative())
+        {
+            addend = addend.removeNegativeSign();
+
+            if (Double.parseDouble(addend.octal) > Double.parseDouble(currentOctal.octal))
+            {
+                answer = addend.subtractOctal(currentOctal);
+                answer = answer.insertNegativeSign();
+            }
+
+            else
+            {
+                answer = currentOctal.subtractOctal(addend);
+            }
+
+            return answer;
+        }
 
         int aDecimalPosition = currentOctal.getPointPosition();
         int bDecimalPosition = addend.getPointPosition();
@@ -121,7 +167,14 @@ public class Octal
         // Add decimal place to answer (aDecimalPosition = bDecimalPosition)
         sb.insert(aDecimalPosition, '.');
 
-        return new Octal(sb.reverse().toString());
+        answer.octal = sb.reverse().toString();
+
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
+        }
+
+        return answer;
     }
 
 
@@ -135,10 +188,52 @@ public class Octal
 
         boolean negative = false;
 
+        // If the minuend and subtrahend are the same, their difference is zero
+        if (Double.parseDouble(minuend.octal) == Double.parseDouble(subtrahend.octal))
+        {
+            return new Octal("0.0");
+        }
+
+        // If both the minuend and subtrahend are negative
+        if (subtrahend.isNegative() && minuend.isNegative())
+        {
+            subtrahend = subtrahend.removeNegativeSign();
+
+            difference = minuend.addOctal(subtrahend);
+
+            return difference;
+        }
+
+        // If the minuend is negative and the subtrahend is positive,
+        // their difference is -1 * (|minuend| + subtrahend)
+        else if (minuend.isNegative() && !subtrahend.isNegative())
+        {
+            minuend = minuend.removeNegativeSign();
+
+            difference = minuend.addOctal(subtrahend);
+            difference = difference.removeLeadingZeroes().insertNegativeSign();
+
+            return difference;
+        }
+
+        // If the subtrahend is negative and the minuend is positive,
+        // their difference is (minuend + |subtrahend|)
+        else if (subtrahend.isNegative() && !minuend.isNegative())
+        {
+            subtrahend = subtrahend.removeNegativeSign();
+
+            difference = minuend.addOctal(subtrahend);
+
+            return difference;
+        }
+
+
+
         // Add placeholder zeroes if needed
         minuend.addPlaceholders(subtrahend);
 
         int pointPosition = 0;
+
         if (Double.parseDouble(subtrahend.octal) > Double.parseDouble(minuend.octal))
         {
             negative = true;
@@ -192,17 +287,40 @@ public class Octal
         Octal multiplicand = new Octal(this.octal);
         Octal multiplier = new Octal(inOctal.octal);
 
+        boolean negative = false;
+
+        // If both the multiplicand and multiplier are negative their product will
+        // be positive, and we can remove the negative signs on both
+        if (multiplicand.isNegative() && multiplier.isNegative())
+        {
+            multiplicand = multiplicand.removeNegativeSign();
+            multiplier = multiplier.removeNegativeSign();
+        }
+
+        // If the multiplicand is negative and the multiplier is positive their product
+        // will be negative, and we can remove the negative sign on the multiplicand
+        else if (multiplicand.isNegative() && !multiplier.isNegative())
+        {
+            multiplicand = multiplicand.removeNegativeSign();
+            negative = true;
+        }
+
+        // If the multiplier is negative and the multiplicand is positive their product
+        // will be negative, and we can remove the negative sign on the multiplier
+        else if (multiplier.isNegative() && !multiplicand.isNegative())
+        {
+            multiplier = multiplier.removeNegativeSign();
+            negative = true;
+        }
+
+
+
         // Add placeholder zeroes if needed
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
         int aDecimalPosition = multiplicand.getPointPosition();
         int bDecimalPosition = inOctal.getPointPosition();
-
-        System.out.println("\nmultiplicand");
-        System.out.println(multiplicand);
-        System.out.println("multiplier");
-        System.out.println(multiplier);
 
         StringBuilder sb = new StringBuilder();
 
@@ -322,6 +440,11 @@ public class Octal
         Octal product = new Octal(sb.toString());
 
         product = product.removeLeadingZeroes();
+
+        if (negative)
+        {
+            product = product.insertNegativeSign();
+        }
 
         return product;
     }
@@ -778,6 +901,28 @@ public class Octal
         {
             return false;
         }
+    }
+
+
+
+    public Octal removeNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).deleteCharAt(0);
+
+        return new Octal(sb.toString());
+    }
+
+
+
+    public Octal insertNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).insert(0, '-');
+
+        return new Octal(sb.toString());
     }
 
 
