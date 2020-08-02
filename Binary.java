@@ -127,12 +127,6 @@ public class Binary
 
         inBinary = inBinary.twosComplement();
 
-        System.out.println("inBinary");
-        System.out.println(inBinary);
-
-        System.out.println("currentBinary");
-        System.out.println(currentBinary);
-
         sb.append(currentBinary.addBinary(inBinary));
 
         // if there was overflow, remove leftmost bit
@@ -157,17 +151,26 @@ public class Binary
 
         sb.append(this.binaryString);
         sb.reverse();
-        String a = sb.toString();
+        Binary multiplicand = new Binary(sb.toString());
 
         // Reset sb
         sb.setLength(0);
 
         sb.append(inBinary.binaryString);
         sb.reverse();
-        String b = sb.toString();
+        Binary multiplier = new Binary(sb.toString());
 
-        int aLength = a.length();
-        int bLength = b.length();
+        multiplicand.addPlaceholders(multiplier);
+        multiplier.addPlaceholders(multiplicand);
+
+        // multiplicand.getPointPosition() = multiplier.getPointPosition()
+        int pointPosition = multiplicand.getPointPosition();
+
+        multiplicand = multiplicand.removePoint();
+        multiplier = multiplier.removePoint();
+
+        int aLength = multiplicand.binaryString.length();
+        int bLength = multiplier.binaryString.length();
 
         sb.setLength(0);
 
@@ -177,18 +180,18 @@ public class Binary
         // the same size as to avoid out of bounds error
         if (aLength > bLength)
         {
-            sb.append(b).append("0".repeat(aLength - bLength));
-            b = sb.toString();
+            sb.append(multiplier.binaryString).append("0".repeat(aLength - bLength));
+            multiplier.binaryString = sb.toString();
 
-            bLength = b.length();
+            bLength = multiplier.binaryString.length();
         }
 
         else if (bLength > aLength)
         {
-            sb.append(a).append("0".repeat(bLength - aLength));
-            a = sb.toString();
+            sb.append(multiplicand.binaryString).append("0".repeat(bLength - aLength));
+            multiplicand.binaryString = sb.toString();
 
-            aLength = a.length();
+            aLength = multiplicand.binaryString.length();
         }
 
 
@@ -203,7 +206,8 @@ public class Binary
 
             for (int j = 0; j < bLength; j++)
             {
-                sb.append((a.charAt(j) - '0') * (b.charAt(i) - '0'));
+                sb.append((multiplicand.binaryString.charAt(j) - '0')
+                        * (multiplier.binaryString.charAt(i) - '0'));
             }
 
             binaryTemp.binaryString = sb.reverse().toString();
@@ -211,6 +215,8 @@ public class Binary
             answer = answer.addBinary(binaryTemp);
             sb.delete(0, bLength + i);
         }
+
+        answer = answer.removePoint().removeTrailingZeroes().removeLeadingZeroes().insertPoint(pointPosition);
 
         return answer;
     }
@@ -420,6 +426,52 @@ public class Binary
 
             currentBinary.binaryString = sb.toString();
         }
+    }
+
+
+
+    public Binary removeLeadingZeroes()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        sb.append(currentBinary);
+
+        if (sb.toString().charAt(0) == '0')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+
+            currentBinary.binaryString = sb.toString();
+        }
+
+        return currentBinary;
+    }
+
+
+
+    public Binary removeTrailingZeroes()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        sb.append(currentBinary).reverse();
+
+        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+        }
+
+        currentBinary.binaryString = sb.reverse().toString();
+
+        return currentBinary;
     }
 
 
