@@ -39,7 +39,9 @@ public class Binary
     {
         for (int i = 0; i < this.binaryString.length(); i++)
         {
-            if (this.binaryString.charAt(i) != '0' && this.binaryString.charAt(i) != '1')
+            if (this.binaryString.charAt(i) != '0'
+                    && this.binaryString.charAt(i) != '1'
+                        && this.binaryString.charAt(i) != '.')
             {
                 return false;
             }
@@ -53,11 +55,20 @@ public class Binary
     public Binary addBinary(Binary inBinary)
     {
         Binary answer = new Binary();
-        String reverseAnswer = "";
         StringBuilder sb = new StringBuilder();
-        int aLength = this.binaryString.length() - 1;
-        int bLength = inBinary.binaryString.length() - 1;
         int carry = 0;
+
+        Binary currentBinary = new Binary(this.binaryString);
+        Binary addend = new Binary(inBinary.binaryString);
+
+        int currentBinaryPointPosition = currentBinary.getPointPosition();
+        int addendPointPosition = addend.getPointPosition();
+
+        currentBinary = currentBinary.removePoint();
+        addend = addend.removePoint();
+
+        int aLength = currentBinary.binaryString.length() - 1;
+        int bLength = addend.binaryString.length() - 1;
 
         while (aLength >= 0 || bLength >= 0)
         {
@@ -65,12 +76,12 @@ public class Binary
 
             if (aLength >= 0)
             {
-                sum += this.binaryString.charAt(aLength--) - '0';
+                sum += currentBinary.binaryString.charAt(aLength--) - '0';
             }
 
             if (bLength >= 0)
             {
-                sum += inBinary.binaryString.charAt(bLength--) - '0';
+                sum += addend.binaryString.charAt(bLength--) - '0';
             }
 
             sb.append(sum % 2);
@@ -84,6 +95,16 @@ public class Binary
         }
 
         answer.binaryString = sb.reverse().toString();
+
+        if (currentBinaryPointPosition > addendPointPosition)
+        {
+            answer = answer.insertPoint(currentBinaryPointPosition);
+        }
+
+        else
+        {
+            answer = answer.insertPoint(addendPointPosition);
+        }
 
         return answer;
     }
@@ -131,15 +152,32 @@ public class Binary
         sb.reverse();
         String b = sb.toString();
 
-        if (b.length() > a.length())
-        {
-            String stringTemp = a;
-            a = b;
-            b = stringTemp;
-        }
-
         int aLength = a.length();
         int bLength = b.length();
+
+        sb.setLength(0);
+
+
+
+        // Add placeholder zeroes to smaller string so both binary strings are
+        // the same size as to avoid out of bounds error
+        if (aLength > bLength)
+        {
+            sb.append(b).append("0".repeat(aLength - bLength));
+            b = sb.toString();
+
+            bLength = b.length();
+        }
+
+        else if (bLength > aLength)
+        {
+            sb.append(a).append("0".repeat(bLength - aLength));
+            a = sb.toString();
+
+            aLength = a.length();
+        }
+
+
 
         // Reset sb
         sb.setLength(0);
@@ -161,6 +199,28 @@ public class Binary
         }
 
         return answer;
+    }
+
+
+
+    public Binary divideBinary(Binary inBinary)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Binary quotient = new Binary();
+
+        sb.append(this);
+        Binary dividend = new Binary(sb.toString());
+
+        sb.setLength(0);
+
+        sb.append(inBinary);
+
+        Binary divisor = new Binary(sb.toString());
+
+        sb.setLength(0);
+
+        return quotient;
     }
 
 
@@ -218,6 +278,67 @@ public class Binary
         }
 
         return new Decimal(sum);
+    }
+
+
+
+    public int getPointPosition()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.binaryString);
+
+        String a = sb.reverse().toString();
+
+        // Find point position with respect to rightmost digit
+        int pointPosition = 0;
+        for (int i = 0; i < a.length(); i++)
+        {
+            if (a.charAt(i) == '.')
+            {
+                pointPosition = i;
+            }
+        }
+
+        return pointPosition;
+    }
+
+
+
+    public Binary removePoint()
+    {
+        Binary currentBinary = new Binary(this.binaryString);
+
+        int pointPosition = currentBinary.getPointPosition();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentBinary);
+        sb.reverse().deleteCharAt(pointPosition).reverse();
+
+        currentBinary.binaryString = sb.toString();
+
+        return currentBinary;
+    }
+
+
+
+    public Binary insertPoint(int pointPosition)
+    {
+        Binary currentBinary = new Binary(this.binaryString);
+
+        StringBuilder sb = new StringBuilder();
+
+        currentBinary.removePoint();
+
+        sb.append(currentBinary);
+
+        // Insert point at pointPosition
+        sb.reverse().insert(pointPosition, '.').reverse();
+
+        currentBinary.binaryString = sb.toString();
+
+        return currentBinary;
     }
 
 
