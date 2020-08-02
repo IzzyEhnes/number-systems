@@ -62,6 +62,7 @@ public class Binary
         Binary addend = new Binary(inBinary.binaryString);
 
         addend.addPlaceholders(currentBinary);
+        currentBinary.addPlaceholders(addend);
 
         int currentBinaryPointPosition = currentBinary.getPointPosition();
         int addendPointPosition = addend.getPointPosition();
@@ -119,9 +120,20 @@ public class Binary
 
         StringBuilder sb = new StringBuilder();
 
+        Binary currentBinary = new Binary(this.binaryString);
+
+        currentBinary.addPlaceholders(inBinary);
+        inBinary.addPlaceholders(currentBinary);
+
         inBinary = inBinary.twosComplement();
 
-        sb.append(this.addBinary(inBinary));
+        System.out.println("inBinary");
+        System.out.println(inBinary);
+
+        System.out.println("currentBinary");
+        System.out.println(currentBinary);
+
+        sb.append(currentBinary.addBinary(inBinary));
 
         // if there was overflow, remove leftmost bit
         if (sb.length() > answer.binaryString.length())
@@ -205,28 +217,6 @@ public class Binary
 
 
 
-    public Binary divideBinary(Binary inBinary)
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Binary quotient = new Binary();
-
-        sb.append(this);
-        Binary dividend = new Binary(sb.toString());
-
-        sb.setLength(0);
-
-        sb.append(inBinary);
-
-        Binary divisor = new Binary(sb.toString());
-
-        sb.setLength(0);
-
-        return quotient;
-    }
-
-
-
     public Binary onesComplement()
     {
         int binaryLength = this.binaryString.length();
@@ -243,6 +233,11 @@ public class Binary
             {
                 sb.append('1');
             }
+
+            else if (this.binaryString.charAt(i) == '.')
+            {
+                sb.append('.');
+            }
         }
 
         return new Binary(sb.toString());
@@ -252,9 +247,18 @@ public class Binary
 
     public Binary twosComplement()
     {
+        StringBuilder sb = new StringBuilder();
         Binary answer;
-        Binary one = new Binary ("1");
+        Binary one = new Binary ("0.0");
+
         answer = this.onesComplement();
+
+        answer.addPlaceholders(one);
+
+        sb.append(one).reverse().deleteCharAt(0).insert(0, '1').reverse();
+
+        one.binaryString = sb.toString();
+
         answer = answer.addBinary(one);
 
         return answer;
@@ -345,6 +349,23 @@ public class Binary
 
 
 
+    public int getDigitsBeforePoint()
+    {
+        int numDigits = 0;
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        while (numDigits < currentBinary.binaryString.length()
+                && currentBinary.binaryString.charAt(numDigits) != '.')
+        {
+            numDigits++;
+        }
+
+        return numDigits;
+    }
+
+
+
     public void addPlaceholders(Binary inBinary)
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -353,6 +374,32 @@ public class Binary
 
         int currentBinaryPointPosition = currentBinary.getPointPosition();
         int inBinaryPointPosition = inBinary.getPointPosition();
+
+        int aDigitsBeforePoint = currentBinary.getDigitsBeforePoint();
+        int bDigitsBeforePoint = inBinary.getDigitsBeforePoint();
+        // If needed, add placeholder zeroes so both Octals
+        // have same number of digits in front of point
+        if (aDigitsBeforePoint > bDigitsBeforePoint)
+        {
+            sb.append("0".repeat(aDigitsBeforePoint - bDigitsBeforePoint));
+            sb.append(inBinary);
+
+            inBinary.binaryString = sb.toString();
+
+            sb.setLength(0);
+        }
+
+        else if (bDigitsBeforePoint > aDigitsBeforePoint)
+        {
+            sb.append("0".repeat(bDigitsBeforePoint - aDigitsBeforePoint));
+            sb.append(currentBinary);
+
+            currentBinary.binaryString = sb.toString();
+
+            sb.setLength(0);
+        }
+
+
 
         // If needed, add placeholder zeroes so both Binary strings
         // have same number of digits behind point
