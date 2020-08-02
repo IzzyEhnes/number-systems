@@ -17,9 +17,12 @@ public class Main
         System.out.println("******************************************");
         addBinaryTest();
         System.out.println("******************************************");
-        binaryPointTest();
-        System.out.println("******************************************");
         subtractBinaryTest();
+        System.out.println("******************************************");
+        multiplyBinaryTest();
+        System.out.println("******************************************");
+        binaryPointTest();
+
     }
 
 
@@ -216,9 +219,38 @@ public class Main
         System.out.print(b4.subtractBinary(b2));
 
         System.out.println("\n\nb3.subtractBinary(b4)");
-        System.out.println("Expected: 1010.101");
+        System.out.println("Expected: 101.011");
         System.out.print("Returned value: ");
         System.out.print(b3.subtractBinary(b4));
+
+        System.out.print("\n\nEnd subtractBinaryTest()\n");
+    }
+
+
+
+    public static void multiplyBinaryTest()
+    {
+        Binary b1 = new Binary("0.1");
+        Binary b2 = new Binary("101.1");
+        Binary b3 = new Binary("010.01");
+        Binary b4 = new Binary("1100.101");
+
+        System.out.println("Begin multiplyBinaryTest():");
+
+        System.out.println("\nb2.multiplyBinary(b3)");
+        System.out.println("Expected: 1100.011");
+        System.out.print("Returned value: ");
+        System.out.print(b2.multiplyBinary(b3));
+
+        System.out.println("\n\nb4.multiplyBinary(b2)");
+        System.out.println("Expected: 1000101.0111");
+        System.out.print("Returned value: ");
+        System.out.print(b4.multiplyBinary(b2));
+
+        System.out.println("\n\nb1.multiplyBinary(b4)");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(b1.multiplyBinary(b4));
 
         System.out.print("\n\nEnd subtractBinaryTest()\n");
     }
