@@ -4,7 +4,7 @@ import java.lang.Math;
 
 public class Binary
 {
-    private String binaryString = "";
+    private String binaryString = "0.0";
 
 
 
@@ -60,6 +60,8 @@ public class Binary
 
         Binary currentBinary = new Binary(this.binaryString);
         Binary addend = new Binary(inBinary.binaryString);
+
+        addend.addPlaceholders(currentBinary);
 
         int currentBinaryPointPosition = currentBinary.getPointPosition();
         int addendPointPosition = addend.getPointPosition();
@@ -339,6 +341,38 @@ public class Binary
         currentBinary.binaryString = sb.toString();
 
         return currentBinary;
+    }
+
+
+
+    public void addPlaceholders(Binary inBinary)
+    {
+        Binary currentBinary = new Binary(this.binaryString);
+
+        StringBuilder sb = new StringBuilder();
+
+        int currentBinaryPointPosition = currentBinary.getPointPosition();
+        int inBinaryPointPosition = inBinary.getPointPosition();
+
+        // If needed, add placeholder zeroes so both Binary strings
+        // have same number of digits behind point
+        if (currentBinaryPointPosition > inBinaryPointPosition)
+        {
+            sb.append(inBinary);
+
+            sb.append("0".repeat(currentBinaryPointPosition - inBinaryPointPosition));
+
+            inBinary.binaryString = sb.toString();
+        }
+
+        else
+        {
+            sb.append(currentBinary);
+
+            sb.append("0".repeat(inBinaryPointPosition - currentBinaryPointPosition));
+
+            currentBinary.binaryString = sb.toString();
+        }
     }
 
 
