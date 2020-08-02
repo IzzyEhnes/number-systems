@@ -4,6 +4,166 @@ public class Main
 {
     public static void main(String[] args)
     {
+        System.out.println("******************************************");
+        addDecimalTest();
+        System.out.println("******************************************");
+        subtractDecimalTest();
+        System.out.println("******************************************");
+        multiplyDecimalTest();
+        System.out.println("******************************************");
+        divideDecimalTest();
+        System.out.println("******************************************");
+        decimalToBinaryTest();
+        System.out.println("******************************************");
+    }
+
+
+    public static void addDecimalTest()
+    {
+        Decimal d1 = new Decimal();
+        Decimal d2 = new Decimal(2.5);
+        Decimal d3 = new Decimal(9.75);
+        Decimal d4 = new Decimal(-128.38);
+
+        System.out.println("Begin addDecimalTest():");
+
+        System.out.println("\nd1.addDecimal(d2)");
+        System.out.println("Expected: 2.5");
+        System.out.print("Returned value: ");
+        System.out.print(d1.addDecimal(d2));
+
+        System.out.println("\n\nd3.addDecimal(d4)");
+        System.out.println("Expected: -118.63");
+        System.out.print("Returned value: ");
+        System.out.print(d3.addDecimal(d4));
+
+        System.out.println("\n\nd1.addDecimal(d3)");
+        System.out.println("Expected: 9.75");
+        System.out.print("Returned value: ");
+        System.out.print(d1.addDecimal(d3));
+
+        System.out.print("\n\nEnd addDecimalTest()\n");
+    }
+
+
+
+    public static void subtractDecimalTest()
+    {
+        Decimal d1 = new Decimal();
+        Decimal d2 = new Decimal(86.19);
+        Decimal d3 = new Decimal(12.463);
+        Decimal d4 = new Decimal(5.1);
+
+        System.out.println("Begin subtractDecimalTest():");
+
+        System.out.println("\nd1.subtractDecimal(d2)");
+        System.out.println("Expected: -86.19");
+        System.out.print("Returned value: ");
+        System.out.print(d1.subtractDecimal(d2));
+
+        System.out.println("\n\nd3.subtractDecimal(d4)");
+        System.out.println("Expected: 7.363");
+        System.out.print("Returned value: ");
+        System.out.print(d3.subtractDecimal(d4));
+
+        System.out.println("\n\nd1.subtractDecimal(d3)");
+        System.out.println("Expected: -12.463");
+        System.out.print("Returned value: ");
+        System.out.print(d1.subtractDecimal(d3));
+
+        System.out.print("\n\nEnd subtractDecimalTest()\n");
+    }
+
+
+
+    public static void multiplyDecimalTest()
+    {
+        Decimal d1 = new Decimal();
+        Decimal d2 = new Decimal(2.25);
+        Decimal d3 = new Decimal(15.64);
+        Decimal d4 = new Decimal(-5.1);
+
+        System.out.println("Begin multiplyDecimalTest():");
+
+        System.out.println("\nd1.multiplyDecimal(d2)");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(d1.multiplyDecimal(d2));
+
+        System.out.println("\n\nd2.multiplyDecimal(d3)");
+        System.out.println("Expected: 35.19");
+        System.out.print("Returned value: ");
+        System.out.print(d2.multiplyDecimal(d3));
+
+        System.out.println("\n\nd3.multiplyDecimal(d4)");
+        System.out.println("Expected: -79.764");
+        System.out.print("Returned value: ");
+        System.out.print(d3.multiplyDecimal(d4));
+
+        System.out.print("\n\nEnd multiplyDecimalTest()\n");
+    }
+
+
+
+    public static void divideDecimalTest()
+    {
+        Decimal d1 = new Decimal();
+        Decimal d2 = new Decimal(1.25);
+        Decimal d3 = new Decimal(63.25);
+        Decimal d4 = new Decimal(1345.615);
+
+        System.out.println("Begin divideDecimalTest():");
+
+        System.out.println("\nd2.divideDecimal(d3)");
+        System.out.println("Expected: 0.0197");
+        System.out.print("Returned value: ");
+        System.out.print(d2.divideDecimal(d3));
+
+        System.out.println("\n\nd4.divideDecimal(d3)");
+        System.out.println("Expected: 21.27");
+        System.out.print("Returned value: ");
+        System.out.print(d4.divideDecimal(d3));
+
+        System.out.println("\n\nd3.divideDecimal(d4)");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(d1.divideDecimal(d4));
+
+        System.out.print("\n\nEnd divideDecimalTest()\n");
+    }
+
+
+
+    public static void decimalToBinaryTest()
+    {
+        Decimal d1 = new Decimal(10.0);
+        Decimal d2 = new Decimal(753.0);
+        Decimal d3 = new Decimal(92.00);
+
+        System.out.println("Begin decimalToBinaryTest():");
+
+        System.out.println("\nd2.decimalToBinary()");
+        System.out.println("Expected: 1010");
+        System.out.print("Returned value: ");
+        System.out.print(d1.decimalToBinary());
+
+        System.out.println("\n\nd4.decimalToBinary(d3)");
+        System.out.println("Expected: 1011110001");
+        System.out.print("Returned value: ");
+        System.out.print(d2.decimalToBinary());
+
+        System.out.println("\n\nd3.decimalToBinary(d4)");
+        System.out.println("Expected: 1011100");
+        System.out.print("Returned value: ");
+        System.out.print(d3.decimalToBinary());
+
+        System.out.print("\n\nEnd decimalToBinaryTest()\n");
+    }
+
+
+
+
+    /*
         System.out.println("Tests for Decimal class");
 
         Decimal d1 = new Decimal();
@@ -83,21 +243,26 @@ public class Main
 
         System.out.println("\nTests for Octal class");
         Octal o1 = new Octal();
-        Octal o2 = new Octal("7.0");
-        Octal o3 = new Octal("2.0");
+        Octal o2 = new Octal("-40.0");
+        Octal o3 = new Octal("-30.0");
         //Octal o2 = new Octal("23.14");
         //Octal o3 = new Octal("6.35");
         Octal o4 = new Octal("1.0");
-        Octal o5 = new Octal("37513.127314");
-        Octal o6 = new Octal("35.57");
-        Octal o7 = new Octal("345.0");
+        Octal o5 = new Octal("-13.62");
+        Octal o6 = new Octal("-10.0");
+        Octal o7 = new Octal("-345.0");
         Octal o8 = new Octal("146.0");
 
+        o1.setOctal("-3.0");
 
-        o1.setOctal("3.0");
+        System.out.println("\nisNegative: ");
+        System.out.println(o1.isNegative());
+        System.out.println(o7.isNegative());
+        System.out.println(o5.isNegative());
+        System.out.println(o8.isNegative());
 
         System.out.println("\naddOctal: ");
-        System.out.println(o2.addOctal(o3));
+        System.out.println(o1.addOctal(o2));
         System.out.println(o4.addOctal(o5));
         System.out.println(o6.addOctal(o7));
 
@@ -125,17 +290,19 @@ public class Main
         System.out.println(o7.subtractOctal(o6));
         System.out.println(o7.subtractOctal(o8));
 
-        //System.out.println("\nmultiplyOctal: ");
-        //System.out.println(o2.multiplyOctal(o3));
-        //System.out.println(o4.subtractOctal(o5));
-        //System.out.println(o7.subtractOctal(o6));
-        //System.out.println(o7.subtractOctal(o8));
+        System.out.println("\nmultiplyOctal: ");
+        System.out.println(o2.multiplyOctal(o3));
+        System.out.println(o4.multiplyOctal(o5));
+        System.out.println(o7.multiplyOctal(o6));
+        System.out.println(o7.multiplyOctal(o8));
 
         Octal o9 = new Octal("524.104");
         Octal o10 = new Octal("23.75");
 
-        System.out.println("\ndivideOctal: ");
-        System.out.println(o9.divideOctal(o10, 3));
+        //System.out.println("\ndivideOctal: ");
+        //System.out.println(o9.divideOctal(o10, 3));
 
     }
+
+     */
 }
