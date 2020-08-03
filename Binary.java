@@ -160,41 +160,22 @@ public class Binary
         sb.reverse();
         Binary multiplier = new Binary(sb.toString());
 
+        if (Double.parseDouble(multiplicand.binaryString) == 0 ||
+                Double.parseDouble(multiplier.binaryString) == 0)
+        {
+            return new Binary("0.0");
+        }
+
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
-        // multiplicand.getPointPosition() = multiplier.getPointPosition()
-        int pointPosition = multiplicand.getPointPosition();
+        int pointPosition = multiplicand.getDigitsBeforePoint();
 
         multiplicand = multiplicand.removePoint();
         multiplier = multiplier.removePoint();
 
         int aLength = multiplicand.binaryString.length();
         int bLength = multiplier.binaryString.length();
-
-        sb.setLength(0);
-
-
-
-        // Add placeholder zeroes to smaller string so both binary strings are
-        // the same size as to avoid out of bounds error
-        if (aLength > bLength)
-        {
-            sb.append(multiplier.binaryString).append("0".repeat(aLength - bLength));
-            multiplier.binaryString = sb.toString();
-
-            bLength = multiplier.binaryString.length();
-        }
-
-        else if (bLength > aLength)
-        {
-            sb.append(multiplicand.binaryString).append("0".repeat(bLength - aLength));
-            multiplicand.binaryString = sb.toString();
-
-            aLength = multiplicand.binaryString.length();
-        }
-
-
 
         // Reset sb
         sb.setLength(0);
@@ -216,10 +197,13 @@ public class Binary
             sb.delete(0, bLength + i);
         }
 
-        answer = answer.removePoint().removeTrailingZeroes().removeLeadingZeroes().insertPoint(pointPosition);
+        //answer = answer.insertPoint(pointPosition);
+        answer = answer.removePoint().insertPoint(pointPosition * 2).removeLeadingZeroes().removeTrailingZeroes();
 
         return answer;
     }
+
+
 
 
 
@@ -461,7 +445,7 @@ public class Binary
 
         sb.append(currentBinary).reverse();
 
-        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        if (sb.toString().charAt(0) == '0' && sb.toString().charAt(2) != '.')
         {
             while (sb.toString().charAt(0) == '0')
             {
