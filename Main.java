@@ -230,22 +230,35 @@ public class Main
 
     public static void multiplyBinaryTest()
     {
-        Binary b1 = new Binary("0.1");
-        Binary b2 = new Binary("101.1");
-        Binary b3 = new Binary("010.01");
+        Binary b1 = new Binary("0");
+        Binary b2 = new Binary("101.0");
+        Binary b3 = new Binary("010.0");
         Binary b4 = new Binary("1100.101");
+        Binary b5 = new Binary("1111.11");
+        Binary b6 = new Binary("10001.1");
+        Binary b7 = new Binary("1101001.110011");
 
         System.out.println("Begin multiplyBinaryTest():");
 
         System.out.println("\nb2.multiplyBinary(b3)");
-        System.out.println("Expected: 1100.011");
+        System.out.println("Expected: 1010.00");
         System.out.print("Returned value: ");
         System.out.print(b2.multiplyBinary(b3));
 
         System.out.println("\n\nb4.multiplyBinary(b2)");
-        System.out.println("Expected: 1000101.0111");
+        System.out.println("Expected: 111111.001");
         System.out.print("Returned value: ");
         System.out.print(b4.multiplyBinary(b2));
+
+        System.out.println("\n\nb2.multiplyBinary(b5)");
+        System.out.println("Expected: 1001110.11");
+        System.out.print("Returned value: ");
+        System.out.print(b2.multiplyBinary(b5));
+
+        System.out.println("\n\nb6.multiplyBinary(b7)");
+        System.out.println("Expected: 11100111011.0111001");
+        System.out.print("Returned value: ");
+        System.out.print(b6.multiplyBinary(b7));
 
         System.out.println("\n\nb1.multiplyBinary(b4)");
         System.out.println("Expected: 0.0");
