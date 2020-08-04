@@ -241,10 +241,13 @@ public class Binary
             dividend = dividend.shiftPointRightByOne();
         }
 
+        // If the dividend has no zero behind the radix point, append one
         if (dividend.getPointPosition() == 0)
         {
             dividend = dividend.appendZero();
         }
+
+
 
         System.out.println("dividend");
         System.out.println(dividend);
@@ -531,6 +534,45 @@ public class Binary
         currentBinary = currentBinary.removePoint().insertPoint(pointPosition - 1);
 
         return currentBinary;
+    }
+
+
+
+    public boolean lessThanBinary(Binary right)
+    {
+        Binary left = new Binary(this.binaryString);
+
+        left = left.removeLeadingZeroes();
+        right = right.removeLeadingZeroes();
+
+        if (left.binaryString.length() < right.binaryString.length())
+        {
+            return true;
+        }
+
+        else if (left.binaryString.length() > right.binaryString.length())
+        {
+            return false;
+        }
+
+        else if (left.binaryString.equals(right.binaryString))
+        {
+            return false;
+        }
+
+        else
+        {
+            for (int i = 0; i < left.binaryString.length(); i++)
+            {
+                if (left.binaryString.charAt(i) == '1' &&
+                        right.binaryString.charAt(i) == '0')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
 
