@@ -24,6 +24,8 @@ public class Main
         multiplyBinaryTest();
         System.out.println("******************************************");
         divideBinaryTest();
+        System.out.println("******************************************");
+        lessThanBinaryTest();
 
 
     }
@@ -351,6 +353,47 @@ public class Main
 
         System.out.print("\n\nEnd divideBinaryTest()\n");
     }
+
+
+
+    public static void lessThanBinaryTest()
+    {
+        Binary b1 = new Binary();
+        Binary b2 = new Binary("11.1");
+        Binary b3 = new Binary("10010.001");
+        Binary b4 = new Binary("10010.001");
+        Binary b5 = new Binary("10010.011");
+
+        System.out.println("Begin lessThanBinaryTest():");
+
+        System.out.println("\nb1.lessThanBinary(b2)");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(b1.lessThanBinary(b2));
+
+        System.out.println("\n\nb3.lessThanBinary(b2)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(b3.lessThanBinary(b2));
+
+        System.out.println("\n\nb3.lessThanBinary(b4)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(b3.lessThanBinary(b4));
+
+        System.out.println("\n\nb4.lessThanBinary(b5)");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(b4.lessThanBinary(b5));
+
+        System.out.println("\n\nb5.lessThanBinary(b4)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(b5.lessThanBinary(b4));
+
+        System.out.print("\n\nEnd lessThanBinaryTest()\n");
+    }
+
 
 
 
