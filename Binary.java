@@ -197,13 +197,60 @@ public class Binary
             sb.delete(0, bLength + i);
         }
 
-        //answer = answer.insertPoint(pointPosition);
         answer = answer.removePoint().insertPoint(pointPosition * 2).removeLeadingZeroes().removeTrailingZeroes();
 
         return answer;
     }
 
 
+
+    public Binary divideBinary(Binary divisor)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Binary quotient = new Binary();
+
+        Binary dividend = new Binary(this.binaryString);
+
+        divisor = divisor.removeTrailingZeroes();
+
+        // Add placeholder zeroes behind radix point of dividend so
+        // both divisor and dividend have same number of digits after point
+        divisor.addPlaceholders(dividend);
+        dividend = dividend.removeLeadingZeroes();
+
+        int divisorPointPosition = divisor.getPointPosition();
+
+        // Shift radix point of the divisor to the right until it is the last char
+        int numShifts = 0;
+        while (divisorPointPosition != 0)
+        {
+            divisor = divisor.shiftPointRightByOne();
+
+            numShifts++;
+
+            divisorPointPosition = divisor.getPointPosition();
+        }
+
+        // Append a zero to the divisor so in Binary form
+        divisor = divisor.appendZero();
+
+        // Shift the radix point of the dividend to the right numShift times
+        for (int i = 0; i < numShifts; i++)
+        {
+            dividend = dividend.shiftPointRightByOne();
+        }
+
+        if (dividend.getPointPosition() == 0)
+        {
+            dividend = dividend.appendZero();
+        }
+
+        System.out.println("dividend");
+        System.out.println(dividend);
+
+        return quotient;
+    }
 
 
 
@@ -454,6 +501,34 @@ public class Binary
         }
 
         currentBinary.binaryString = sb.reverse().toString();
+
+        return currentBinary;
+    }
+
+
+
+    public Binary appendZero()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        sb.append(currentBinary).append('0');
+
+        currentBinary.binaryString = sb.toString();
+
+        return currentBinary;
+    }
+
+
+
+    public Binary shiftPointRightByOne()
+    {
+        Binary currentBinary = new Binary(this.binaryString);
+
+        int pointPosition = currentBinary.getPointPosition();
+
+        currentBinary = currentBinary.removePoint().insertPoint(pointPosition - 1);
 
         return currentBinary;
     }
