@@ -204,7 +204,7 @@ public class Main
         System.out.println("\n\nb4.insertPoint(2)");
         System.out.println("Expected: 10010.11");
         System.out.print("Returned value: ");
-        System.out.print(b4.insertPoint(2));
+        System.out.print(b4.insertPointFromRight(2));
 
         System.out.println("\n\nb2.AddPlaceholders(b4)");
         System.out.println("Expected: 101.101000");
@@ -340,8 +340,10 @@ public class Main
         Binary b2 = new Binary("11.1");
         Binary b3 = new Binary("10010.011");
         Binary b4 = new Binary("1100.01");
-        Binary b5 = new Binary("0.101");
-        Binary b6 = new Binary("1.1");
+        Binary b5 = new Binary("100.00");
+        Binary b6 = new Binary("1.10");
+        Binary b7 = new Binary("0.01");
+        Binary b8 = new Binary("1010.10");
 
         System.out.println("Begin divideBinaryTest():");
 
@@ -357,9 +359,14 @@ public class Main
         System.out.print(b4.divideBinary(b2, 3));
 
         System.out.println("\n\nb5.divideBinary(b6)");
-        System.out.println("Expected: 0.01101");
+        System.out.println("Expected: 10.010101");
         System.out.print("Returned value: ");
-        System.out.print(b5.divideBinary(b6, 5));
+        System.out.print(b5.divideBinary(b6, 6));
+
+        System.out.println("\n\nb7.divideBinary(b8)");
+        System.out.println("Expected: 0.0000011");
+        System.out.print("Returned value: ");
+        System.out.print(b7.divideBinary(b8, 8));
 
         System.out.print("\n\nEnd divideBinaryTest()\n");
     }
