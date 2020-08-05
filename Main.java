@@ -181,6 +181,8 @@ public class Main
         Binary b2 = new Binary("101.101");
         Binary b3 = new Binary("110.010101");
         Binary b4 = new Binary("1001011.0");
+        Binary b5 = new Binary("0.001");
+
 
         System.out.println("Begin binaryPointTest():");
 
@@ -221,6 +223,11 @@ public class Main
         System.out.print("Returned value: ");
         b4.addPlaceholders(b3);
         System.out.print(b3);
+
+        System.out.println("\n\nb5.shiftPointRightByOne()");
+        System.out.println("Expected: 00.01");
+        System.out.print("Returned value: ");
+        System.out.println(b5.shiftPointRightByOne());
 
         System.out.print("\n\nEnd binaryPointTest()\n");
     }
@@ -332,24 +339,27 @@ public class Main
         Binary b1 = new Binary();
         Binary b2 = new Binary("11.1");
         Binary b3 = new Binary("10010.011");
-        Binary b4 = new Binary("1100.101");
+        Binary b4 = new Binary("1100.01");
+        Binary b5 = new Binary("0.101");
+        Binary b6 = new Binary("1.1");
 
         System.out.println("Begin divideBinaryTest():");
 
         System.out.println("\nd2.divideBinary(b3)");
-        System.out.println("Expected: 000101.01");
+        System.out.println("Expected: 101.01");
         System.out.print("Returned value: ");
-        System.out.print(b3.divideBinary(b2));
+        System.out.print(b3.divideBinary(b2, 3));
+
 
         System.out.println("\n\nb4.divideBinary(b2)");
-        System.out.println("Expected: 111.001");
+        System.out.println("Expected: 11.1");
         System.out.print("Returned value: ");
-        //System.out.print(b4.divideBinary(b2));
+        System.out.print(b4.divideBinary(b2, 3));
 
-        System.out.println("\n\nb3.divideBinary(b4)");
-        System.out.println("Expected: 101.011");
+        System.out.println("\n\nb5.divideBinary(b6)");
+        System.out.println("Expected: 0.01101");
         System.out.print("Returned value: ");
-        //System.out.print(b3.divideBinary(b4));
+        System.out.print(b5.divideBinary(b6, 5));
 
         System.out.print("\n\nEnd divideBinaryTest()\n");
     }
@@ -363,8 +373,11 @@ public class Main
         Binary b3 = new Binary("10010.001");
         Binary b4 = new Binary("10010.001");
         Binary b5 = new Binary("10010.011");
+        Binary b6 = new Binary("1001.0");
+        Binary b7 = new Binary("111.0");
 
         System.out.println("Begin lessThanBinaryTest():");
+
 
         System.out.println("\nb1.lessThanBinary(b2)");
         System.out.println("Expected: true");
@@ -390,6 +403,11 @@ public class Main
         System.out.println("Expected: false");
         System.out.print("Returned value: ");
         System.out.print(b5.lessThanBinary(b4));
+
+        System.out.println("\n\nb5.lessThanBinary(b4)");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(b7.lessThanBinary(b6));
 
         System.out.print("\n\nEnd lessThanBinaryTest()\n");
     }
