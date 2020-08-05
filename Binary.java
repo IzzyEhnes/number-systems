@@ -181,12 +181,17 @@ public class Binary {
 
         Binary dividend = new Binary(this.binaryString);
 
-        divisor = divisor.removeTrailingZeroes();
+        if (Double.parseDouble(divisor.binaryString) == 1)
+        {
+            return dividend;
+        }
 
         // Add placeholder zeroes behind radix point of dividend so
         // both divisor and dividend have same number of digits after point
         divisor.addPlaceholders(dividend);
         dividend = dividend.removeLeadingZeroes();
+
+        divisor = divisor.removeTrailingZeroes();
 
         int divisorPointPosition = divisor.getPointPosition();
 
@@ -274,8 +279,29 @@ public class Binary {
 
         int currentIndex = 1;
         while (Double.parseDouble(currentDividend.binaryString) != Double.parseDouble(divisor.binaryString) &&
-                currentIndex < (dividendDigitsBeforePoint + scale + 1))
+                currentIndex < (dividendDigitsBeforePoint + scale))
         {
+            /*
+            System.out.println("\ncurrentDividend");
+            System.out.println(currentDividend);
+            System.out.println("divisor");
+            System.out.println(divisor);
+            System.out.println("dividend");
+            System.out.println(dividend);
+            System.out.println("currentIndex");
+            System.out.println(currentIndex);
+            System.out.println("quotient");
+            System.out.println(quotient);
+
+             */
+
+            dividend = dividend.appendZero();
+
+            if (dividend.binaryString.charAt(currentIndex) == '.')
+            {
+                currentIndex++;
+            }
+
             // "Bring down" the next digit of the dividend to add to currentDividend, placing it to the left of the radix point
             currentDividendDigitsBeforePoint = currentDividend.getDigitsBeforePoint();
             dividendBuilder.append(currentDividend);
@@ -332,7 +358,7 @@ public class Binary {
             currentIndex++;
         }
 
-        quotient = quotient.removeLeadingZeroes().removeTrailingZeroes().removePoint().insertPoint(dividendPointPosition);
+        //quotient = quotient.removeLeadingZeroes().removeTrailingZeroes().removePoint().insertPoint(dividendPointPosition + 1);
 
         return quotient;
     }
@@ -864,7 +890,7 @@ public class Binary {
 
         sb.append(currentBinary).reverse();
 
-        if (sb.toString().charAt(0) == '0' && sb.toString().charAt(2) != '.')
+        if (sb.toString().charAt(0) == '0' && sb.toString().charAt(1) != '.')
         {
             while (sb.toString().charAt(0) == '0')
             {
