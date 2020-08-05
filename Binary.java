@@ -2,47 +2,34 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.lang.Math;
 
-public class Binary
-{
+public class Binary {
     private String binaryString = "0.0";
 
 
-
-    public Binary()
-    {
+    public Binary() {
     }
 
 
-
-    public Binary(String inString)
-    {
+    public Binary(String inString) {
         binaryString = inString;
     }
 
 
-
-    public String getBinary()
-    {
+    public String getBinary() {
         return binaryString;
     }
 
 
-
-    public void setBinaryString(String inString)
-    {
+    public void setBinaryString(String inString) {
         binaryString = inString;
     }
 
 
-
-    public boolean isBinary()
-    {
-        for (int i = 0; i < this.binaryString.length(); i++)
-        {
+    public boolean isBinary() {
+        for (int i = 0; i < this.binaryString.length(); i++) {
             if (this.binaryString.charAt(i) != '0'
                     && this.binaryString.charAt(i) != '1'
-                        && this.binaryString.charAt(i) != '.')
-            {
+                    && this.binaryString.charAt(i) != '.') {
                 return false;
             }
         }
@@ -51,9 +38,7 @@ public class Binary
     }
 
 
-
-    public Binary addBinary(Binary inBinary)
-    {
+    public Binary addBinary(Binary inBinary) {
         Binary answer = new Binary();
         StringBuilder sb = new StringBuilder();
         int carry = 0;
@@ -73,17 +58,14 @@ public class Binary
         int aLength = currentBinary.binaryString.length() - 1;
         int bLength = addend.binaryString.length() - 1;
 
-        while (aLength >= 0 || bLength >= 0)
-        {
+        while (aLength >= 0 || bLength >= 0) {
             int sum = carry;
 
-            if (aLength >= 0)
-            {
+            if (aLength >= 0) {
                 sum += currentBinary.binaryString.charAt(aLength--) - '0';
             }
 
-            if (bLength >= 0)
-            {
+            if (bLength >= 0) {
                 sum += addend.binaryString.charAt(bLength--) - '0';
             }
 
@@ -92,20 +74,15 @@ public class Binary
             carry = sum / 2;
         }
 
-        if (carry != 0)
-        {
+        if (carry != 0) {
             sb.append(carry);
         }
 
         answer.binaryString = sb.reverse().toString();
 
-        if (currentBinaryPointPosition > addendPointPosition)
-        {
+        if (currentBinaryPointPosition > addendPointPosition) {
             answer = answer.insertPoint(currentBinaryPointPosition);
-        }
-
-        else
-        {
+        } else {
             answer = answer.insertPoint(addendPointPosition);
         }
 
@@ -113,9 +90,7 @@ public class Binary
     }
 
 
-
-    public Binary subtractBinary(Binary inBinary)
-    {
+    public Binary subtractBinary(Binary inBinary) {
         Binary answer = new Binary();
 
         StringBuilder sb = new StringBuilder();
@@ -130,20 +105,19 @@ public class Binary
         sb.append(currentBinary.addBinary(inBinary));
 
         // if there was overflow, remove leftmost bit
-        if (sb.length() > answer.binaryString.length())
-        {
+        if (sb.length() > answer.binaryString.length()) {
             sb.deleteCharAt(0);
         }
 
         answer.binaryString = sb.toString();
 
+        answer = answer.removeLeadingZeroes();
+
         return answer;
     }
 
 
-
-    public Binary multiplyBinary(Binary inBinary)
-    {
+    public Binary multiplyBinary(Binary inBinary) {
         Binary answer = new Binary();
         Binary binaryTemp = new Binary();
 
@@ -161,8 +135,7 @@ public class Binary
         Binary multiplier = new Binary(sb.toString());
 
         if (Double.parseDouble(multiplicand.binaryString) == 0 ||
-                Double.parseDouble(multiplier.binaryString) == 0)
-        {
+                Double.parseDouble(multiplier.binaryString) == 0) {
             return new Binary("0.0");
         }
 
@@ -180,13 +153,11 @@ public class Binary
         // Reset sb
         sb.setLength(0);
 
-        for (int i = 0; i < aLength; i++)
-        {
+        for (int i = 0; i < aLength; i++) {
             // Add placeholder zeroes
             sb.append("0".repeat(i));
 
-            for (int j = 0; j < bLength; j++)
-            {
+            for (int j = 0; j < bLength; j++) {
                 sb.append((multiplicand.binaryString.charAt(j) - '0')
                         * (multiplier.binaryString.charAt(i) - '0'));
             }
@@ -204,10 +175,8 @@ public class Binary
 
 
 
-    public Binary divideBinary(Binary divisor)
+    public Binary divideBinary(Binary divisor, int scale)
     {
-        StringBuilder sb = new StringBuilder();
-
         Binary quotient = new Binary();
 
         Binary dividend = new Binary(this.binaryString);
@@ -241,19 +210,419 @@ public class Binary
             dividend = dividend.shiftPointRightByOne();
         }
 
-        // If the dividend has no zero behind the radix point, append one
-        if (dividend.getPointPosition() == 0)
+        // How many digits will be in front of the radix point in the final quotient (including placeholder zeroes)
+        int dividendDigitsBeforePoint = dividend.getDigitsBeforePoint();
+
+        // Where the point will be placed in the final quotient
+        int dividendPointPosition = dividend.getPointPosition();
+
+        dividend = dividend.removePoint().insertPoint(0).appendZero();
+
+        /*
+        System.out.println("dividend");
+        System.out.println(dividend);
+        System.out.println("divisor");
+        System.out.println(divisor);
+        System.out.println("pointPosition");
+        System.out.println(pointPosition);
+         */
+
+
+        StringBuilder quotientBuilder = new StringBuilder();
+        quotient = quotient.removeLeadingZeroes();
+
+        Binary one = new Binary("1.0");
+        Binary zero = new Binary("0.0");
+
+        Binary product = new Binary();
+
+        // Append first digit of dividend to currentDividend
+        Binary currentDividend = new Binary();
+        currentDividend = currentDividend.removeLeadingZeroes();
+        StringBuilder dividendBuilder = new StringBuilder();
+        dividendBuilder.append(currentDividend).insert(0, dividend.binaryString.charAt(0));
+        currentDividend.binaryString = dividendBuilder.toString();
+
+        // Reset dividendBuilder
+        dividendBuilder.setLength(0);
+
+        if (divisor.lessThanBinary(currentDividend))
         {
-            dividend = dividend.appendZero();
+            quotientBuilder.append(quotient).insert(0, '1');
+            quotient.binaryString = quotientBuilder.toString();
+
+            // Reset quotientBuilder
+            quotientBuilder.setLength(0);
+
+            currentDividend = currentDividend.subtractBinary(product);
+            currentDividend = currentDividend.removeLeadingZeroes();
+        }
+
+        else
+        {
+            quotientBuilder.append(quotient).insert(0, '0');
+            quotient.binaryString = quotientBuilder.toString();
+
+            // Reset quotientBuilder
+            quotientBuilder.setLength(0);
+
+            currentDividend = currentDividend.subtractBinary(product);
+            currentDividend = currentDividend.removeLeadingZeroes();
+        }
+
+        int currentDividendDigitsBeforePoint = 0;
+
+        int currentIndex = 1;
+        while (Double.parseDouble(currentDividend.binaryString) != Double.parseDouble(divisor.binaryString) &&
+                currentIndex < (dividendDigitsBeforePoint + scale + 1))
+        {
+            // "Bring down" the next digit of the dividend to add to currentDividend, placing it to the left of the radix point
+            currentDividendDigitsBeforePoint = currentDividend.getDigitsBeforePoint();
+            dividendBuilder.append(currentDividend);
+            dividendBuilder.insert(currentDividendDigitsBeforePoint, dividend.binaryString.charAt(currentIndex));
+            currentDividend.binaryString = dividendBuilder.toString();
+
+            // Reset dividendBuilder
+            dividendBuilder.setLength(0);
+
+            // If the divisor "fits" into currentDividend, but divisor != currentDividend
+            if (divisor.lessThanBinary(currentDividend))
+            {
+                // Place a zero in the correct place in the quotient
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '1').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(one);
+
+                currentDividend = currentDividend.subtractBinary(product);
+            }
+
+            // When divisor == currentDividend, the division has been completed (no remainder)
+            else if (Double.parseDouble(currentDividend.binaryString) == Double.parseDouble(divisor.binaryString))
+            {
+                // Place a one in the correct place in the quotient
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '1').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+            }
+
+            // If the divisor doesn't 'fit' into currendDividend
+            else
+            {
+                // Place a zero in the correct place in the quotient
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '0').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(zero);
+
+                currentDividend = currentDividend.subtractBinary(product);
+            }
+
+            currentIndex++;
+        }
+
+        quotient = quotient.removeLeadingZeroes().removeTrailingZeroes().removePoint().insertPoint(dividendPointPosition);
+
+        return quotient;
+    }
+
+        /*
+        int currentIndex = 1;
+        while (!currentDividend.binaryString.equals(divisor.binaryString) &&
+                currentIndex < (dividendDigitsBeforePoint + scale + 1))
+        {
+            System.out.println("\ncurrentDividend");
+            System.out.println(currentDividend);
+            System.out.println("divisor");
+            System.out.println(divisor);
+            System.out.println("quotient");
+            System.out.println(quotient);
+            System.out.println("currentIndex");
+            System.out.println(currentIndex);
+            System.out.println("dividend.binaryString.charAt(currentIndex))");
+            System.out.println(dividend.binaryString.charAt(currentIndex));
+
+            dividendBuilder.append(currentDividend);
+            dividendBuilder.reverse().insert(2, dividend.binaryString.charAt(currentIndex)).reverse();
+            currentDividend.binaryString = dividendBuilder.toString();
+
+            // Reset dividendBuilder
+            dividendBuilder.setLength(0);
+
+            if (divisor.lessThanBinary(currentDividend))
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '1').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(one);
+
+                currentDividend = currentDividend.subtractBinary(product);
+            }
+
+            else
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '0').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(zero);
+
+                currentDividend = currentDividend.subtractBinary(product);
+            }
+
+            currentIndex++;
+        }
+
+        return quotient;
+    }
+    */
+
+
+
+        /*
+        int currentIndex = 1;
+        while (!currentDividend.binaryString.equals(divisor.binaryString) &&
+                currentIndex < (dividendDigitsBeforePoint + scale + 1))
+        {
+            dividendBuilder.append(currentDividend);
+            dividendBuilder.reverse().insert(2, dividend.binaryString.charAt(currentIndex)).reverse();
+            currentDividend.binaryString = dividendBuilder.toString();
+
+            System.out.println("\ncurrentDividend");
+            System.out.println(currentDividend);
+            System.out.println("divisor");
+            System.out.println(divisor);
+            System.out.println("quotient");
+            System.out.println(quotient);
+            System.out.println("currentIndex");
+            System.out.println(currentIndex);
+
+            // Reset dividendBuilder
+            dividendBuilder.setLength(0);
+
+            if (divisor.lessThanBinary(currentDividend))
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '1').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(one);
+
+                currentDividend = currentDividend.subtractBinary(product);
+                currentDividend = currentDividend.removeLeadingZeroes();
+            }
+
+            else
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.reverse().insert(2, '0').reverse();
+                quotient.binaryString = quotientBuilder.toString();
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                product = divisor.multiplyBinary(zero);
+
+                currentDividend = currentDividend.subtractBinary(product);
+                currentDividend = currentDividend.removeLeadingZeroes();
+            }
+
+            currentIndex++;
         }
 
 
 
-        System.out.println("dividend");
-        System.out.println(dividend);
+        return quotient;
+    }
+
+
+    /*
+    public Binary divideBinary(Binary divisor, int scale) {
+        StringBuilder sb = new StringBuilder();
+
+        Binary quotient = new Binary();
+
+        Binary dividend = new Binary(this.binaryString);
+
+        if (dividend.binaryString.equals(divisor.binaryString)) {
+            quotient.binaryString = "1.0";
+
+            return quotient;
+        } else if (Double.parseDouble(divisor.binaryString) == 1) {
+            return dividend;
+        }
+
+        divisor = divisor.removeTrailingZeroes();
+
+        // Add placeholder zeroes behind radix point of dividend so
+        // both divisor and dividend have same number of digits after point
+        divisor.addPlaceholders(dividend);
+        dividend = dividend.removeLeadingZeroes();
+
+        int divisorPointPosition = divisor.getPointPosition();
+
+        // Shift radix point of the divisor to the right until it is the last char
+        int numShifts = 0;
+        while (divisorPointPosition != 0) {
+            divisor = divisor.shiftPointRightByOne();
+
+            numShifts++;
+
+            divisorPointPosition = divisor.getPointPosition();
+        }
+
+        // Append a zero to the divisor so in Binary form
+        divisor = divisor.appendZero();
+
+        // Shift the radix point of the dividend to the right numShift times
+        for (int i = 0; i < numShifts; i++) {
+            dividend = dividend.shiftPointRightByOne();
+        }
+
+        // If the dividend has no zero behind the radix point, append one
+        if (dividend.getPointPosition() == 0) {
+            dividend = dividend.appendZero();
+        }
+
+        Binary remainder = new Binary();
+        StringBuilder quotientBuilder = new StringBuilder();
+        StringBuilder dividendBuilder = new StringBuilder();
+        Binary currentDividend = new Binary();
+        Binary multiplier = new Binary();
+        Binary product = new Binary();
+
+        currentDividend = currentDividend.removeLeadingZeroes();
+        quotient = quotient.removeLeadingZeroes();
+
+        dividendBuilder.append(currentDividend);
+        dividendBuilder.insert(0, dividend.binaryString.charAt(0));
+        currentDividend.binaryString = dividendBuilder.toString();
+
+        System.out.println("currentDividend");
+        System.out.println(currentDividend);
+
+        System.out.println("divisor");
+        System.out.println(divisor);
+
+        int digitsBeforePoint = dividend.getDigitsBeforePoint();
+        if (divisor.lessThanBinary(currentDividend))
+        {
+            quotientBuilder.append(quotient);
+            quotientBuilder.insert(0, '1');
+
+            // Reset quotientBuilder
+            quotientBuilder.setLength(0);
+
+            multiplier.binaryString = "1.0";
+
+            product = currentDividend.multiplyBinary(multiplier);
+
+            remainder = currentDividend.subtractBinary(product);
+        }
+
+        else
+        {
+            quotientBuilder.append(quotient);
+            quotientBuilder.insert(0, '0');
+            quotientBuilder.setLength(0);
+
+            multiplier.binaryString = "0.0";
+
+            product = currentDividend.multiplyBinary(multiplier);
+
+            System.out.println("PRODUCT");
+            System.out.println(product);
+
+            System.out.println("CURRENT DIVIDEND");
+            System.out.println(currentDividend);
+
+            remainder = currentDividend.subtractBinary(product);
+        }
+
+        int currentIndex = 1;
+        while (Double.parseDouble(remainder.binaryString) != 0 &&
+              currentIndex < (digitsBeforePoint + scale))
+        {
+            dividendBuilder.append(dividend).insert(currentIndex, dividend.binaryString.charAt(currentIndex));
+            currentDividend.binaryString = dividendBuilder.toString();
+            dividendBuilder.setLength(0);
+
+            if (divisor.lessThanBinary(currentDividend))
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.insert(currentIndex, '1');
+
+                // Reset quotientBuilder
+                quotientBuilder.setLength(0);
+
+                multiplier.binaryString = "1.0";
+
+                product = currentDividend.multiplyBinary(multiplier);
+
+                remainder = currentDividend.subtractBinary(product);
+            }
+
+            else
+            {
+                quotientBuilder.append(quotient);
+                quotientBuilder.insert(currentIndex, '0');
+                quotientBuilder.setLength(0);
+
+                multiplier.binaryString = "0.0";
+
+                product = currentDividend.multiplyBinary(multiplier);
+
+                System.out.println("PRODUCT");
+                System.out.println(product);
+
+                System.out.println("CURRENT DIVIDEND");
+                System.out.println(currentDividend);
+
+                remainder = currentDividend.subtractBinary(product);
+            }
+
+            currentIndex++;
+        }
+
+
+        System.out.println("remainder");
+        System.out.println(remainder);
+
+
+
+        int digitsAfterPoint = 0;
+        while (Double.parseDouble(remainder.binaryString) != 0 &&
+                digitsAfterPoint < scale)
+        {
+
+        }
+
 
         return quotient;
     }
+*/
+
 
 
 
@@ -545,17 +914,10 @@ public class Binary
         left = left.removeLeadingZeroes();
         right = right.removeLeadingZeroes();
 
-        if (left.binaryString.length() < right.binaryString.length())
-        {
-            return true;
-        }
+        left.addPlaceholders(right);
+        right.addPlaceholders(left);
 
-        else if (left.binaryString.length() > right.binaryString.length())
-        {
-            return false;
-        }
-
-        else if (left.binaryString.equals(right.binaryString))
+        if (left.binaryString.equals(right.binaryString))
         {
             return false;
         }
@@ -564,10 +926,14 @@ public class Binary
         {
             for (int i = 0; i < left.binaryString.length(); i++)
             {
-                if (left.binaryString.charAt(i) == '1' &&
-                        right.binaryString.charAt(i) == '0')
+                if (left.binaryString.charAt(i) == '1' && right.binaryString.charAt(i) == '0')
                 {
                     return false;
+                }
+
+                else if (right.binaryString.charAt(i) == '1' && left.binaryString.charAt(i) == '0')
+                {
+                    return true;
                 }
             }
 
