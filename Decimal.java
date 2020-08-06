@@ -128,11 +128,43 @@ public class Decimal
 
 
 
-    public Binary decimalToBinary()
+    public Binary decimalToBinary(int scale)
     {
         StringBuilder sb = new StringBuilder();
 
-        int integerValue = this.decimal.intValue();
+        sb.append(this);
+
+        String inString = sb.toString();
+
+        sb.setLength(0);
+
+        StringBuilder integerBuilder = new StringBuilder();
+        StringBuilder decimalBuilder = new StringBuilder();
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < inString.length(); i++)
+        {
+            if (inString.charAt(i) == '.')
+            {
+                decimalFlag = true;
+                continue;
+            }
+
+            if (!decimalFlag)
+            {
+                integerBuilder.append(inString.charAt(i));
+            }
+
+            else
+            {
+                decimalBuilder.append(inString.charAt(i));
+            }
+        }
+
+        String integerString = integerBuilder.toString();
+        String decimalString = decimalBuilder.toString();
+
+        int integerValue = Integer.parseInt(integerString);
 
         // Find the maximum power of two that "fits" into the given integer
         int n = 1;
@@ -157,6 +189,50 @@ public class Decimal
             }
 
             n--;
+        }
+
+        // If the Decimal is a whole number
+        if (Double.parseDouble(decimalString) == 0)
+        {
+            sb.append(".0");
+        }
+
+        // If the Decimal has digits after the radix point
+        else
+        {
+            // Convert decimal fraction part to binary
+            String answer = sb.append('.').toString();
+
+            sb.setLength(0);
+
+            sb.append("0.").append(decimalString);
+
+            decimalString = sb.toString();
+
+            sb.setLength(0);
+
+            double temp = Double.parseDouble(decimalString);
+
+            int count = 0;
+            while (temp != 0 && count < scale)
+            {
+                temp *= 2;
+
+                sb.append(String.valueOf(temp).charAt(0));
+
+                if (temp >= 1)
+                {
+                    temp -= 1;
+                }
+
+                count++;
+            }
+
+            decimalString = sb.toString();
+
+            sb.setLength(0);
+
+            sb.append(answer).append(decimalString);
         }
 
         return new Binary(sb.toString());
