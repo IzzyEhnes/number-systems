@@ -149,26 +149,26 @@ public class Main
 
     public static void decimalToBinaryTest()
     {
-        Decimal d1 = new Decimal(10.0);
+        Decimal d1 = new Decimal(10.375);
         Decimal d2 = new Decimal(753.0);
-        Decimal d3 = new Decimal(92.00);
+        Decimal d3 = new Decimal(92.55);
 
         System.out.println("Begin decimalToBinaryTest():");
 
         System.out.println("\nd2.decimalToBinary()");
-        System.out.println("Expected: 1010");
+        System.out.println("Expected: 1010.011");
         System.out.print("Returned value: ");
-        System.out.print(d1.decimalToBinary());
+        System.out.print(d1.decimalToBinary(5));
 
-        System.out.println("\n\nd4.decimalToBinary(d3)");
-        System.out.println("Expected: 1011110001");
+        System.out.println("\n\nd2.decimalToBinary()");
+        System.out.println("Expected: 1011110001.0");
         System.out.print("Returned value: ");
-        System.out.print(d2.decimalToBinary());
+        System.out.print(d2.decimalToBinary(5));
 
         System.out.println("\n\nd3.decimalToBinary(d4)");
-        System.out.println("Expected: 1011100");
+        System.out.println("Expected: 1011100.10001100110011001101");
         System.out.print("Returned value: ");
-        System.out.print(d3.decimalToBinary());
+        System.out.print(d3.decimalToBinary(20));
 
         System.out.print("\n\nEnd decimalToBinaryTest()\n");
     }
@@ -384,7 +384,6 @@ public class Main
         Binary b7 = new Binary("111.0");
 
         System.out.println("Begin lessThanBinaryTest():");
-
 
         System.out.println("\nb1.lessThanBinary(b2)");
         System.out.println("Expected: true");
