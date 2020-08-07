@@ -26,7 +26,8 @@ public class Main
         divideBinaryTest();
         System.out.println("******************************************");
         lessThanBinaryTest();
-
+        System.out.println("******************************************");
+        binaryToDecimalTest();
 
     }
 
@@ -414,6 +415,40 @@ public class Main
         System.out.println("Expected: true");
         System.out.print("Returned value: ");
         System.out.print(b7.lessThanBinary(b6));
+
+        System.out.print("\n\nEnd lessThanBinaryTest()\n");
+    }
+
+
+
+    public static void binaryToDecimalTest()
+    {
+        Binary b1 = new Binary();
+        Binary b2 = new Binary("10110.11");
+        Binary b3 = new Binary("1101001011.1011");
+        Binary b4 = new Binary("101.0");
+
+        System.out.println("Begin binaryToDecimalTest():");
+
+        System.out.println("\nb1.binaryToDecimal()");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(b1.binaryToDecimal());
+
+        System.out.println("\n\nb2.binaryToDecimal()");
+        System.out.println("Expected: 22.75");
+        System.out.print("Returned value: ");
+        System.out.print(b2.binaryToDecimal());
+
+        System.out.println("\n\nb3.binaryToDecimal()");
+        System.out.println("Expected: 843.6875");
+        System.out.print("Returned value: ");
+        System.out.print(b3.binaryToDecimal());
+
+        System.out.println("\n\nb4.binaryToDecimal()");
+        System.out.println("Expected: 5.0");
+        System.out.print("Returned value: ");
+        System.out.print(b4.binaryToDecimal());
 
         System.out.print("\n\nEnd lessThanBinaryTest()\n");
     }
