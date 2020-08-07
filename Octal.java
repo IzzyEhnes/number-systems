@@ -601,6 +601,66 @@ public class Octal
 
 
 
+    public Binary octalToBinary()
+    {
+        String inOctal = this.octal;
+
+        StringBuilder binaryStringBuilder = new StringBuilder();
+
+        for (int i = 0; i < inOctal.length(); i++)
+        {
+            if (inOctal.charAt(i) == '.')
+            {
+                binaryStringBuilder.append('.');
+                continue;
+            }
+
+            int currentDigit = (inOctal.charAt(i) - '0');
+
+            if (currentDigit % 4 < currentDigit)
+            {
+                binaryStringBuilder.append(1);
+
+                currentDigit -= 4;
+            }
+
+            else
+            {
+                binaryStringBuilder.append(0);
+            }
+
+
+
+            if (currentDigit % 2 < currentDigit)
+            {
+                binaryStringBuilder.append(1);
+
+                currentDigit -= 2;
+            }
+
+            else
+            {
+                binaryStringBuilder.append(0);
+            }
+
+
+
+            if (currentDigit == 1)
+            {
+                binaryStringBuilder.append(1);
+            }
+
+            else
+            {
+                binaryStringBuilder.append(0);
+            }
+        }
+
+        return new Binary(binaryStringBuilder.toString());
+    }
+
+
+
     public Octal sevensComplement()
     {
         int decimalPosition = this.getPointPosition();
