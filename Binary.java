@@ -413,21 +413,74 @@ public class Binary
     public Decimal binaryToDecimal()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.binaryString);
 
-        double sum = 0;
+        sb.append(this);
 
-        String reversedBinaryString = sb.reverse().toString();
+        String inString = sb.toString();
 
-        for (int i = 0; i < reversedBinaryString.length(); i++)
+        sb.setLength(0);
+
+        StringBuilder integerBuilder = new StringBuilder();
+        StringBuilder decimalBuilder = new StringBuilder();
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < inString.length(); i++)
         {
-            if (reversedBinaryString.charAt(i) == '1')
+            if (inString.charAt(i) == '.')
             {
-                sum += Math.pow(2, i);
+                decimalFlag = true;
+                decimalBuilder.append("0.");
+                continue;
+            }
+
+            if (!decimalFlag)
+            {
+                integerBuilder.append(inString.charAt(i));
+            }
+
+            else
+            {
+                decimalBuilder.append(inString.charAt(i));
             }
         }
 
-        return new Decimal(sum);
+        String integerString = integerBuilder.toString();
+        String fractionString = decimalBuilder.toString();
+
+        double integerSum = 0;
+        String reversedIntegerString = integerBuilder.reverse().toString();
+        for (int i = 0; i < reversedIntegerString.length(); i++)
+        {
+            if (reversedIntegerString.charAt(i) == '1')
+            {
+                integerSum += Math.pow(2, i);
+            }
+        }
+
+        // If the Binary is a whole number
+        if (Double.parseDouble(fractionString) == 0)
+        {
+            return new Decimal(integerSum);
+        }
+
+        // If the Binary has digits after the radix point
+        else
+        {
+            sb.append(fractionString).delete(0, 2).append(".0").reverse();
+
+            fractionString = sb.toString();
+
+            double fractionSum = 0;
+            double temp = 0;
+            for (int i = 2; i < fractionString.length(); i++)
+            {
+                fractionSum = 0.5 * (fractionSum + (fractionString.charAt(i) - '0'));
+            }
+
+            integerSum += fractionSum;
+        }
+
+        return new Decimal(integerSum);
     }
 
 
