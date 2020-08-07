@@ -34,6 +34,8 @@ public class Main
         binaryToOctalTest();
         System.out.println("******************************************");
         octalToDecimalTest();
+        System.out.println("******************************************");
+        octalToBinaryTest();
 
     }
 
@@ -548,6 +550,40 @@ public class Main
         System.out.print(b4.octalToDecimal());
 
         System.out.print("\n\nEnd octalToDecimalTest()\n");
+    }
+
+
+
+    public static void octalToBinaryTest()
+    {
+        Octal b1 = new Octal();
+        Octal b2 = new Octal("305.4");
+        Octal b3 = new Octal("12.1");
+        Octal b4 = new Octal("61317.42631");
+
+        System.out.println("Begin octalToBinaryTest():");
+
+        System.out.println("\nd2.octalToBinary()");
+        System.out.println("Expected: 000.000");
+        System.out.print("Returned value: ");
+        System.out.print(b1.octalToBinary());
+
+        System.out.println("\n\nd2.octalToBinary()");
+        System.out.println("Expected: 011000101.100");
+        System.out.print("Returned value: ");
+        System.out.print(b2.octalToBinary());
+
+        System.out.println("\n\nd4.octalToBinary()");
+        System.out.println("Expected: 001010.001");
+        System.out.print("Returned value: ");
+        System.out.print(b3.octalToBinary());
+
+        System.out.println("\n\nb1.octalToBinary()");
+        System.out.println("Expected: 110001011001111.100010110011001");
+        System.out.print("Returned value: ");
+        System.out.print(b4.octalToBinary());
+
+        System.out.print("\n\nEnd octalToBinaryTest()\n");
     }
 
 
