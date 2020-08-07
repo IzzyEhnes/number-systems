@@ -485,6 +485,107 @@ public class Binary
 
 
 
+    public Octal binaryToOctal()
+    {
+        String inString = this.binaryString;
+
+        StringBuilder wholeBuilder = new StringBuilder();
+        StringBuilder fractionalBuilder = new StringBuilder();
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < inString.length(); i++)
+        {
+            if (inString.charAt(i) == '.')
+            {
+                decimalFlag = true;
+                continue;
+            }
+
+            if (!decimalFlag)
+            {
+                wholeBuilder.append(inString.charAt(i));
+            }
+
+            else
+            {
+                fractionalBuilder.append(inString.charAt(i));
+            }
+        }
+
+        String wholeNum = wholeBuilder.toString();
+        String fractional = fractionalBuilder.toString();
+
+        while (wholeNum.length() % 3 != 0)
+        {
+            wholeBuilder.insert(0,'0');
+
+            wholeNum = wholeBuilder.toString();
+        }
+
+        int radixPosition = wholeNum.length() / 3;
+
+        while (fractional.length() % 3 != 0)
+        {
+            fractionalBuilder.insert(fractional.length(),'0');
+
+            fractional = fractionalBuilder.toString();
+        }
+
+        StringBuilder binaryStringBuilder = new StringBuilder();
+
+        binaryStringBuilder.append(wholeNum).append(fractional);
+        String binaryString = binaryStringBuilder.toString();
+
+        StringBuilder answerBuilder = new StringBuilder();
+
+        int groupSum = 0;
+        int bitCount = 0;
+        for (int i = 0; i < binaryString.length(); i++)
+        {
+            if (bitCount == 0)
+            {
+                if (binaryStringBuilder.toString().charAt(0) == '1')
+                {
+                    groupSum += 4;
+                }
+            }
+
+            if (bitCount == 1)
+            {
+                if (binaryStringBuilder.toString().charAt(1) == '1')
+                {
+                    groupSum += 2;
+                }
+            }
+
+            if (bitCount == 2)
+            {
+                if (binaryStringBuilder.toString().charAt(2) == '1')
+                {
+                    groupSum += 1;
+                }
+            }
+
+            bitCount++;
+
+            if (bitCount == 3)
+            {
+                answerBuilder.append(groupSum);
+
+                binaryStringBuilder.delete(0, 3);
+
+                groupSum = 0;
+                bitCount = 0;
+            }
+        }
+
+        answerBuilder.insert(radixPosition, '.');
+
+        return new Octal(answerBuilder.toString());
+    }
+
+
+
     public int getPointPosition()
     {
         StringBuilder sb = new StringBuilder();
