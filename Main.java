@@ -30,6 +30,8 @@ public class Main
         binaryToDecimalTest();
         System.out.println("******************************************");
         decimalToOctalTest();
+        System.out.println("******************************************");
+        binaryToOctalTest();
 
     }
 
@@ -481,6 +483,35 @@ public class Main
         System.out.print(d3.decimalToOctal(3));
 
         System.out.print("\n\nEnd decimalToOctalTest()\n");
+    }
+
+
+
+    public static void binaryToOctalTest()
+    {
+        Binary b1 = new Binary();
+        Binary b2 = new Binary("10011011.00");
+        Binary b3 = new Binary("101001101110.001011");
+        Binary b4 = new Binary("11.1");
+
+        System.out.println("Begin binaryToOctalTest():");
+
+        System.out.println("\nd2.binaryToOctal()");
+        System.out.println("Expected: 233.0");
+        System.out.print("Returned value: ");
+        System.out.print(b2.binaryToOctal());
+
+        System.out.println("\n\nd4.binaryToOctal()");
+        System.out.println("Expected: 5156.13");
+        System.out.print("Returned value: ");
+        System.out.print(b3.binaryToOctal());
+
+        System.out.println("\n\nb1.binaryToOctal()");
+        System.out.println("Expected: 3.4");
+        System.out.print("Returned value: ");
+        System.out.print(b4.binaryToOctal());
+
+        System.out.print("\n\nEnd binaryToOctalTest()\n");
     }
 
 
