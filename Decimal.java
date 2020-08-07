@@ -240,6 +240,118 @@ public class Decimal
 
 
 
+    public Octal decimalToOctal(int scale)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        String inString = String.valueOf(this.decimal);
+
+        StringBuilder integerBuilder = new StringBuilder();
+        StringBuilder fractionBuilder = new StringBuilder();
+
+        boolean negativeFlag = false;
+        if (inString.charAt(0) == '-')
+        {
+            negativeFlag = true;
+
+            sb.append(inString).deleteCharAt(0);
+
+            inString = sb.toString();
+
+            sb.setLength(0);
+        }
+
+        boolean radixFlag = false;
+        for (int i = 0; i < inString.length(); i++)
+        {
+            if (inString.charAt(i) == '.')
+            {
+                radixFlag = true;
+                fractionBuilder.append("0.");
+                continue;
+            }
+
+            if (!radixFlag)
+            {
+                integerBuilder.append(inString.charAt(i));
+            }
+
+            else
+            {
+                fractionBuilder.append(inString.charAt(i));
+            }
+        }
+
+        String integerString = integerBuilder.toString();
+        String fractionString = fractionBuilder.toString();
+
+        int integerValue = Integer.parseInt(integerString);
+        double fractionValue = Double.parseDouble(fractionString);
+
+        StringBuilder answerBuilder = new StringBuilder();
+
+        // Convert the number in front of the radix point into Octal
+        int multiple = integerValue / 8;
+        int remainder = integerValue % 8;
+        answerBuilder.append(remainder);
+
+        while (multiple != 0)
+        {
+            remainder = multiple % 8;
+
+            multiple /= 8;
+
+            answerBuilder.append(remainder);
+        }
+
+        String answer = answerBuilder.reverse().toString();
+
+        // If the Decimal is a whole number
+        if (Double.parseDouble(fractionString) == 0)
+        {
+            answerBuilder.append(".0");
+
+            answer = answerBuilder.toString();
+        }
+
+        // If the Decimal has digits after the radix point
+        else
+        {
+            answerBuilder.append('.');
+
+            double temp = Double.parseDouble(fractionString);
+
+            int count = 0;
+            while (temp != 0 && count < scale)
+            {
+                temp *= 8;
+
+                answerBuilder.append(String.valueOf(temp).charAt(0));
+
+                if (temp >= 1)
+                {
+                    temp -= String.valueOf(temp).charAt(0) - '0';
+                }
+
+                count++;
+            }
+
+            answer = answerBuilder.toString();
+        }
+
+        if (negativeFlag)
+        {
+            answerBuilder.insert(0, '-');
+
+            answer = answerBuilder.toString();
+        }
+
+        return new Octal(answer);
+    }
+
+
+
+
     @Override
     public String toString()
     {
