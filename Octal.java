@@ -576,6 +576,31 @@ public class Octal
 
 
 
+    public Decimal octalToDecimal()
+    {
+        String inOctal = this.octal;
+
+        double sum = 0;
+
+        int n = this.getDigitsBeforePoint() - 1;
+
+        for (int i = 0; i < inOctal.length(); i++)
+        {
+            if (inOctal.charAt(i) == '.')
+            {
+                continue;
+            }
+
+            sum += (inOctal.charAt(i) - '0') * Math.pow(8, n);
+
+            n--;
+        }
+
+        return new Decimal(sum);
+    }
+
+
+
     public Octal sevensComplement()
     {
         int decimalPosition = this.getPointPosition();
