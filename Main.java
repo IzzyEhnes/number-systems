@@ -28,6 +28,8 @@ public class Main
         lessThanBinaryTest();
         System.out.println("******************************************");
         binaryToDecimalTest();
+        System.out.println("******************************************");
+        decimalToOctalTest();
 
     }
 
@@ -455,7 +457,31 @@ public class Main
 
 
 
+    public static void decimalToOctalTest()
+    {
+        Decimal d1 = new Decimal();
+        Decimal d2 = new Decimal(670.1640625);
+        Decimal d3 = new Decimal(-23.0);
 
+        System.out.println("Begin decimalToOctalTest():");
+
+        System.out.println("\nd1.decimalToOctal(d2)");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(d1.decimalToOctal(3));
+
+        System.out.println("\n\nd2.decimalToOctal()");
+        System.out.println("Expected: 1236.124");
+        System.out.print("Returned value: ");
+        System.out.print(d2.decimalToOctal(3));
+
+        System.out.println("\n\nd3.decimalToOctal()");
+        System.out.println("Expected: -27.0");
+        System.out.print("Returned value: ");
+        System.out.print(d3.decimalToOctal(3));
+
+        System.out.print("\n\nEnd decimalToOctalTest()\n");
+    }
 
 
     /*
