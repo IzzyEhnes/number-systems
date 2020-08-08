@@ -524,7 +524,7 @@ public class Main
     {
         Octal b1 = new Octal();
         Octal b2 = new Octal("345.67");
-        Octal b3 = new Octal("12.1");
+        Octal b3 = new Octal("-12.1");
         Octal b4 = new Octal("61317.42631");
 
         System.out.println("Begin octalToDecimalTest():");
@@ -540,7 +540,7 @@ public class Main
         System.out.print(b2.octalToDecimal());
 
         System.out.println("\n\nd4.octalToDecimal()");
-        System.out.println("Expected: 10.125");
+        System.out.println("Expected: -10.125");
         System.out.print("Returned value: ");
         System.out.print(b3.octalToDecimal());
 
