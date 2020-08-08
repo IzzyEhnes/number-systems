@@ -43,6 +43,8 @@ public class Main
         System.out.println("******************************************");
         addHexadecimalTest();
         System.out.println("******************************************");
+        lessThanHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -715,6 +717,43 @@ public class Main
         System.out.print(h1.addHexadecimal(h3));
 
         System.out.print("\n\nEnd isHexadecimalTest()\n");
+    }
+
+
+
+    public static void lessThanHexadecimalTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("4AD.9C2");
+        Hexadecimal h3 = new Hexadecimal("4AD.9C2");
+        Hexadecimal h4 = new Hexadecimal("B.E");
+        Hexadecimal h5 = new Hexadecimal("A.F");
+        Hexadecimal h6 = new Hexadecimal("4AD.9C1");
+
+        System.out.println("Begin lessThanHexadecimal():");
+
+        System.out.println("\nh1.lessThanHexadecimal(h2)");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(h1.lessThanHexadecimal(h2));
+
+
+        System.out.println("\n\nh2.lessThanHexadecimal(h3)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(h2.lessThanHexadecimal(h3));
+
+        System.out.println("\n\nh5.lessThanHexadecimal(h4)");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(h5.lessThanHexadecimal(h4));
+
+        System.out.println("\n\nh3.lessThanHexadecimal(h6)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(h3.lessThanHexadecimal(h6));
+
+        System.out.print("\n\nEnd lessThanHexadecimalTest()\n");
     }
 
 
