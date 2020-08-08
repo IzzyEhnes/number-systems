@@ -578,11 +578,24 @@ public class Octal
 
     public Decimal octalToDecimal()
     {
-        String inOctal = this.octal;
-
-        double sum = 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append(this);
 
         int n = this.getDigitsBeforePoint() - 1;
+
+        boolean isNegative = false;
+        if (sb.charAt(0) == '-')
+        {
+            isNegative = true;
+
+            n--;
+
+            sb.deleteCharAt(0);
+        }
+
+        String inOctal = sb.toString();
+
+        double sum = 0;
 
         for (int i = 0; i < inOctal.length(); i++)
         {
@@ -594,6 +607,11 @@ public class Octal
             sum += (inOctal.charAt(i) - '0') * Math.pow(8, n);
 
             n--;
+        }
+
+        if (isNegative)
+        {
+            sum *= -1;
         }
 
         return new Decimal(sum);
