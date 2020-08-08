@@ -11,6 +11,16 @@ public class Hexadecimal
 
     public Hexadecimal()
     {
+        hexMap.put('0', 0);
+        hexMap.put('1', 1);
+        hexMap.put('2', 2);
+        hexMap.put('3', 3);
+        hexMap.put('4', 4);
+        hexMap.put('5', 5);
+        hexMap.put('6', 6);
+        hexMap.put('7', 7);
+        hexMap.put('8', 8);
+        hexMap.put('9', 9);
         hexMap.put('A', 10);
         hexMap.put('B', 11);
         hexMap.put('C', 12);
@@ -25,6 +35,16 @@ public class Hexadecimal
     {
         this.hexString = inString;
 
+        hexMap.put('0', 0);
+        hexMap.put('1', 1);
+        hexMap.put('2', 2);
+        hexMap.put('3', 3);
+        hexMap.put('4', 4);
+        hexMap.put('5', 5);
+        hexMap.put('6', 6);
+        hexMap.put('7', 7);
+        hexMap.put('8', 8);
+        hexMap.put('9', 9);
         hexMap.put('A', 10);
         hexMap.put('B', 11);
         hexMap.put('C', 12);
@@ -68,10 +88,78 @@ public class Hexadecimal
 
     public Hexadecimal addHexadecimal(Hexadecimal inHex)
     {
+        Hexadecimal sum = new Hexadecimal();
+
         Hexadecimal currentHex = new Hexadecimal(this.hexString);
         Hexadecimal addend = new Hexadecimal(inHex.hexString);
 
-        return new Hexadecimal();
+        currentHex.addPlaceholders(addend);
+        addend.addPlaceholders(currentHex);
+
+        // After addPlaceholders calls, radix point position is the same for
+        // both currentHex and addend
+        int radixPosition = currentHex.getPointPosition();
+
+        currentHex = currentHex.removePoint();
+        addend = addend.removePoint();
+
+        // After addPlaceholders calls, hexString length is the same for
+        // both currentHex and addend
+        int length = currentHex.hexString.length();
+
+
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentHex).reverse();
+
+        String a = sb.toString();
+
+        sb.setLength(0);
+
+        sb.append(addend).reverse();
+
+        String b = sb.toString();
+
+        sb.setLength(0);
+
+
+
+        StringBuilder sumBuilder = new StringBuilder();
+
+        int tempSum = 0;
+        int carry = 0;
+        for (int i = 0; i < length; i++)
+        {
+            tempSum = hexMap.get(a.charAt(i)) + hexMap.get(b.charAt(i));
+
+            if (carry == 1)
+            {
+                tempSum++;
+                carry = 0;
+            }
+
+            if (tempSum > 15)
+            {
+                carry = 1;
+
+                tempSum -= 16;
+
+            }
+
+            sumBuilder.append(getKeyFromValue(hexMap, tempSum));
+        }
+
+        if (carry != 0)
+        {
+            sumBuilder.append(carry);
+        }
+
+        sum.hexString = sumBuilder.reverse().toString();
+
+        sum = sum.insertPointFromRight(radixPosition);
+
+        return sum;
     }
 
 
@@ -187,6 +275,38 @@ public class Hexadecimal
         currentHex.hexString = sb.toString();
 
         return currentHex;
+    }
+
+
+
+    public Hexadecimal insertPointFromRight(int pointPosition)
+    {
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentHex);
+
+        // Insert point at pointPosition
+        sb.reverse().insert(pointPosition, '.').reverse();
+
+        currentHex.hexString = sb.toString();
+
+        return currentHex;
+    }
+
+
+
+    public Object getKeyFromValue(HashMap inMap, Integer inValue)
+    {
+        for (Object i : inMap.keySet())
+        {
+            if (inMap.get(i).equals(inValue))
+            {
+                return i;
+            }
+        }
+        return null;
     }
 
 
