@@ -297,6 +297,45 @@ public class Hexadecimal
 
 
 
+    public boolean lessThanHexadecimal(Hexadecimal inHex)
+    {
+        Hexadecimal left = new Hexadecimal(this.hexString);
+        Hexadecimal right = new Hexadecimal(inHex.hexString);
+
+        left.addPlaceholders(right);
+        right.addPlaceholders(left);
+
+        if (left.hexString.equals(right.hexString))
+        {
+            return false;
+        }
+
+        else
+        {
+            for (int i = 0; i < left.hexString.length(); i++)
+            {
+                if (left.hexString.charAt(i) == '.')
+                {
+                    continue;
+                }
+
+                if (hexMap.get(left.hexString.charAt(i)) > hexMap.get(right.hexString.charAt(i)))
+                {
+                    return false;
+                }
+
+                else if (right.hexString.charAt(i) > left.hexString.charAt(i))
+                {
+                    return true;
+                }
+            }
+
+            return true;
+        }
+    }
+
+
+
     public Object getKeyFromValue(HashMap inMap, Integer inValue)
     {
         for (Object i : inMap.keySet())
