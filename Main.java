@@ -38,6 +38,9 @@ public class Main
         octalToBinaryTest();
         System.out.println("******************************************");
         isHexadecimalTest();
+        System.out.println("******************************************");
+        hexadecimalPointTest();
+        System.out.println("******************************************");
     }
 
 
@@ -625,6 +628,55 @@ public class Main
         System.out.print(h5.isHexadecimal());
 
         System.out.print("\n\nEnd isHexadecimalTest()\n");
+    }
+
+
+
+    public static void hexadecimalPointTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("F52B.9E");
+        Hexadecimal h3 = new Hexadecimal("A8.04");
+        Hexadecimal h4 = new Hexadecimal("24C7DFB.3");
+        Hexadecimal h5 = new Hexadecimal("B.90FC5C");
+
+
+        System.out.println("Begin hexadecimalPointTest():");
+
+        System.out.println("\nh2.getPointPosition()");
+        System.out.println("Expected: 2");
+        System.out.print("Returned value: ");
+        System.out.print(h2.getPointPosition());
+
+        System.out.println("\n\nh4.getDigitsBeforePoint()");
+        System.out.println("Expected: 7");
+        System.out.print("Returned value: ");
+        System.out.print(h4.getDigitsBeforePoint());
+
+        System.out.println("\n\nh3.removePoint()");
+        System.out.println("Expected: A804");
+        System.out.print("Returned value: ");
+        System.out.print(h3.removePoint());
+
+        System.out.println("\n\nh4.AddPlaceholders(h5)");
+        System.out.println("Expected: 000000B.90FC5C");
+        System.out.print("Returned value: ");
+        h4.addPlaceholders(h5);
+        System.out.print(h5);
+
+        System.out.println("\n\nh5.AddPlaceholders(h4)");
+        System.out.println("Expected: 24C7DFB.300000");
+        System.out.print("Returned value: ");
+        h5.addPlaceholders(h4);
+        System.out.print(h4);
+
+        System.out.println("\n\nh2.AddPlaceholders(h1)");
+        System.out.println("Expected: 0000.00");
+        System.out.print("Returned value: ");
+        h2.addPlaceholders(h1);
+        System.out.print(h1);
+
+        System.out.print("\n\nEnd hexadecimalPointTest()\n");
     }
 
 
