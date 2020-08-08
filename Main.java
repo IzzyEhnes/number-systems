@@ -41,6 +41,8 @@ public class Main
         System.out.println("******************************************");
         hexadecimalPointTest();
         System.out.println("******************************************");
+        addHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -677,6 +679,42 @@ public class Main
         System.out.print(h1);
 
         System.out.print("\n\nEnd hexadecimalPointTest()\n");
+    }
+
+
+
+    public static void addHexadecimalTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("4AD.9C2");
+        Hexadecimal h3 = new Hexadecimal("F5.B");
+        Hexadecimal h4 = new Hexadecimal("B.E");
+        Hexadecimal h5 = new Hexadecimal("A.F");
+
+        System.out.println("Begin addHexadecimalTest():");
+
+        System.out.println("\nh2.addHexadecimal(h3)");
+        System.out.println("Expected: 5A3.4C2");
+        System.out.print("Returned value: ");
+        System.out.print(h2.addHexadecimal(h3));
+
+
+        System.out.println("\n\nh4.addHexadecimal(h5)");
+        System.out.println("Expected: 16.D");
+        System.out.print("Returned value: ");
+        System.out.print(h4.addHexadecimal(h5));
+
+        System.out.println("\n\nh2.addHexadecimal(h5)");
+        System.out.println("Expected: 4B8.8C2");
+        System.out.print("Returned value: ");
+        System.out.print(h2.addHexadecimal(h5));
+
+        System.out.println("\n\nh1.addHexadecimal(h3)");
+        System.out.println("Expected: F5.B");
+        System.out.print("Returned value: ");
+        System.out.print(h1.addHexadecimal(h3));
+
+        System.out.print("\n\nEnd isHexadecimalTest()\n");
     }
 
 
