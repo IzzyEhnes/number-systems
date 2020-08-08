@@ -1,6 +1,7 @@
 package Ehnes.Izzy.NumberSystems;
 
 import java.lang.Math;
+import java.security.InvalidParameterException;
 
 public class Binary
 {
@@ -203,6 +204,11 @@ public class Binary
         Binary quotient = new Binary();
 
         Binary dividend = new Binary(this.binaryString);
+
+        if (Double.parseDouble(divisor.binaryString) == 0)
+        {
+            throw new InvalidParameterException("Error: Cannot divide by zero.");
+        }
 
         if (Double.parseDouble(divisor.binaryString) == 1)
         {
