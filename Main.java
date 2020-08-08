@@ -36,7 +36,8 @@ public class Main
         octalToDecimalTest();
         System.out.println("******************************************");
         octalToBinaryTest();
-
+        System.out.println("******************************************");
+        isHexadecimalTest();
     }
 
 
@@ -585,6 +586,47 @@ public class Main
 
         System.out.print("\n\nEnd octalToBinaryTest()\n");
     }
+
+
+
+    public static void isHexadecimalTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("A9.F");
+        Hexadecimal h3 = new Hexadecimal("8H6.EBC");
+        Hexadecimal h4 = new Hexadecimal("D3F1.A02");
+        Hexadecimal h5 = new Hexadecimal("LP.QW");
+
+        System.out.println("Begin isHexadecimalTest():");
+
+        System.out.println("\nh1.isHexadecimal()");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(h1.isHexadecimal());
+
+        System.out.println("\n\nh2.isHexadecimal()");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(h2.isHexadecimal());
+
+        System.out.println("\n\nh3.isHexadecimal()");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(h3.isHexadecimal());
+
+        System.out.println("\n\nh4.isHexadecimal()");
+        System.out.println("Expected: true");
+        System.out.print("Returned value: ");
+        System.out.print(h4.isHexadecimal());
+
+        System.out.println("\n\nh5.isHexadecimal()");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(h5.isHexadecimal());
+
+        System.out.print("\n\nEnd isHexadecimalTest()\n");
+    }
+
 
 
     /*
