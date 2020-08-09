@@ -164,6 +164,145 @@ public class Hexadecimal
 
 
 
+    public Hexadecimal subtractHexadecimal(Hexadecimal inHex)
+    {
+        Hexadecimal difference = new Hexadecimal(this.hexString);
+
+        Hexadecimal minuend = new Hexadecimal(this.hexString);
+        Hexadecimal subtrahend = new Hexadecimal(inHex.hexString);
+
+        minuend.addPlaceholders(subtrahend);
+        subtrahend.addPlaceholders(minuend);
+
+        boolean negative = false;
+
+        // If the minuend and subtrahend are the same, their difference is zero
+        if (minuend.hexString.equals(subtrahend.hexString))
+        {
+            return new Hexadecimal("0.0");
+        }
+
+        // If both the minuend and subtrahend are negative
+        if (subtrahend.isNegative() && minuend.isNegative())
+        {
+            subtrahend = subtrahend.removeNegativeSign();
+
+            difference = minuend.addHexadecimal(subtrahend);
+
+            return difference;
+        }
+
+        // If the minuend is negative and the subtrahend is positive,
+        // their difference is -1 * (|minuend| + subtrahend)
+        else if (minuend.isNegative() && !subtrahend.isNegative())
+        {
+            minuend = minuend.removeNegativeSign();
+
+            difference = minuend.addHexadecimal(subtrahend);
+            difference = difference.removeLeadingZeroes().insertNegativeSign();
+
+            return difference;
+        }
+
+        // If the subtrahend is negative and the minuend is positive,
+        // their difference is (minuend + |subtrahend|)
+        else if (subtrahend.isNegative() && !minuend.isNegative())
+        {
+            subtrahend = subtrahend.removeNegativeSign();
+
+            difference = minuend.addHexadecimal(subtrahend);
+
+            return difference;
+        }
+
+
+
+        if (minuend.lessThanHexadecimal(subtrahend))
+        {
+            negative = true;
+
+            Hexadecimal temp = new Hexadecimal();
+
+            temp = minuend;
+            minuend = subtrahend;
+            subtrahend = temp;
+        }
+
+
+
+        // After addPlaceholders calls, radix point position is the same for
+        // both currentHex and addend
+        int radixPosition = minuend.getPointPosition();
+
+        minuend = minuend.removePoint();
+        subtrahend = subtrahend.removePoint();
+
+        // After addPlaceholders calls, hexString length is the same for
+        // both currentHex and addend
+        int length = minuend.hexString.length();
+
+
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(minuend).reverse();
+
+        String a = sb.toString();
+
+        sb.setLength(0);
+
+        sb.append(subtrahend).reverse();
+
+        String b = sb.toString();
+
+        sb.setLength(0);
+
+
+
+        StringBuilder differenceBuilder = new StringBuilder();
+
+        int tempDiff = 0;
+        int carry = 0;
+        for (int i = 0; i < length; i++)
+        {
+            int tempA = hexMap.get(a.charAt(i));
+            int tempB = hexMap.get(b.charAt(i));
+
+            if (carry == 1)
+            {
+                tempA--;
+
+                carry = 0;
+            }
+
+            tempDiff = tempA - tempB;
+
+            if (tempDiff < 0)
+            {
+                carry = 1;
+
+                tempA += 16;
+
+                tempDiff = tempA - tempB;
+            }
+
+            differenceBuilder.append(getKeyFromValue(hexMap, tempDiff));
+        }
+
+        difference.hexString = differenceBuilder.reverse().toString();
+
+        difference = difference.insertPointFromRight(radixPosition);
+
+        if (negative)
+        {
+            difference = difference.insertNegativeSign();
+        }
+
+        return difference;
+    }
+
+
+
     public void addPlaceholders(Hexadecimal inHex)
     {
         StringBuilder sb = new StringBuilder();
@@ -332,6 +471,77 @@ public class Hexadecimal
 
             return true;
         }
+    }
+
+
+
+    public Hexadecimal insertNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).insert(0, '-');
+
+        return new Hexadecimal(sb.toString());
+    }
+
+
+
+    public boolean isNegative()
+    {
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        if (currentHex.hexString.charAt(0) == '-')
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+    public Hexadecimal removeNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).deleteCharAt(0);
+
+        return new Hexadecimal(sb.toString());
+    }
+
+
+
+    public Hexadecimal removeLeadingZeroes()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        sb.append(currentHex);
+
+        if (sb.toString().charAt(0) == '0'
+                || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+
+            if (sb.toString().charAt(0) == '-')
+            {
+                while (sb.toString().charAt(1) == '0')
+                {
+                    sb.deleteCharAt(1);
+                }
+            }
+
+            currentHex.hexString = sb.toString();
+        }
+
+        return currentHex;
     }
 
 
