@@ -45,6 +45,8 @@ public class Main
         System.out.println("******************************************");
         lessThanHexadecimalTest();
         System.out.println("******************************************");
+        subtractHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -737,7 +739,6 @@ public class Main
         System.out.print("Returned value: ");
         System.out.print(h1.lessThanHexadecimal(h2));
 
-
         System.out.println("\n\nh2.lessThanHexadecimal(h3)");
         System.out.println("Expected: false");
         System.out.print("Returned value: ");
@@ -754,6 +755,41 @@ public class Main
         System.out.print(h3.lessThanHexadecimal(h6));
 
         System.out.print("\n\nEnd lessThanHexadecimalTest()\n");
+    }
+
+
+
+    public static void subtractHexadecimalTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("4AD.9C2");
+        Hexadecimal h3 = new Hexadecimal("F5.B");
+        Hexadecimal h4 = new Hexadecimal("7E5AF.13");
+        Hexadecimal h5 = new Hexadecimal("92BE.0DFF");
+
+        System.out.println("Begin subtractHexadecimalTest():");
+
+        System.out.println("\nh2.subtractHexadecimal(h3)");
+        System.out.println("Expected: 3B7.EC2");
+        System.out.print("Returned value: ");
+        System.out.print(h2.subtractHexadecimal(h3));
+
+        System.out.println("\n\nh4.subtractHexadecimal(h5)");
+        System.out.println("Expected: 752F1.0501");
+        System.out.print("Returned value: ");
+        System.out.print(h4.subtractHexadecimal(h5));
+
+        System.out.println("\n\nh3.subtractHexadecimal(h4)");
+        System.out.println("Expected: -7E4B9.63");
+        System.out.print("Returned value: ");
+        System.out.print(h3.subtractHexadecimal(h4));
+
+        System.out.println("\n\nh1.subtractHexadecimal(h5)");
+        System.out.println("Expected: -92BE.0DFF");
+        System.out.print("Returned value: ");
+        System.out.print(h1.subtractHexadecimal(h5));
+
+        System.out.print("\n\nEnd isHexadecimalTest()\n");
     }
 
 
