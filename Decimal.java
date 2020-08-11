@@ -5,7 +5,7 @@ import java.lang.Math;
 
 
 
-public class Decimal extends NumberSystem
+public class Decimal extends NumberSystem<Decimal>
 {
     private Double decimal = 0.0;
 
@@ -38,7 +38,7 @@ public class Decimal extends NumberSystem
 
 
 
-    public Decimal addDecimal(Decimal inDecimal)
+    public Decimal add(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
 
@@ -49,7 +49,7 @@ public class Decimal extends NumberSystem
 
 
 
-    public Decimal subtractDecimal(Decimal inDecimal)
+    public Decimal subtract(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
 
@@ -60,7 +60,7 @@ public class Decimal extends NumberSystem
 
 
 
-    public Decimal multiplyDecimal(Decimal inDecimal)
+    public Decimal multiply(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
 
@@ -71,7 +71,7 @@ public class Decimal extends NumberSystem
 
 
 
-    public Decimal divideDecimal(Decimal inDecimal)
+    public Decimal divide(Decimal inDecimal, int scale)
     {
         Decimal answer = new Decimal();
 

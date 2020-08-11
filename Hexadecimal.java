@@ -2,7 +2,7 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.util.HashMap;
 
-public class Hexadecimal extends NumberSystem
+public class Hexadecimal extends NumberSystem<Hexadecimal>
 {
     private String hexString = "0.0";
 
@@ -53,7 +53,7 @@ public class Hexadecimal extends NumberSystem
 
 
 
-    public Hexadecimal addHexadecimal(Hexadecimal inHex)
+    public Hexadecimal add(Hexadecimal inHex)
     {
         Hexadecimal sum = new Hexadecimal();
 
@@ -131,7 +131,7 @@ public class Hexadecimal extends NumberSystem
 
 
 
-    public Hexadecimal subtractHexadecimal(Hexadecimal inHex)
+    public Hexadecimal subtract(Hexadecimal inHex)
     {
         Hexadecimal difference = new Hexadecimal(this.hexString);
 
@@ -154,7 +154,7 @@ public class Hexadecimal extends NumberSystem
         {
             subtrahend = subtrahend.removeNegativeSign();
 
-            difference = minuend.addHexadecimal(subtrahend);
+            difference = minuend.add(subtrahend);
 
             return difference;
         }
@@ -165,7 +165,7 @@ public class Hexadecimal extends NumberSystem
         {
             minuend = minuend.removeNegativeSign();
 
-            difference = minuend.addHexadecimal(subtrahend);
+            difference = minuend.add(subtrahend);
             difference = difference.removeLeadingZeroes().insertNegativeSign();
 
             return difference;
@@ -177,7 +177,7 @@ public class Hexadecimal extends NumberSystem
         {
             subtrahend = subtrahend.removeNegativeSign();
 
-            difference = minuend.addHexadecimal(subtrahend);
+            difference = minuend.add(subtrahend);
 
             return difference;
         }
@@ -266,6 +266,22 @@ public class Hexadecimal extends NumberSystem
         }
 
         return difference;
+    }
+
+
+
+    public Hexadecimal multiply(Hexadecimal inHex)
+    {
+
+        return new Hexadecimal();
+    }
+
+
+
+
+    public Hexadecimal divide(Hexadecimal inHex, int scale)
+    {
+        return new Hexadecimal();
     }
 
 

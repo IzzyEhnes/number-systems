@@ -2,7 +2,7 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
 
-public class Octal extends NumberSystem
+public class Octal extends NumberSystem<Octal>
 {
 
     private String octal = "0.0";
@@ -52,7 +52,7 @@ public class Octal extends NumberSystem
 
 
 
-    public Octal addOctal(Octal inOctal)
+    public Octal add(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
         int carry = 0;
@@ -78,13 +78,13 @@ public class Octal extends NumberSystem
 
             if (Double.parseDouble(currentOctal.octal) > Double.parseDouble(addend.octal))
             {
-                answer = currentOctal.subtractOctal(addend);
+                answer = currentOctal.subtract(addend);
                 answer = answer.insertNegativeSign();
             }
 
             else
             {
-                answer = addend.subtractOctal(currentOctal);
+                answer = addend.subtract(currentOctal);
             }
 
             return answer;
@@ -96,13 +96,13 @@ public class Octal extends NumberSystem
 
             if (Double.parseDouble(addend.octal) > Double.parseDouble(currentOctal.octal))
             {
-                answer = addend.subtractOctal(currentOctal);
+                answer = addend.subtract(currentOctal);
                 answer = answer.insertNegativeSign();
             }
 
             else
             {
-                answer = currentOctal.subtractOctal(addend);
+                answer = currentOctal.subtract(addend);
             }
 
             return answer;
@@ -179,7 +179,7 @@ public class Octal extends NumberSystem
 
 
 
-    public Octal subtractOctal(Octal inOctal)
+    public Octal subtract(Octal inOctal)
     {
         Octal minuend = new Octal(this.octal);
         Octal subtrahend = new Octal(inOctal.octal);
@@ -199,7 +199,7 @@ public class Octal extends NumberSystem
         {
             subtrahend = subtrahend.removeNegativeSign();
 
-            difference = minuend.addOctal(subtrahend);
+            difference = minuend.add(subtrahend);
 
             return difference;
         }
@@ -210,7 +210,7 @@ public class Octal extends NumberSystem
         {
             minuend = minuend.removeNegativeSign();
 
-            difference = minuend.addOctal(subtrahend);
+            difference = minuend.add(subtrahend);
             difference = difference.removeLeadingZeroes().insertNegativeSign();
 
             return difference;
@@ -222,7 +222,7 @@ public class Octal extends NumberSystem
         {
             subtrahend = subtrahend.removeNegativeSign();
 
-            difference = minuend.addOctal(subtrahend);
+            difference = minuend.add(subtrahend);
 
             return difference;
         }
@@ -251,7 +251,7 @@ public class Octal extends NumberSystem
 
         subtrahend = subtrahend.eightsComplement();
 
-        difference = minuend.addOctal(subtrahend);
+        difference = minuend.add(subtrahend);
 
         StringBuilder sb = new StringBuilder();
 
@@ -282,7 +282,7 @@ public class Octal extends NumberSystem
 
 
 
-    public Octal multiplyOctal(Octal inOctal)
+    public Octal multiply(Octal inOctal)
     {
         Octal multiplicand = new Octal(this.octal);
         Octal multiplier = new Octal(inOctal.octal);
@@ -451,7 +451,7 @@ public class Octal extends NumberSystem
 
 
 
-    public Octal divideOctal(Octal divisor, int scale)
+    public Octal divide(Octal divisor, int scale)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -506,9 +506,9 @@ public class Octal extends NumberSystem
         // is closest to the dividend
         multiplier = getLargestMultiplier(divisor, dividend);
 
-        product = multiplier.multiplyOctal(divisor);
+        product = multiplier.multiply(divisor);
 
-        remainder = dividend.subtractOctal(product);
+        remainder = dividend.subtract(product);
 
         // If the divisor divides into the dividend evenly (i.e. remainder is 0)
         if (Double.parseDouble(remainder.octal) == 0)
@@ -547,9 +547,9 @@ public class Octal extends NumberSystem
 
                 else
                 {
-                    product = multiplier.multiplyOctal(divisor);
+                    product = multiplier.multiply(divisor);
 
-                    remainder = remainder.subtractOctal(product);
+                    remainder = remainder.subtract(product);
 
                     multiplier = multiplier.removePoint();
                     sb.append(quotient).append(multiplier);
@@ -723,7 +723,7 @@ public class Octal extends NumberSystem
         Octal sevensComplement = this.sevensComplement();
         Octal one = new Octal("1.0");
 
-        sb.append(sevensComplement.addOctal(one));
+        sb.append(sevensComplement.add(one));
 
         return new Octal(sb.toString());
     }
@@ -868,7 +868,7 @@ public class Octal extends NumberSystem
         int n = 1;
         Octal multiplier = new Octal(Double.toString(n));
 
-        while (Double.parseDouble((multiplier.multiplyOctal(divisor).octal)) <=
+        while (Double.parseDouble((multiplier.multiply(divisor).octal)) <=
                 Double.parseDouble(dividend.octal))
         {
             n++;

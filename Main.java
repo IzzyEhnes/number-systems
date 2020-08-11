@@ -47,6 +47,8 @@ public class Main
         System.out.println("******************************************");
         subtractHexadecimalTest();
         System.out.println("******************************************");
+        decimalToHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -62,17 +64,17 @@ public class Main
         System.out.println("\nd1.addDecimal(d2)");
         System.out.println("Expected: 2.5");
         System.out.print("Returned value: ");
-        System.out.print(d1.addDecimal(d2));
+        System.out.print(d1.add(d2));
 
         System.out.println("\n\nd3.addDecimal(d4)");
         System.out.println("Expected: -118.63");
         System.out.print("Returned value: ");
-        System.out.print(d3.addDecimal(d4));
+        System.out.print(d3.add(d4));
 
         System.out.println("\n\nd1.addDecimal(d3)");
         System.out.println("Expected: 9.75");
         System.out.print("Returned value: ");
-        System.out.print(d1.addDecimal(d3));
+        System.out.print(d1.add(d3));
 
         System.out.print("\n\nEnd addDecimalTest()\n");
     }
@@ -91,17 +93,17 @@ public class Main
         System.out.println("\nd1.subtractDecimal(d2)");
         System.out.println("Expected: -86.19");
         System.out.print("Returned value: ");
-        System.out.print(d1.subtractDecimal(d2));
+        System.out.print(d1.subtract(d2));
 
         System.out.println("\n\nd3.subtractDecimal(d4)");
         System.out.println("Expected: 7.363");
         System.out.print("Returned value: ");
-        System.out.print(d3.subtractDecimal(d4));
+        System.out.print(d3.subtract(d4));
 
         System.out.println("\n\nd1.subtractDecimal(d3)");
         System.out.println("Expected: -12.463");
         System.out.print("Returned value: ");
-        System.out.print(d1.subtractDecimal(d3));
+        System.out.print(d1.subtract(d3));
 
         System.out.print("\n\nEnd subtractDecimalTest()\n");
     }
@@ -120,17 +122,17 @@ public class Main
         System.out.println("\nd1.multiplyDecimal(d2)");
         System.out.println("Expected: 0.0");
         System.out.print("Returned value: ");
-        System.out.print(d1.multiplyDecimal(d2));
+        System.out.print(d1.multiply(d2));
 
         System.out.println("\n\nd2.multiplyDecimal(d3)");
         System.out.println("Expected: 35.19");
         System.out.print("Returned value: ");
-        System.out.print(d2.multiplyDecimal(d3));
+        System.out.print(d2.multiply(d3));
 
         System.out.println("\n\nd3.multiplyDecimal(d4)");
         System.out.println("Expected: -79.764");
         System.out.print("Returned value: ");
-        System.out.print(d3.multiplyDecimal(d4));
+        System.out.print(d3.multiply(d4));
 
         System.out.print("\n\nEnd multiplyDecimalTest()\n");
     }
@@ -149,17 +151,17 @@ public class Main
         System.out.println("\nd2.divideDecimal(d3)");
         System.out.println("Expected: 0.0197");
         System.out.print("Returned value: ");
-        System.out.print(d2.divideDecimal(d3));
+        System.out.print(d2.divide(d3, 3));
 
         System.out.println("\n\nd4.divideDecimal(d3)");
         System.out.println("Expected: 21.27");
         System.out.print("Returned value: ");
-        System.out.print(d4.divideDecimal(d3));
+        System.out.print(d4.divide(d3, 3));
 
         System.out.println("\n\nd3.divideDecimal(d4)");
         System.out.println("Expected: 0.0");
         System.out.print("Returned value: ");
-        System.out.print(d1.divideDecimal(d4));
+        System.out.print(d1.divide(d4, 3));
 
         System.out.print("\n\nEnd divideDecimalTest()\n");
     }
@@ -190,6 +192,38 @@ public class Main
         System.out.print(d3.decimalToBinary(20));
 
         System.out.print("\n\nEnd decimalToBinaryTest()\n");
+    }
+
+
+
+    public static void decimalToHexadecimalTest()
+    {
+        Decimal d1 = new Decimal(7803.0);
+        Decimal d2 = new Decimal();
+        Decimal d3 = new Decimal();
+        Decimal d4 = new Decimal();
+
+        System.out.println("Begin decimalToHexadecimalTest():");
+
+        System.out.println("\nd1.decimalToHexadecimal()");
+        //System.out.println("Expected: 2.5");
+        System.out.print("Returned value: ");
+        //System.out.print(d1.decimalToHexadecimal(10));
+
+        /*
+        System.out.println("\n\nd3.decimalToHexadecimal()");
+        System.out.println("Expected: -118.63");
+        System.out.print("Returned value: ");
+        System.out.print(d3.decimalToHexadecimal());
+
+        System.out.println("\n\nd1.decimalToHexadecimal()");
+        System.out.println("Expected: 9.75");
+        System.out.print("Returned value: ");
+        System.out.print(d1.decimalToHexadecimal());
+
+         */
+
+        System.out.print("\n\nEnd decimalToHexadecimalTest()\n");
     }
 
 
@@ -262,20 +296,20 @@ public class Main
 
         System.out.println("Begin addBinaryTest():");
 
-        System.out.println("\nd2.addBinary()");
+        System.out.println("\nd2.add()");
         System.out.println("Expected: 111");
         System.out.print("Returned value: ");
-        System.out.print(b2.addBinary(b3));
+        System.out.print(b2.add(b3));
 
-        System.out.println("\n\nd4.addBinary(d3)");
+        System.out.println("\n\nd4.add(d3)");
         System.out.println("Expected: 10010.001");
         System.out.print("Returned value: ");
-        System.out.print(b2.addBinary(b4));
+        System.out.print(b2.add(b4));
 
-        System.out.println("\n\nb1.addBinary(b4)");
+        System.out.println("\n\nb1.add(b4)");
         System.out.println("Expected: 1100.101");
         System.out.print("Returned value: ");
-        System.out.print(b1.addBinary(b4));
+        System.out.print(b1.add(b4));
 
         System.out.print("\n\nEnd addBinaryTest()\n");
     }
@@ -294,17 +328,17 @@ public class Main
         System.out.println("\nd2.subtractBinary(b3)");
         System.out.println("Expected: 11.1");
         System.out.print("Returned value: ");
-        System.out.print(b2.subtractBinary(b3));
+        System.out.print(b2.subtract(b3));
 
         System.out.println("\n\nb4.subtractBinary(b2)");
         System.out.println("Expected: 111.001");
         System.out.print("Returned value: ");
-        System.out.print(b4.subtractBinary(b2));
+        System.out.print(b4.subtract(b2));
 
         System.out.println("\n\nb3.subtractBinary(b4)");
         System.out.println("Expected: 101.011");
         System.out.print("Returned value: ");
-        System.out.print(b3.subtractBinary(b4));
+        System.out.print(b3.subtract(b4));
 
         System.out.print("\n\nEnd subtractBinaryTest()\n");
     }
@@ -326,27 +360,27 @@ public class Main
         System.out.println("\nb2.multiplyBinary(b3)");
         System.out.println("Expected: 1010.00");
         System.out.print("Returned value: ");
-        System.out.print(b2.multiplyBinary(b3));
+        System.out.print(b2.multiply(b3));
 
         System.out.println("\n\nb4.multiplyBinary(b2)");
         System.out.println("Expected: 111111.001");
         System.out.print("Returned value: ");
-        System.out.print(b4.multiplyBinary(b2));
+        System.out.print(b4.multiply(b2));
 
         System.out.println("\n\nb2.multiplyBinary(b5)");
         System.out.println("Expected: 1001110.11");
         System.out.print("Returned value: ");
-        System.out.print(b2.multiplyBinary(b5));
+        System.out.print(b2.multiply(b5));
 
         System.out.println("\n\nb6.multiplyBinary(b7)");
         System.out.println("Expected: 11100111011.0111001");
         System.out.print("Returned value: ");
-        System.out.print(b6.multiplyBinary(b7));
+        System.out.print(b6.multiply(b7));
 
         System.out.println("\n\nb1.multiplyBinary(b4)");
         System.out.println("Expected: 0.0");
         System.out.print("Returned value: ");
-        System.out.print(b1.multiplyBinary(b4));
+        System.out.print(b1.multiply(b4));
 
         System.out.print("\n\nEnd subtractBinaryTest()\n");
     }
@@ -366,26 +400,25 @@ public class Main
 
         System.out.println("Begin divideBinaryTest():");
 
-        System.out.println("\nd2.divideBinary(b3)");
+        System.out.println("\nb3.divide(b2)");
         System.out.println("Expected: 101.01");
         System.out.print("Returned value: ");
-        System.out.print(b3.divideBinary(b2, 3));
+        System.out.print(b3.divide(b2, 3));
 
-
-        System.out.println("\n\nb4.divideBinary(b2)");
+        System.out.println("\n\nb4.divide(b2)");
         System.out.println("Expected: 11.1");
         System.out.print("Returned value: ");
-        System.out.print(b4.divideBinary(b2, 3));
+        System.out.print(b4.divide(b2, 3));
 
-        System.out.println("\n\nb5.divideBinary(b6)");
-        System.out.println("Expected: 10.010101");
+        System.out.println("\n\nb5.divide(b6)");
+        System.out.println("Expected: 10.10101");
         System.out.print("Returned value: ");
-        System.out.print(b5.divideBinary(b6, 6));
+        System.out.print(b5.divide(b6, 6));
 
-        System.out.println("\n\nb7.divideBinary(b8)");
+        System.out.println("\n\nb7.divide(b8)");
         System.out.println("Expected: 0.0000011");
         System.out.print("Returned value: ");
-        System.out.print(b7.divideBinary(b8, 8));
+        System.out.print(b7.divide(b8, 8));
 
         System.out.print("\n\nEnd divideBinaryTest()\n");
     }
@@ -700,23 +733,23 @@ public class Main
         System.out.println("\nh2.addHexadecimal(h3)");
         System.out.println("Expected: 5A3.4C2");
         System.out.print("Returned value: ");
-        System.out.print(h2.addHexadecimal(h3));
+        System.out.print(h2.add(h3));
 
 
         System.out.println("\n\nh4.addHexadecimal(h5)");
         System.out.println("Expected: 16.D");
         System.out.print("Returned value: ");
-        System.out.print(h4.addHexadecimal(h5));
+        System.out.print(h4.add(h5));
 
         System.out.println("\n\nh2.addHexadecimal(h5)");
         System.out.println("Expected: 4B8.8C2");
         System.out.print("Returned value: ");
-        System.out.print(h2.addHexadecimal(h5));
+        System.out.print(h2.add(h5));
 
         System.out.println("\n\nh1.addHexadecimal(h3)");
         System.out.println("Expected: F5.B");
         System.out.print("Returned value: ");
-        System.out.print(h1.addHexadecimal(h3));
+        System.out.print(h1.add(h3));
 
         System.out.print("\n\nEnd isHexadecimalTest()\n");
     }
@@ -772,22 +805,22 @@ public class Main
         System.out.println("\nh2.subtractHexadecimal(h3)");
         System.out.println("Expected: 3B7.EC2");
         System.out.print("Returned value: ");
-        System.out.print(h2.subtractHexadecimal(h3));
+        System.out.print(h2.subtract(h3));
 
         System.out.println("\n\nh4.subtractHexadecimal(h5)");
         System.out.println("Expected: 752F1.0501");
         System.out.print("Returned value: ");
-        System.out.print(h4.subtractHexadecimal(h5));
+        System.out.print(h4.subtract(h5));
 
         System.out.println("\n\nh3.subtractHexadecimal(h4)");
         System.out.println("Expected: -7E4B9.63");
         System.out.print("Returned value: ");
-        System.out.print(h3.subtractHexadecimal(h4));
+        System.out.print(h3.subtract(h4));
 
         System.out.println("\n\nh1.subtractHexadecimal(h5)");
         System.out.println("Expected: -92BE.0DFF");
         System.out.print("Returned value: ");
-        System.out.print(h1.subtractHexadecimal(h5));
+        System.out.print(h1.subtract(h5));
 
         System.out.print("\n\nEnd isHexadecimalTest()\n");
     }

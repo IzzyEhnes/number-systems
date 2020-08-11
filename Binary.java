@@ -3,7 +3,7 @@ package Ehnes.Izzy.NumberSystems;
 import java.lang.Math;
 import java.security.InvalidParameterException;
 
-public class Binary extends NumberSystem
+public class Binary extends NumberSystem<Binary>
 {
     private String binaryString = "0.0";
 
@@ -11,6 +11,7 @@ public class Binary extends NumberSystem
     public Binary()
     {
     }
+
 
 
     public Binary(String inString)
@@ -47,7 +48,8 @@ public class Binary extends NumberSystem
     }
 
 
-    public Binary addBinary(Binary inBinary)
+
+    public Binary add(Binary inBinary)
     {
         Binary answer = new Binary();
         StringBuilder sb = new StringBuilder();
@@ -108,7 +110,7 @@ public class Binary extends NumberSystem
     }
 
 
-    public Binary subtractBinary(Binary inBinary)
+    public Binary subtract(Binary inBinary)
     {
         Binary answer = new Binary();
 
@@ -121,7 +123,7 @@ public class Binary extends NumberSystem
 
         inBinary = inBinary.twosComplement();
 
-        sb.append(currentBinary.addBinary(inBinary));
+        sb.append(currentBinary.add(inBinary));
 
         // if there was overflow, remove leftmost bit
         if (sb.length() > answer.binaryString.length())
@@ -137,7 +139,7 @@ public class Binary extends NumberSystem
     }
 
 
-    public Binary multiplyBinary(Binary inBinary)
+    public Binary multiply(Binary inBinary)
     {
         Binary answer = new Binary();
         Binary binaryTemp = new Binary();
@@ -188,7 +190,7 @@ public class Binary extends NumberSystem
 
             binaryTemp.binaryString = sb.reverse().toString();
 
-            answer = answer.addBinary(binaryTemp);
+            answer = answer.add(binaryTemp);
             sb.delete(0, bLength + i);
         }
 
@@ -199,7 +201,7 @@ public class Binary extends NumberSystem
 
 
 
-    public Binary divideBinary(Binary divisor, int scale)
+    public Binary divide(Binary divisor, int scale)
     {
         Binary quotient = new Binary();
 
@@ -259,7 +261,8 @@ public class Binary extends NumberSystem
 
         // Append first digit of dividend to currentDividend
         Binary currentDividend = new Binary();
-        currentDividend = currentDividend.removeLeadingZeroes();
+        currentDividend = currentDividend.removeLeadingZeroes().removeTrailingZeroes();
+
         StringBuilder dividendBuilder = new StringBuilder();
         dividendBuilder.append(currentDividend).insert(0, dividend.binaryString.charAt(0));
         currentDividend.binaryString = dividendBuilder.toString();
@@ -275,7 +278,7 @@ public class Binary extends NumberSystem
             // Reset quotientBuilder
             quotientBuilder.setLength(0);
 
-            currentDividend = currentDividend.subtractBinary(product);
+            currentDividend = currentDividend.subtract(product);
             currentDividend = currentDividend.removeLeadingZeroes();
         }
 
@@ -287,7 +290,7 @@ public class Binary extends NumberSystem
             // Reset quotientBuilder
             quotientBuilder.setLength(0);
 
-            currentDividend = currentDividend.subtractBinary(product);
+            currentDividend = currentDividend.subtract(product);
             currentDividend = currentDividend.removeLeadingZeroes();
         }
 
@@ -324,9 +327,9 @@ public class Binary extends NumberSystem
                 // Reset quotientBuilder
                 quotientBuilder.setLength(0);
 
-                product = divisor.multiplyBinary(one);
+                product = divisor.multiply(one);
 
-                currentDividend = currentDividend.subtractBinary(product);
+                currentDividend = currentDividend.subtract(product);
             }
 
             // When divisor == currentDividend, the division has been completed (no remainder)
@@ -352,9 +355,9 @@ public class Binary extends NumberSystem
                 // Reset quotientBuilder
                 quotientBuilder.setLength(0);
 
-                product = divisor.multiplyBinary(zero);
+                product = divisor.multiply(zero);
 
-                currentDividend = currentDividend.subtractBinary(product);
+                currentDividend = currentDividend.subtract(product);
             }
 
             currentIndex++;
@@ -409,7 +412,7 @@ public class Binary extends NumberSystem
 
         one.binaryString = sb.toString();
 
-        answer = answer.addBinary(one);
+        answer = answer.add(one);
 
         return answer;
     }
@@ -758,7 +761,7 @@ public class Binary extends NumberSystem
 
         if (sb.toString().charAt(0) == '0')
         {
-            while (sb.toString().charAt(0) == '0' && sb.toString().charAt(1) != '.')
+            while (sb.toString().charAt(0) == '0')
             {
                 sb.deleteCharAt(0);
             }
@@ -779,7 +782,7 @@ public class Binary extends NumberSystem
 
         sb.append(currentBinary).reverse();
 
-        if (sb.toString().charAt(0) == '0' && sb.toString().charAt(1) != '.')
+        if (sb.toString().charAt(0) == '0')
         {
             while (sb.toString().charAt(0) == '0')
             {
