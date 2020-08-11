@@ -38,49 +38,11 @@ public class Decimal
 
 
 
-    public Decimal add(Decimal inDecimal)
-    {
-        return new Decimal(decimal + inDecimal.decimal);
-    }
-
-
-
-    public Decimal subtract(Decimal inDecimal)
-    {
-        return new Decimal(decimal - inDecimal.decimal);
-    }
-
-
-
-    public Decimal multiply(Decimal inDecimal)
-    {
-        return new Decimal(decimal * inDecimal.decimal);
-    }
-
-
-
-    public Decimal divide(Decimal inDecimal)
-    {
-        Decimal zero = new Decimal(0.0);
-
-        if ((inDecimal.decimal).equals(0.0))
-        {
-            throw new InvalidParameterException("Error: Cannot divide by zero.");
-        }
-
-        else
-        {
-            return new Decimal(decimal / inDecimal.decimal);
-        }
-    }
-
-
-
     public Decimal addDecimal(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
 
-        answer = this.add(inDecimal);
+        answer.decimal = inDecimal.decimal + this.decimal;
 
         return answer;
     }
@@ -91,7 +53,7 @@ public class Decimal
     {
         Decimal answer = new Decimal();
 
-        answer = this.subtract(inDecimal);
+        answer.decimal = this.decimal - inDecimal.decimal;
 
         return answer;
     }
@@ -102,7 +64,7 @@ public class Decimal
     {
         Decimal answer = new Decimal();
 
-        answer = this.multiply(inDecimal);
+        answer.decimal = this.decimal * inDecimal.decimal;
 
         return answer;
     }
@@ -113,14 +75,19 @@ public class Decimal
     {
         Decimal answer = new Decimal();
 
-        try
+        if ((inDecimal.decimal).equals(0.0))
         {
-            answer = this.divide(inDecimal);
+            throw new InvalidParameterException("Error: Cannot divide by zero.");
         }
 
-        catch (Exception ex)
+        else if (this.decimal < 0)
         {
-            System.err.println(ex.getMessage());
+            throw new InvalidParameterException("Error: Cannot divide a negative Decimal.");
+        }
+
+        else
+        {
+            answer.decimal = this.decimal / inDecimal.decimal;
         }
 
         return answer;
@@ -348,7 +315,6 @@ public class Decimal
 
         return new Octal(answer);
     }
-
 
 
 
