@@ -3,7 +3,7 @@ package Ehnes.Izzy.NumberSystems;
 import java.lang.Math;
 import java.security.InvalidParameterException;
 
-public class Binary
+public class Binary extends NumberSystem
 {
     private String binaryString = "0.0";
 

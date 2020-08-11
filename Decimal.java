@@ -5,7 +5,7 @@ import java.lang.Math;
 
 
 
-public class Decimal
+public class Decimal extends NumberSystem
 {
     private Double decimal = 0.0;
 

@@ -2,7 +2,7 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
 
-public class Octal
+public class Octal extends NumberSystem
 {
 
     private String octal = "0.0";
