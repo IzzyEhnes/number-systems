@@ -2,7 +2,7 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.util.HashMap;
 
-public abstract class NumberSystem
+public abstract class NumberSystem<T>
 {
     HashMap<Character, Integer> hexMap = new HashMap<>();
 
@@ -25,6 +25,11 @@ public abstract class NumberSystem
         hexMap.put('E', 14);
         hexMap.put('F', 15);
     }
+
+    public abstract T add(T addend);
+    public abstract T subtract(T subtrahend);
+    public abstract T multiply(T multiplier);
+    public abstract T divide(T divisor, int scale);
 
     public abstract String toString();
 }
