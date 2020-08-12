@@ -199,29 +199,26 @@ public class Main
     public static void decimalToHexadecimalTest()
     {
         Decimal d1 = new Decimal(7803.0);
-        Decimal d2 = new Decimal();
-        Decimal d3 = new Decimal();
+        Decimal d2 = new Decimal(36.89);
+        Decimal d3 = new Decimal(4018.65312);
         Decimal d4 = new Decimal();
 
         System.out.println("Begin decimalToHexadecimalTest():");
 
         System.out.println("\nd1.decimalToHexadecimal()");
-        //System.out.println("Expected: 2.5");
+        System.out.println("Expected: 1E7B.0");
         System.out.print("Returned value: ");
-        //System.out.print(d1.decimalToHexadecimal(10));
+        System.out.print(d1.decimalToHexadecimal(10));
 
-        /*
         System.out.println("\n\nd3.decimalToHexadecimal()");
-        System.out.println("Expected: -118.63");
+        System.out.println("Expected: 24.E3D70A");
         System.out.print("Returned value: ");
-        System.out.print(d3.decimalToHexadecimal());
+        System.out.print(d2.decimalToHexadecimal(6));
 
         System.out.println("\n\nd1.decimalToHexadecimal()");
-        System.out.println("Expected: 9.75");
+        System.out.println("Expected: 0FB2.A732DF505D");
         System.out.print("Returned value: ");
-        System.out.print(d1.decimalToHexadecimal());
-
-         */
+        System.out.print(d3.decimalToHexadecimal(10));
 
         System.out.print("\n\nEnd decimalToHexadecimalTest()\n");
     }
@@ -239,25 +236,10 @@ public class Main
 
         System.out.println("Begin binaryPointTest():");
 
-        System.out.println("\nb2.getPointPosition()");
-        System.out.println("Expected: 3");
-        System.out.print("Returned value: ");
-        System.out.print(b2.getPointPosition());
-
         System.out.println("\n\nb4.getDigitsBeforePoint()");
         System.out.println("Expected: 7");
         System.out.print("Returned value: ");
         System.out.print(b4.getDigitsBeforePoint());
-
-        System.out.println("\n\nb3.removePoint()");
-        System.out.println("Expected: 110010101");
-        System.out.print("Returned value: ");
-        System.out.print(b3.removePoint());
-
-        System.out.println("\n\nb4.insertPoint(2)");
-        System.out.println("Expected: 10010.11");
-        System.out.print("Returned value: ");
-        System.out.print(b4.insertPointFromRight(2));
 
         System.out.println("\n\nb2.AddPlaceholders(b4)");
         System.out.println("Expected: 101.101000");
@@ -681,11 +663,6 @@ public class Main
 
 
         System.out.println("Begin hexadecimalPointTest():");
-
-        System.out.println("\nh2.getPointPosition()");
-        System.out.println("Expected: 2");
-        System.out.print("Returned value: ");
-        System.out.print(h2.getPointPosition());
 
         System.out.println("\n\nh4.getDigitsBeforePoint()");
         System.out.println("Expected: 7");
