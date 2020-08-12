@@ -396,6 +396,24 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    public Hexadecimal insertPointFromLeft(int pointPosition)
+    {
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentHex);
+
+        // Insert point at pointPosition
+        sb.insert(pointPosition, '.');
+
+        currentHex.hexString = sb.toString();
+
+        return currentHex;
+    }
+
+
+
     public boolean lessThanHexadecimal(Hexadecimal inHex)
     {
         Hexadecimal left = new Hexadecimal(this.hexString);
@@ -459,6 +477,21 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         {
             return false;
         }
+    }
+
+
+
+    public Hexadecimal appendZero()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        sb.append(currentHex).append('0');
+
+        currentHex.hexString = sb.toString();
+
+        return currentHex;
     }
 
 
