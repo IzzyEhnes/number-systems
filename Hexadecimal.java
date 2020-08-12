@@ -65,7 +65,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         // After addPlaceholders calls, radix point position is the same for
         // both currentHex and addend
-        int radixPosition = currentHex.getPointPosition();
+        int radixPosition = getPointPosition(currentHex.hexString);
 
         currentHex = currentHex.removePoint();
         addend = addend.removePoint();
@@ -199,7 +199,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         // After addPlaceholders calls, radix point position is the same for
         // both currentHex and addend
-        int radixPosition = minuend.getPointPosition();
+        int radixPosition = getPointPosition(minuend.hexString);
 
         minuend = minuend.removePoint();
         subtrahend = subtrahend.removePoint();
@@ -292,12 +292,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         Hexadecimal currentHex = new Hexadecimal(this.hexString);
 
-        int aPointPosition = currentHex.getPointPosition();
-        int bPointPosition = inHex.getPointPosition();
+        int aPointPosition = getPointPosition(currentHex.hexString);
+        int bPointPosition = getPointPosition(inHex.hexString);
 
         int aDigitsBeforePoint = currentHex.getDigitsBeforePoint();
         int bDigitsBeforePoint = inHex.getDigitsBeforePoint();
-        // If needed, add placeholder zeroes so both Octals
+        // If needed, add placeholder zeroes so both Hexadecimals
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)
         {
@@ -360,34 +360,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
-    public int getPointPosition()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this.hexString);
-
-        String a = sb.reverse().toString();
-
-        // Find point position with respect to rightmost digit
-        int pointPosition = 0;
-        for (int i = 0; i < a.length(); i++)
-        {
-            if (a.charAt(i) == '.')
-            {
-                pointPosition = i;
-            }
-        }
-
-        return pointPosition;
-    }
-
-
-
     public Hexadecimal removePoint()
     {
         Hexadecimal currentHex = this;
 
-        int pointPosition = currentHex.getPointPosition();
+        int pointPosition = getPointPosition(currentHex.hexString);
 
         StringBuilder sb = new StringBuilder();
 

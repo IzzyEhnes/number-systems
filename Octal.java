@@ -108,13 +108,10 @@ public class Octal extends NumberSystem<Octal>
             return answer;
         }
 
-        int aDecimalPosition = currentOctal.getPointPosition();
-        int bDecimalPosition = addend.getPointPosition();
-
         currentOctal.addPlaceholders(addend);
 
-        aDecimalPosition = currentOctal.getPointPosition();
-        bDecimalPosition = addend.getPointPosition();
+        int aDecimalPosition = getPointPosition(currentOctal.octal);
+        int bDecimalPosition = getPointPosition(addend.octal);
 
         sb.append(currentOctal);
 
@@ -242,7 +239,7 @@ public class Octal extends NumberSystem<Octal>
         else
         {
             // Get final point position (the same value in both the minuend and subtrahend)
-            pointPosition = minuend.getPointPosition();
+            pointPosition = getPointPosition(minuend.octal);
 
             // Remove point to treat as whole number
             minuend = minuend.removePoint();
@@ -319,8 +316,8 @@ public class Octal extends NumberSystem<Octal>
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
-        int aDecimalPosition = multiplicand.getPointPosition();
-        int bDecimalPosition = inOctal.getPointPosition();
+        int aDecimalPosition = getPointPosition(multiplicand.octal);
+        int bDecimalPosition = getPointPosition(inOctal.octal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -681,7 +678,7 @@ public class Octal extends NumberSystem<Octal>
 
     public Octal sevensComplement()
     {
-        int decimalPosition = this.getPointPosition();
+        int decimalPosition = getPointPosition(this.octal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -730,34 +727,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public int getPointPosition()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this.octal);
-
-        String a = sb.reverse().toString();
-
-        // Find point position with respect to rightmost digit
-        int pointPosition = 0;
-        for (int i = 0; i < a.length(); i++)
-        {
-            if (a.charAt(i) == '.')
-            {
-                pointPosition = i;
-            }
-        }
-
-        return pointPosition;
-    }
-
-
-
     public Octal removePoint()
     {
         Octal currentOctal = this;
 
-        int pointPosition = currentOctal.getPointPosition();
+        int pointPosition = getPointPosition(currentOctal.octal);
 
         StringBuilder sb = new StringBuilder();
 
@@ -797,8 +771,8 @@ public class Octal extends NumberSystem<Octal>
 
         Octal currentOctal = new Octal(this.octal);
 
-        int aPointPosition = currentOctal.getPointPosition();
-        int bPointPosition = inOctal.getPointPosition();
+        int aPointPosition = getPointPosition(currentOctal.octal);
+        int bPointPosition = getPointPosition(inOctal.octal);
 
         int aDigitsBeforePoint = currentOctal.getDigitsBeforePoint();
         int bDigitsBeforePoint = inOctal.getDigitsBeforePoint();

@@ -61,8 +61,8 @@ public class Binary extends NumberSystem<Binary>
         addend.addPlaceholders(currentBinary);
         currentBinary.addPlaceholders(addend);
 
-        int currentBinaryPointPosition = currentBinary.getPointPosition();
-        int addendPointPosition = addend.getPointPosition();
+        int currentBinaryPointPosition = getPointPosition(currentBinary.binaryString);
+        int addendPointPosition = getPointPosition(addend.binaryString);
 
         currentBinary = currentBinary.removePoint();
         addend = addend.removePoint();
@@ -224,7 +224,7 @@ public class Binary extends NumberSystem<Binary>
 
         divisor = divisor.removeTrailingZeroes();
 
-        int divisorPointPosition = divisor.getPointPosition();
+        int divisorPointPosition = getPointPosition(divisor.binaryString);
 
         // Shift radix point of the divisor to the right until it is the last char
         int numShifts = 0;
@@ -234,7 +234,7 @@ public class Binary extends NumberSystem<Binary>
 
             numShifts++;
 
-            divisorPointPosition = divisor.getPointPosition();
+            divisorPointPosition = getPointPosition(divisor.binaryString);
         }
 
         // Append a zero to the divisor so in Binary form
@@ -595,34 +595,11 @@ public class Binary extends NumberSystem<Binary>
 
 
 
-    public int getPointPosition()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this.binaryString);
-
-        String a = sb.reverse().toString();
-
-        // Find point position with respect to rightmost digit
-        int pointPosition = 0;
-        for (int i = 0; i < a.length(); i++)
-        {
-            if (a.charAt(i) == '.')
-            {
-                pointPosition = i;
-            }
-        }
-
-        return pointPosition;
-    }
-
-
-
     public Binary removePoint()
     {
         Binary currentBinary = new Binary(this.binaryString);
 
-        int pointPosition = currentBinary.getPointPosition();
+        int pointPosition = getPointPosition(currentBinary.binaryString);
 
         StringBuilder sb = new StringBuilder();
 
@@ -699,12 +676,12 @@ public class Binary extends NumberSystem<Binary>
 
         StringBuilder sb = new StringBuilder();
 
-        int currentBinaryPointPosition = currentBinary.getPointPosition();
-        int inBinaryPointPosition = inBinary.getPointPosition();
+        int currentBinaryPointPosition = getPointPosition(currentBinary.binaryString);
+        int inBinaryPointPosition = getPointPosition(inBinary.binaryString);
 
         int aDigitsBeforePoint = currentBinary.getDigitsBeforePoint();
         int bDigitsBeforePoint = inBinary.getDigitsBeforePoint();
-        // If needed, add placeholder zeroes so both Octals
+        // If needed, add placeholder zeroes so both Binarys
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)
         {
@@ -816,7 +793,7 @@ public class Binary extends NumberSystem<Binary>
     {
         Binary currentBinary = new Binary(this.binaryString);
 
-        int pointPosition = currentBinary.getPointPosition();
+        int pointPosition = getPointPosition(currentBinary.binaryString);
 
         currentBinary = currentBinary.removePoint().insertPointFromRight(pointPosition - 1);
 

@@ -31,5 +31,70 @@ public abstract class NumberSystem<T>
     public abstract T multiply(T multiplier);
     public abstract T divide(T divisor, int scale);
 
+
+    public int getPointPosition(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        String a = sb.reverse().toString();
+
+        // Find point position with respect to rightmost digit
+        int pointPosition = 0;
+        for (int i = 0; i < a.length(); i++)
+        {
+            if (a.charAt(i) == '.')
+            {
+                pointPosition = i;
+            }
+        }
+
+        return pointPosition;
+    }
+
+
+
     public abstract String toString();
 }
+
+/*
+    public int getPointPosition()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.binaryString);
+
+        String a = sb.reverse().toString();
+
+        // Find point position with respect to rightmost digit
+        int pointPosition = 0;
+        for (int i = 0; i < a.length(); i++)
+        {
+            if (a.charAt(i) == '.')
+            {
+                pointPosition = i;
+            }
+        }
+
+        return pointPosition;
+    }
+
+
+
+    public Binary removePoint()
+    {
+        Binary currentBinary = new Binary(this.binaryString);
+
+        int pointPosition = currentBinary.getPointPosition();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(currentBinary);
+        sb.reverse().deleteCharAt(pointPosition).reverse();
+
+        currentBinary.binaryString = sb.toString();
+
+        return currentBinary;
+    }
+ */
