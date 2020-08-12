@@ -318,6 +318,87 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    public Hexadecimal decimalToHexadecimal(int scale)
+    {
+        StringBuilder answerBuilder = new StringBuilder();
+
+        Hexadecimal temp = new Hexadecimal(String.valueOf(this.decimal));
+
+        double tempDecimal = this.decimal;
+
+        int intPart = (int) tempDecimal;
+
+        double fractionPart = tempDecimal - intPart;
+
+        boolean appendZero = false;
+        if (fractionPart == 0)
+        {
+            appendZero = true;
+        }
+
+        double thisDouble = tempDecimal - fractionPart;
+
+        int pointPosition = temp.getDigitsBeforePoint();
+
+        int wholeNum = 0;
+        double remainder = 0.0;
+
+        while (thisDouble > 15)
+        {
+            thisDouble /= 16;
+        }
+
+        // Get the number in front of the radix point and append it to answerBuilder
+        wholeNum = (int) thisDouble;
+
+        answerBuilder.append(wholeNum);
+
+        // Get the number behind the radix point
+        remainder = thisDouble - wholeNum;
+
+        int currentNum = 0;
+        int digitsAfterPoint = 0;
+        while (remainder != 0 && digitsAfterPoint < scale)
+        {
+            remainder *= 16;
+
+            currentNum = (int) remainder;
+
+            remainder -= currentNum;
+
+            answerBuilder.append(temp.getKeyFromValue(hexMap, currentNum));
+
+            digitsAfterPoint++;
+        }
+
+        digitsAfterPoint = 0;
+        while (fractionPart != 0 && digitsAfterPoint < scale)
+        {
+            fractionPart *= 16;
+
+            currentNum = (int) fractionPart;
+
+            fractionPart -= currentNum;
+
+            answerBuilder.append(temp.getKeyFromValue(hexMap, currentNum));
+
+            digitsAfterPoint++;
+        }
+
+        Hexadecimal answer = new Hexadecimal(answerBuilder.toString());
+
+        answer = answer.insertPointFromLeft(pointPosition);
+
+        if (appendZero)
+        {
+            answer = answer.appendZero();
+        }
+
+        return answer;
+    }
+
+
+
     @Override
     public String toString()
     {
