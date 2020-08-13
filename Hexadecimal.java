@@ -304,21 +304,64 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         System.out.println("multiplier");
         System.out.println(multiplier);
 
-        Decimal product = new Decimal();
+        //Decimal product = new Decimal();
 
-        int tempProduct = 0;
+        Hexadecimal hexProduct = new Hexadecimal();
 
-        int[] sumArray = new int[length * 2];
+        double tempProduct = 0;
+
+        Hexadecimal[] sumArray = new Hexadecimal[(length * 2) + 1];
+
+        // Populate array with Hexadecimals with value zero
+        Hexadecimal zero = new Hexadecimal();
+        for (int i = 0; i < length * 2; i++)
+        {
+            sumArray[i] = zero;
+        }
 
         for (int i = 0; i < length; i++)
         {
             System.out.println();
+            System.out.println();
 
             for (int j = 0; j < length; j++)
             {
-                tempProduct = hexMap.get(multiplicand.hexString.charAt(i)) * hexMap.get(multiplier.hexString.charAt(j));
-                sumArray[j] = tempProduct;
-                System.out.println(sumArray[j]);
+                double a  = hexMap.get(multiplicand.hexString.charAt(j));
+                double b = hexMap.get(multiplier.hexString.charAt(i));
+
+                System.out.println("a");
+                System.out.println(a);
+                System.out.println("b");
+                System.out.println(b);
+                System.out.println();
+
+                tempProduct = a * b;
+                System.out.println("tempProduct");
+                System.out.println(tempProduct);
+                //tempProduct = a * b;
+
+
+
+                /*
+                System.out.println("hexMap.get(multiplicand.hexString.charAt(j))");
+                System.out.println(hexMap.get(multiplicand.hexString.charAt(j)));
+                System.out.println("hexMap.get(multiplier.hexString.charAt(i))");
+                System.out.println(hexMap.get(multiplier.hexString.charAt(i)));
+                 */
+
+                Decimal decimalProduct = new Decimal(tempProduct);
+
+                //hexProduct = decimalProduct.decimalToHexadecimal(1);
+
+                //sumArray[j] = hexProduct;
+
+                //System.out.println(tempProduct);
+
+            }
+
+            for (int k = 0; k < (length * 2); k++)
+            {
+                System.out.println(sumArray[k]);
             }
         }
 
