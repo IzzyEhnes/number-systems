@@ -314,57 +314,58 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         // Populate array with Hexadecimals with value zero
         Hexadecimal zero = new Hexadecimal();
-        for (int i = 0; i < length * 2; i++)
+        for (int i = 0; i < (length * 2) + 1; i++)
         {
             sumArray[i] = zero;
         }
 
+        System.out.println("length");
+        System.out.println((length * 2)+1);
+
+        int carry = 0;
+
         for (int i = 0; i < length; i++)
         {
-            System.out.println();
             System.out.println();
 
             for (int j = 0; j < length; j++)
             {
-                double a  = hexMap.get(multiplicand.hexString.charAt(j));
+                double a  = hexMap.get(multiplicand.hexString.charAt(j)) + carry;
                 double b = hexMap.get(multiplier.hexString.charAt(i));
 
-                System.out.println("a");
-                System.out.println(a);
-                System.out.println("b");
-                System.out.println(b);
-                System.out.println();
-
                 tempProduct = a * b;
-                System.out.println("tempProduct");
-                System.out.println(tempProduct);
-                //tempProduct = a * b;
-
-
-
-                /*
-                System.out.println("hexMap.get(multiplicand.hexString.charAt(j))");
-                System.out.println(hexMap.get(multiplicand.hexString.charAt(j)));
-                System.out.println("hexMap.get(multiplier.hexString.charAt(i))");
-                System.out.println(hexMap.get(multiplier.hexString.charAt(i)));
-                 */
 
                 Decimal decimalProduct = new Decimal(tempProduct);
 
-                //hexProduct = decimalProduct.decimalToHexadecimal(1);
+                hexProduct = decimalProduct.decimalToHexadecimal(1);
 
-                //sumArray[j] = hexProduct;
+                // If product has two digits, "carry" first digit
+                if (hexProduct.hexString.length() > 3)
+                {
+                    carry = hexMap.get(hexProduct.hexString.charAt(0));
 
-                //System.out.println(tempProduct);
+                    sb.append(hexProduct).deleteCharAt(0);
 
+                    hexProduct.hexString = sb.toString();
+
+                    sb.setLength(0);
+                }
+
+                else
+                {
+                    carry = 0;
+                }
+
+                sumArray[j + i] = hexProduct;
             }
 
-            for (int k = 0; k < (length * 2); k++)
+            for (int k = 0; k < (length * 2) + 1; k++)
             {
                 System.out.println(sumArray[k]);
             }
         }
 
+        System.out.println("\nAnswer");
         return answer;
     }
 
