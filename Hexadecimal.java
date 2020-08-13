@@ -272,8 +272,57 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
     public Hexadecimal multiply(Hexadecimal inHex)
     {
+        Hexadecimal answer = new Hexadecimal();
 
-        return new Hexadecimal();
+        StringBuilder sb = new StringBuilder();
+
+        Hexadecimal multiplicand = new Hexadecimal(this.hexString);
+        Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
+
+        multiplicand.addPlaceholders(multiplier);
+        multiplier.addPlaceholders(multiplicand);
+
+        multiplicand = multiplicand.removePoint();
+        multiplier = multiplier.removePoint();
+
+        sb.append(multiplicand).reverse();
+
+        multiplicand.hexString = sb.toString();
+
+        sb.setLength(0);
+
+        sb.append(multiplier).reverse();
+
+        multiplier.hexString = sb.toString();
+
+        sb.setLength(0);
+
+        int length = multiplicand.hexString.length();
+
+        System.out.println("multiplicand");
+        System.out.println(multiplicand);
+        System.out.println("multiplier");
+        System.out.println(multiplier);
+
+        Decimal product = new Decimal();
+
+        int tempProduct = 0;
+
+        int[] sumArray = new int[length * 2];
+
+        for (int i = 0; i < length; i++)
+        {
+            System.out.println();
+
+            for (int j = 0; j < length; j++)
+            {
+                tempProduct = hexMap.get(multiplicand.hexString.charAt(i)) * hexMap.get(multiplier.hexString.charAt(j));
+                sumArray[j] = tempProduct;
+                System.out.println(sumArray[j]);
+            }
+        }
+
+        return answer;
     }
 
 
