@@ -342,33 +342,45 @@ public class Decimal extends NumberSystem<Decimal>
 
         int wholeNum = 0;
         double remainder = 0.0;
+        int digitsAfterPoint = 0;
+        int currentNum = 0;
 
-        while (thisDouble > 15)
+        if (thisDouble < 16)
         {
-            thisDouble /= 16;
+            answerBuilder.append(temp.getKeyFromValue(hexMap, (int) thisDouble));
         }
 
-        // Get the number in front of the radix point and append it to answerBuilder
-        wholeNum = (int) thisDouble;
-
-        answerBuilder.append(wholeNum);
-
-        // Get the number behind the radix point
-        remainder = thisDouble - wholeNum;
-
-        int currentNum = 0;
-        int digitsAfterPoint = 0;
-        while (remainder != 0 && digitsAfterPoint < scale)
+        else if (thisDouble == 16)
         {
-            remainder *= 16;
+            answerBuilder.append(10);
+        }
 
-            currentNum = (int) remainder;
+        else
+        {
+            while (thisDouble > 15)
+            {
+                thisDouble /= 16;
+            }
 
-            remainder -= currentNum;
+            // Get the number in front of the radix point and append it to answerBuilder
+            wholeNum = (int) thisDouble;
 
-            answerBuilder.append(temp.getKeyFromValue(hexMap, currentNum));
+            answerBuilder.append(wholeNum);
 
-            digitsAfterPoint++;
+            // Get the number behind the radix point
+            remainder = thisDouble - wholeNum;
+
+            while (remainder != 0 && digitsAfterPoint < scale) {
+                remainder *= 16;
+
+                currentNum = (int) remainder;
+
+                remainder -= currentNum;
+
+                answerBuilder.append(temp.getKeyFromValue(hexMap, currentNum));
+
+                digitsAfterPoint++;
+            }
         }
 
         digitsAfterPoint = 0;
