@@ -387,7 +387,7 @@ public class Decimal extends NumberSystem<Decimal>
 
         Hexadecimal answer = new Hexadecimal(answerBuilder.toString());
 
-        answer = answer.insertPointFromLeft(pointPosition);
+        answer = answer.insertPointFromRight(digitsAfterPoint);
 
         if (appendZero)
         {
