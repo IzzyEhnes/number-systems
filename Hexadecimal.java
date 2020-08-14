@@ -319,9 +319,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             sumArray[i] = zero;
         }
 
-        System.out.println("length");
-        System.out.println((length * 2)+1);
-
         int carry = 0;
 
         for (int i = 0; i < length; i++)
@@ -330,17 +327,28 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             for (int j = 0; j < length; j++)
             {
-                double a  = hexMap.get(multiplicand.hexString.charAt(j)) + carry;
+                double a  = hexMap.get(multiplicand.hexString.charAt(j));
                 double b = hexMap.get(multiplier.hexString.charAt(i));
 
-                tempProduct = a * b;
+                tempProduct = (a * b) + carry;
 
                 Decimal decimalProduct = new Decimal(tempProduct);
 
                 hexProduct = decimalProduct.decimalToHexadecimal(1);
 
+                System.out.println("\nhexProduct");
+                System.out.println(hexProduct);
+                System.out.print("\na: ");
+                System.out.print(a);
+                System.out.print("\nb: ");
+                System.out.print(b);
+                System.out.print("\n\nj: ");
+                System.out.print(j);
+                System.out.println();
+                System.out.println();
+
                 // If product has two digits, "carry" first digit
-                if (hexProduct.hexString.length() > 3)
+                if (hexProduct.hexString.length() > 3 && j != length - 1)
                 {
                     carry = hexMap.get(hexProduct.hexString.charAt(0));
 
@@ -348,15 +356,45 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     hexProduct.hexString = sb.toString();
 
+                    /*
+                    System.out.println("CARRY");
+                    System.out.println(carry);
+                     */
+
                     sb.setLength(0);
+
+                    sumArray[j + i] = hexProduct;
+                }
+
+                else if (hexProduct.hexString.length() > 3 && j == length - 1)
+                {
+                    char secondDigit = hexProduct.hexString.charAt(0);
+
+                    sb.append(hexProduct.hexString.charAt(1)).append(".0");
+
+                    hexProduct.hexString = sb.toString();
+
+                    sb.setLength(0);
+
+                    sumArray[j + i] = hexProduct;
+
+                    sb.append(secondDigit).append(".0");
+
+                    Hexadecimal hexProduct2 = new Hexadecimal(sb.toString());
+
+                    sb.setLength(0);
+
+                    sumArray[j + i + 1] = hexProduct2;
                 }
 
                 else
                 {
                     carry = 0;
+
+                    sumArray[j + i] = hexProduct;
                 }
 
-                sumArray[j + i] = hexProduct;
+                System.out.println("\n**********************");
             }
 
             for (int k = 0; k < (length * 2) + 1; k++)
