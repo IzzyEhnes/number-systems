@@ -323,6 +323,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         }
 
         int carry = 0;
+        int sumCarry = 0;
 
         for (int i = 0; i < length; i++)
         {
@@ -362,10 +363,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     hexProduct.hexString = sb.toString();
 
-                    /*
                     System.out.println("CARRY");
                     System.out.println(carry);
-                     */
 
                     sb.setLength(0);
 
@@ -405,6 +404,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                     sum = hexProduct2.add(tempHex);
 
                     sumArray[j + i + 1] = sum;
+
+                    carry = 0;
                 }
 
                 else
@@ -426,6 +427,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             }
 
             System.out.println("\n**********************");
+        }
+
+        for (int k = 0; k < (length * 2) + 1; k++)
+        {
+            //System.out.println(k);
+            System.out.println(sumArray[k]);
         }
 
         System.out.println("\nAnswer");
