@@ -307,6 +307,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         //Decimal product = new Decimal();
 
         Hexadecimal hexProduct = new Hexadecimal();
+        Hexadecimal sum = new Hexadecimal();
+        Hexadecimal tempHex = new Hexadecimal();
+
 
         double tempProduct = 0;
 
@@ -336,6 +339,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 hexProduct = decimalProduct.decimalToHexadecimal(1);
 
+                /*
                 System.out.println("\nhexProduct");
                 System.out.println(hexProduct);
                 System.out.print("\na: ");
@@ -347,7 +351,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                 System.out.println();
                 System.out.println();
 
-                // If product has two digits, "carry" first digit
+                 */
+
+                // If product has two digits, "carry" first digit and append the second
                 if (hexProduct.hexString.length() > 3 && j != length - 1)
                 {
                     carry = hexMap.get(hexProduct.hexString.charAt(0));
@@ -363,7 +369,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     sb.setLength(0);
 
-                    sumArray[j + i] = hexProduct;
+                    tempHex = sumArray[j + i];
+
+                    sum = hexProduct.add(tempHex);
+
+                    sumArray[j + i] = sum;
                 }
 
                 else if (hexProduct.hexString.length() > 3 && j == length - 1)
@@ -376,6 +386,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     sb.setLength(0);
 
+                    tempHex = sumArray[j + i];
+
+                    sum = hexProduct.add(tempHex);
+
+                    sumArray[j + i] = sum;
+
                     sumArray[j + i] = hexProduct;
 
                     sb.append(secondDigit).append(".0");
@@ -384,23 +400,32 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     sb.setLength(0);
 
-                    sumArray[j + i + 1] = hexProduct2;
+                    tempHex = sumArray[j + i + 1];
+
+                    sum = hexProduct2.add(tempHex);
+
+                    sumArray[j + i + 1] = sum;
                 }
 
                 else
                 {
                     carry = 0;
 
-                    sumArray[j + i] = hexProduct;
-                }
+                    tempHex = sumArray[j + i];
 
-                System.out.println("\n**********************");
+                    sum = hexProduct.add(tempHex);
+
+                    sumArray[j + i] = sum;
+                }
             }
 
             for (int k = 0; k < (length * 2) + 1; k++)
             {
+                //System.out.println(k);
                 System.out.println(sumArray[k]);
             }
+
+            System.out.println("\n**********************");
         }
 
         System.out.println("\nAnswer");
