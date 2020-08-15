@@ -355,6 +355,13 @@ public class Decimal extends NumberSystem<Decimal>
             answerBuilder.append(10);
         }
 
+        // If thisDouble is a multiple of 16, the number to the left of the
+        // radix point will be the factor * 10
+        else if (thisDouble % 16 == 0)
+        {
+            answerBuilder.append((int)(thisDouble / 16)).append("0");
+        }
+
         else
         {
             while (thisDouble > 15)
