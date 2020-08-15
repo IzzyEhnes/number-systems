@@ -42,7 +42,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         {
             if ((this.hexString.charAt(i) < 48 || this.hexString.charAt(i) > 57) &&
                     (this.hexString.charAt(i) < 65 || this.hexString.charAt(i) > 70) &&
-                        (this.hexString.charAt(i) != '.') && (this.hexString.charAt(i) != '-'))
+                    (this.hexString.charAt(i) != '.') && (this.hexString.charAt(i) != '-'))
             {
                 return false;
             }
@@ -284,7 +284,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         // The position of the radix point in the answer
         int pointPosition = getPointPosition(multiplicand.hexString) +
-                            getPointPosition(multiplier.hexString);
+                getPointPosition(multiplier.hexString);
 
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
@@ -304,6 +304,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         sb.setLength(0);
 
+        System.out.println("multiplicand");
+        System.out.println(multiplicand);
+        System.out.println("multiplier");
+        System.out.println(multiplier);
+
         int length = multiplicand.hexString.length();
 
         Hexadecimal hexProduct = new Hexadecimal();
@@ -322,7 +327,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         }
 
         int carry = 0;
-        int sumCarry = 0;
 
         for (int i = 0; i < length; i++)
         {
@@ -370,8 +374,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                     sum = hexProduct.add(tempHex);
 
                     sumArray[j + i] = sum;
-
-                    sumArray[j + i] = hexProduct;
 
                     sb.append(secondDigit).append(".0");
 
