@@ -279,6 +279,33 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         Hexadecimal multiplicand = new Hexadecimal(this.hexString);
         Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
 
+        // If either the multiplicand or multiplier is zero, their product will be zero
+        if (multiplicand.hexString.equals("0.0") || multiplier.hexString.equals("0.0"))
+        {
+            return new Hexadecimal();
+        }
+
+        boolean negative = false;
+        if (multiplicand.isNegative() && !multiplier.isNegative())
+        {
+            negative = true;
+
+            multiplicand = multiplicand.removeNegativeSign();
+        }
+
+        else if (!multiplicand.isNegative() && multiplier.isNegative())
+        {
+            negative = true;
+
+            multiplier = multiplier.removeNegativeSign();
+        }
+
+        else if (multiplicand.isNegative() && multiplier.isNegative())
+        {
+            multiplicand = multiplicand.removeNegativeSign();
+            multiplier = multiplier.removeNegativeSign();
+        }
+
         multiplicand = multiplicand.removeTrailingZeroes();
         multiplier = multiplier.removeTrailingZeroes();
 
@@ -305,13 +332,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         multiplier.hexString = sb.toString();
 
         sb.setLength(0);
-
-        /*
-        System.out.println("multiplicand");
-        System.out.println(multiplicand);
-        System.out.println("multiplier");
-        System.out.println(multiplier);
-         */
 
         int length = multiplicand.hexString.length();
 
@@ -344,17 +364,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                 Decimal decimalProduct = new Decimal(tempProduct);
 
                 hexProduct = decimalProduct.decimalToHexadecimal(1);
-
-                /*
-                System.out.println("\nhexProduct");
-                System.out.println(hexProduct);
-                System.out.print("\na: ");
-                System.out.print(a);
-                System.out.print("\nb: ");
-                System.out.print(b);
-                System.out.println();
-                System.out.println();
-                 */
 
                 // If product has two digits, "carry" first digit and append the second
                 if (hexProduct.hexString.length() > 3 && j != length - 1)
@@ -415,17 +424,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     sumArray[j + i] = sum;
                 }
-
-                /*
-                System.out.println();
-                for (int k = 0; k < sumArray.length; k++)
-                {
-                    System.out.println(sumArray[k]);
-                }
-
-                System.out.println("****************************");
-
-                 */
             }
         }
 
@@ -466,6 +464,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             sb.append(answer).delete(0, answer.getDigitsBeforePoint() - totalDigitsBeforePoint);
 
             answer.hexString = sb.toString();
+        }
+
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
         }
 
         return answer;
