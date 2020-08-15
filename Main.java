@@ -828,26 +828,29 @@ public class Main
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2F.0");
         Hexadecimal h3 = new Hexadecimal("A5.1");
-        Hexadecimal h4 = new Hexadecimal("7E5AF.13");
-        Hexadecimal h5 = new Hexadecimal("92BE.0DFF");
+        Hexadecimal h4 = new Hexadecimal("4A.1C");
+        Hexadecimal h5 = new Hexadecimal("15.3");
+        Hexadecimal h6 = new Hexadecimal("9D425.0");
+        Hexadecimal h7 = new Hexadecimal("BC56.0");
 
         System.out.println("Begin multiplyHexadecimalTest():");
 
         System.out.println("\nh2.multiplyHexadecimal(h3)");
-        System.out.println("Expected: 1C849B");
+        System.out.println("Expected: 1E4D.F");
         System.out.print("Returned value: ");
         System.out.print(h2.multiply(h3));
 
-        /*
+
         System.out.println("\n\nh4.multiplyHexadecimal(h5)");
-        System.out.println("Expected: 752F1.0501");
+        System.out.println("Expected: 622314");
         System.out.print("Returned value: ");
         System.out.print(h4.multiply(h5));
 
+        /*
         System.out.println("\n\nh3.multiplyHexadecimal(h4)");
-        System.out.println("Expected: -7E4B9.63");
+        System.out.println("Expected: 73B18F258.4DE45E38F2B87CB2");
         System.out.print("Returned value: ");
-        System.out.print(h3.multiply(h4));
+        System.out.print(h6.multiply(h7));
 
         System.out.println("\n\nh1.multiplyHexadecimal(h5)");
         System.out.println("Expected: -92BE.0DFF");
