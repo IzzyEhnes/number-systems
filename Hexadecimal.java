@@ -279,6 +279,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         Hexadecimal multiplicand = new Hexadecimal(this.hexString);
         Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
 
+        multiplicand = multiplicand.removeTrailingZeroes();
+        multiplier = multiplier.removeTrailingZeroes();
+
+        // The position of the radix point in the answer
+        int pointPosition = getPointPosition(multiplicand.hexString) +
+                            getPointPosition(multiplier.hexString);
+
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
@@ -299,17 +306,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         int length = multiplicand.hexString.length();
 
-        System.out.println("multiplicand");
-        System.out.println(multiplicand);
-        System.out.println("multiplier");
-        System.out.println(multiplier);
-
-        //Decimal product = new Decimal();
-
         Hexadecimal hexProduct = new Hexadecimal();
         Hexadecimal sum = new Hexadecimal();
         Hexadecimal tempHex = new Hexadecimal();
-
 
         double tempProduct = 0;
 
@@ -327,8 +326,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         for (int i = 0; i < length; i++)
         {
-            System.out.println();
-
             for (int j = 0; j < length; j++)
             {
                 double a  = hexMap.get(multiplicand.hexString.charAt(j));
@@ -340,20 +337,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 hexProduct = decimalProduct.decimalToHexadecimal(1);
 
-                /*
-                System.out.println("\nhexProduct");
-                System.out.println(hexProduct);
-                System.out.print("\na: ");
-                System.out.print(a);
-                System.out.print("\nb: ");
-                System.out.print(b);
-                System.out.print("\n\nj: ");
-                System.out.print(j);
-                System.out.println();
-                System.out.println();
-
-                 */
-
                 // If product has two digits, "carry" first digit and append the second
                 if (hexProduct.hexString.length() > 3 && j != length - 1)
                 {
@@ -362,9 +345,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                     sb.append(hexProduct).deleteCharAt(0);
 
                     hexProduct.hexString = sb.toString();
-
-                    System.out.println("CARRY");
-                    System.out.println(carry);
 
                     sb.setLength(0);
 
@@ -419,23 +399,34 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                     sumArray[j + i] = sum;
                 }
             }
+        }
 
-            for (int k = 0; k < (length * 2) + 1; k++)
+        StringBuilder answerBuilder = new StringBuilder();
+
+        Hexadecimal carryHex = new Hexadecimal();
+
+        for (int i = 0; i < (length * 2); i++)
+        {
+            if (sumArray[i].hexString.length() == 4)
             {
-                //System.out.println(k);
-                System.out.println(sumArray[k]);
+                carryHex.hexString = sumArray[i].hexString.charAt(0) + ".0";
+                tempHex.hexString = sumArray[i].hexString.charAt(1) + ".0";
+
+                answerBuilder.append(tempHex).reverse().delete(0, 2).reverse();
+
+                sumArray[i + 1] = sumArray[i + 1].add(carryHex);
             }
 
-            System.out.println("\n**********************");
+            else
+            {
+                answerBuilder.append(sumArray[i]).reverse().delete(0, 2).reverse();
+            }
         }
 
-        for (int k = 0; k < (length * 2) + 1; k++)
-        {
-            //System.out.println(k);
-            System.out.println(sumArray[k]);
-        }
+        answer.hexString = answerBuilder.reverse().toString();
 
-        System.out.println("\nAnswer");
+        answer = answer.removeTrailingZeroes().removeLeadingZeroes().insertPointFromRight(pointPosition);
+
         return answer;
     }
 
@@ -696,6 +687,29 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             currentHex.hexString = sb.toString();
         }
+
+        return currentHex;
+    }
+
+
+
+    public Hexadecimal removeTrailingZeroes()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        sb.append(currentHex).reverse();
+
+        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+        }
+
+        currentHex.hexString = sb.reverse().toString();
 
         return currentHex;
     }
