@@ -372,7 +372,7 @@ public class Decimal extends NumberSystem<Decimal>
             // Get the number in front of the radix point and append it to answerBuilder
             wholeNum = (int) thisDouble;
 
-            answerBuilder.append(wholeNum);
+            answerBuilder.append(temp.getKeyFromValue(hexMap, wholeNum));
 
             // Get the number behind the radix point
             remainder = thisDouble - wholeNum;
