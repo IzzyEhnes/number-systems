@@ -1,5 +1,6 @@
 package Ehnes.Izzy.NumberSystems;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 public class Hexadecimal extends NumberSystem<Hexadecimal>
@@ -476,10 +477,145 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    public Hexadecimal divide(Hexadecimal divisor, int scale)
+    {
+        StringBuilder sb = new StringBuilder();
 
+        boolean negative = false;
+
+        Hexadecimal quotient = new Hexadecimal();
+        Hexadecimal remainder = new Hexadecimal();
+        Hexadecimal dividend = new Hexadecimal(this.hexString);
+        Hexadecimal multiplier = new Hexadecimal();
+        Hexadecimal product = new Hexadecimal();
+
+        if (divisor.isNegative())
+        {
+            sb.append(divisor);
+            sb.deleteCharAt(0);
+
+            divisor.hexString = sb.toString();
+
+            // Reset sb
+            sb.setLength(0);
+
+            negative = true;
+        }
+
+        System.out.println("A");
+
+        /*
+        if (Double.parseDouble(divisor.hexString) == 0)
+        {
+            throw new InvalidParameterException("Error: Cannot divide by zero.");
+        }
+
+        else if (Double.parseDouble(dividend.hexString) < 0)
+        {
+            throw new InvalidParameterException("Error: Cannot divide a negative Octal.");
+        }
+
+         */
+
+        // Add placeholder zeroes, if needed
+        divisor.addPlaceholders(dividend);
+        dividend.addPlaceholders(divisor);
+
+        // Remove points from both the divisor and dividend to treat as whole numbers
+        dividend = dividend.removePoint();
+        divisor = divisor.removePoint();
+
+        // Add point to end of dividend and divisor so in Octal format
+        dividend = dividend.insertPoint(0);
+        divisor = divisor.insertPoint(0);
+
+        // Add a zero to the end of dividend and divisor so in Octal format
+        dividend = dividend.appendZero();
+        divisor = divisor.appendZero();
+
+        // Find the biggest base-eight integer that, when multiplied by the divisor,
+        // is closest to the dividend
+        multiplier = getLargestMultiplier(divisor, dividend);
+
+        product = multiplier.multiply(divisor);
+
+        remainder = dividend.subtract(product);
+
+        System.out.println("remainder");
+        System.out.println(remainder);
+
+        // If the divisor divides into the dividend evenly (i.e. remainder is 0)
+        if (Double.parseDouble(remainder.hexString) == 0)
+        {
+            quotient = multiplier;
+        }
+
+        else
+        {
+            // Place the multiplier in front of the point, removing any trailing zeroes
+            sb.append(multiplier);
+            quotient.hexString = sb.toString();
+            quotient = quotient.removeTrailingZeroes();
+            sb.setLength(0);
+
+            int digitsAfterPoint = 0;
+            // While there is still a remainder and digitsAfterPoint is less
+            // than the desired scale of the final answer
+            while (Double.parseDouble(remainder.hexString) != 0 &&
+                    digitsAfterPoint < scale)
+            {
+                remainder = remainder.shiftPointRightByOne();
+
+                multiplier = getLargestMultiplier(divisor, remainder);
+
+                // If the divisor doesn't 'fit' into the remainder,
+                // place a zero to the correct place in the quotient
+                if (Double.parseDouble(multiplier.hexString) == 0)
+                {
+                    sb.append(quotient).append('0');
+                    quotient.hexString = sb.toString();
+
+                    // Reset sb
+                    sb.setLength(0);
+                }
+
+                else
+                {
+                    product = multiplier.multiply(divisor);
+
+                    remainder = remainder.subtract(product);
+
+                    multiplier = multiplier.removePoint();
+                    sb.append(quotient).append(multiplier);
+                    quotient.hexString = sb.toString();
+                    quotient = quotient.removeTrailingZeroes();
+
+                    // Reset sb
+                    sb.setLength(0);
+                }
+
+                digitsAfterPoint++;
+            }
+        }
+
+        if (negative)
+        {
+            sb.append(quotient).insert(0, '-');
+
+            quotient.hexString = sb.toString();
+        }
+
+        return quotient;
+    }
+
+
+/*
     public Hexadecimal divide(Hexadecimal divisor, int scale)
     {
         Hexadecimal dividend = new Hexadecimal(this.hexString);
+        Hexadecimal product = new Hexadecimal();
+        Hexadecimal multiplier = new Hexadecimal();
+        Hexadecimal remainder = new Hexadecimal();
 
         // Add placeholder zeroes, if needed
         divisor.addPlaceholders(dividend);
@@ -502,20 +638,96 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         System.out.println("divisor");
         System.out.println(divisor);
 
+        if (dividend.hexString.equals(divisor.hexString))
+        {
+            return new Hexadecimal("1.0");
+        }
+
+        StringBuilder quotientBuilder = new StringBuilder();
+        StringBuilder dividendBuilder = new StringBuilder();
+
+        Hexadecimal currentDividend = new Hexadecimal();
+
+        dividendBuilder.append(dividend.hexString.charAt(0)).append(".0");
+
+        currentDividend.hexString = dividendBuilder.toString();
+
+        if (divisor.lessThanHexadecimal(currentDividend))
+        {
+            multiplier = getLargestMultiplier(divisor, currentDividend);
+
+            multiplier = multiplier.removeTrailingZeroes().removePoint();
+
+            quotientBuilder.append(multiplier);
+
+            product = multiplier.multiply(divisor);
+
+            remainder = product.subtract(dividend);
+        }
+
+        else
+        {
+            quotientBuilder.append("0");
+
+            remainder
+        }
+
         return new Hexadecimal();
     }
 
+ */
 
-    
+
+    public Decimal hexadecimalToDecimal()
+    {
+        String inString = this.hexString;
+
+        double sum = 0;
+        int currentInt = 0;
+
+        int n = this.getDigitsBeforePoint() - 1;
+
+        for (int i = 0; i < inString.length(); i++)
+        {
+            if (inString.charAt(i) == '.')
+            {
+                continue;
+            }
+
+            currentInt = hexMap.get(inString.charAt(i));
+
+            sum += currentInt * Math.pow(16, n);
+
+            n--;
+        }
+
+        return new Decimal(sum);
+    }
+
+
+
     public Hexadecimal getLargestMultiplier(Hexadecimal divisor, Hexadecimal dividend)
     {
-        Hexadecimal multiplier = new Hexadecimal("1.0");
+        Hexadecimal multiplier = new Hexadecimal();
 
         Hexadecimal one = new Hexadecimal("1.0");
 
-        while (divisor.multiply(multiplier).lessThanHexadecimal(dividend))
+        Hexadecimal product = new Hexadecimal();
+
+        product = divisor.multiply(multiplier);
+
+        while (product.lessThanHexadecimal(dividend))
         {
             multiplier = multiplier.add(one);
+
+            product = divisor.multiply(multiplier);
+
+            if (product.hexString.equals(dividend.hexString))
+            {
+                multiplier = multiplier.add(one);
+
+                break;
+            }
         }
 
         multiplier = multiplier.subtract(one);
