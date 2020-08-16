@@ -506,6 +506,24 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     }
 
 
+    
+    public Hexadecimal getLargestMultiplier(Hexadecimal divisor, Hexadecimal dividend)
+    {
+        Hexadecimal multiplier = new Hexadecimal("1.0");
+
+        Hexadecimal one = new Hexadecimal("1.0");
+
+        while (divisor.multiply(multiplier).lessThanHexadecimal(dividend))
+        {
+            multiplier = multiplier.add(one);
+        }
+
+        multiplier = multiplier.subtract(one);
+
+        return multiplier;
+    }
+
+
 
     public void addPlaceholders(Hexadecimal inHex)
     {
@@ -585,13 +603,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     {
         Hexadecimal currentHex = this;
 
-        System.out.println("currentHex");
-        System.out.println(currentHex);
-
         int pointPosition = getPointPosition(currentHex.hexString);
-
-        System.out.println("pointPosition");
-        System.out.println(pointPosition);
 
         StringBuilder sb = new StringBuilder();
 
