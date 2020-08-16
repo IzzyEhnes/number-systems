@@ -477,8 +477,31 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
-    public Hexadecimal divide(Hexadecimal inHex, int scale)
+    public Hexadecimal divide(Hexadecimal divisor, int scale)
     {
+        Hexadecimal dividend = new Hexadecimal(this.hexString);
+
+        // Add placeholder zeroes, if needed
+        divisor.addPlaceholders(dividend);
+        dividend.addPlaceholders(divisor);
+
+        // Remove points from both the divisor and dividend to treat as whole numbers
+        dividend = dividend.removePoint();
+        divisor = divisor.removePoint();
+
+        // Add point to end of dividend and divisor so in Octal format
+        dividend = dividend.insertPointFromRight(0);
+        divisor = divisor.insertPointFromRight(0);
+
+        // Add a zero to the end of dividend and divisor so in Octal format
+        dividend = dividend.appendZero();
+        divisor = divisor.appendZero();
+
+        System.out.println("dividend");
+        System.out.println(dividend);
+        System.out.println("divisor");
+        System.out.println(divisor);
+
         return new Hexadecimal();
     }
 
@@ -562,7 +585,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     {
         Hexadecimal currentHex = this;
 
+        System.out.println("currentHex");
+        System.out.println(currentHex);
+
         int pointPosition = getPointPosition(currentHex.hexString);
+
+        System.out.println("pointPosition");
+        System.out.println(pointPosition);
 
         StringBuilder sb = new StringBuilder();
 
@@ -754,6 +783,47 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         }
 
         currentHex.hexString = sb.reverse().toString();
+
+        return currentHex;
+    }
+
+
+
+    public Hexadecimal shiftPointRightByOne()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        int pointPosition = currentHex.getDigitsBeforePoint();
+        if (pointPosition == currentHex.hexString.length() - 2)
+        {
+            sb.append(currentHex).append('0');
+
+            currentHex.hexString = sb.toString();
+        }
+
+        currentHex.insertPoint(1);
+
+        return currentHex;
+    }
+
+
+
+    public Hexadecimal insertPoint(int pointPosition)
+    {
+        Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        StringBuilder sb = new StringBuilder();
+
+        currentHex.removePoint();
+
+        sb.append(currentHex);
+
+        // Insert point at pointPosition
+        sb.reverse().insert(pointPosition, '.').reverse();
+
+        currentHex.hexString = sb.toString();
 
         return currentHex;
     }
