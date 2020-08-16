@@ -51,6 +51,8 @@ public class Main
         System.out.println("******************************************");
         multiplyHexadecimalTest();
         System.out.println("******************************************");
+        divideHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -862,6 +864,46 @@ public class Main
         System.out.print(h1.multiply(h5));
 
         System.out.print("\n\nEnd isHexadecimalTest()\n");
+    }
+
+
+
+    public static void divideHexadecimalTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("ECE.46");
+        Hexadecimal h3 = new Hexadecimal("12.0");
+        Hexadecimal h4 = new Hexadecimal("-4A.1C");
+        Hexadecimal h5 = new Hexadecimal("15.3");
+        Hexadecimal h6 = new Hexadecimal("-9D4E053.FA5");
+        Hexadecimal h7 = new Hexadecimal("-BC5A.082D1FE67");
+
+        System.out.println("Begin divideHexadecimalTest():");
+
+        System.out.println("\nh2.divideHexadecimal(h3)");
+        System.out.println("Expected: 1E4D.F");
+        System.out.print("Returned value: ");
+        System.out.print(h2.divide(h3, 5));
+
+        /*
+        System.out.println("\n\nh4.divideHexadecimal(h5)");
+        System.out.println("Expected: -622.314");
+        System.out.print("Returned value: ");
+        System.out.print(h4.divide(h5));
+
+        System.out.println("\n\nh3.divideHexadecimal(h4)");
+        System.out.println("Expected: 73BC9E4EC00.6F6E58F75163");
+        System.out.print("Returned value: ");
+        System.out.print(h6.divide(h7));
+
+        System.out.println("\n\nh1.divideHexadecimal(h5)");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(h1.divide(h5));
+
+         */
+
+        System.out.print("\n\nEnd divideHexadecimalTest()\n");
     }
 
 
