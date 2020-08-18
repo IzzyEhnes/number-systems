@@ -270,20 +270,20 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     }
 
 
-/*
+
     public Hexadecimal multiply(Hexadecimal inHex)
     {
         Hexadecimal answer = new Hexadecimal();
 
-        StringBuilder sb = new StringBuilder();
+        Hexadecimal zero = new Hexadecimal();
 
         Hexadecimal multiplicand = new Hexadecimal(this.hexString);
         Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
 
-        // If either the multiplicand or multiplier is zero, their product will be zero
-        if (multiplicand.hexString.equals("0.0") || multiplier.hexString.equals("0.0"))
+        if (multiplicand.removeTrailingZeroes().removeLeadingZeroes().hexString.equals(".") ||
+                multiplier.removeTrailingZeroes().removeLeadingZeroes().hexString.equals("."))
         {
-            return new Hexadecimal();
+            return zero;
         }
 
         boolean negative = false;
@@ -307,197 +307,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             multiplier = multiplier.removeNegativeSign();
         }
 
-        multiplicand = multiplicand.removeTrailingZeroes();
-        multiplier = multiplier.removeTrailingZeroes();
-
-        // The position of the radix point in the answer
         int pointPosition = getPointPosition(multiplicand.hexString) +
-                getPointPosition(multiplier.hexString);
-
-        int totalDigitsBeforePoint =  multiplicand.getDigitsBeforePoint() + multiplier.getDigitsBeforePoint();
-
-        //multiplicand.addPlaceholders(multiplier);
-        //multiplier.addPlaceholders(multiplicand);
-
-        multiplicand = multiplicand.removePoint();
-        multiplier = multiplier.removePoint();
-
-        //multiplicand = multiplicand.removeLeadingZeroes();
-        //multiplier = multiplier.removeLeadingZeroes();
-
-        sb.append(multiplicand).reverse();
-
-        multiplicand.hexString = sb.toString();
-
-        sb.setLength(0);
-
-        sb.append(multiplier).reverse();
-
-        multiplier.hexString = sb.toString();
-
-        sb.setLength(0);
-
-        int length = multiplicand.hexString.length();
-
-        Hexadecimal hexProduct = new Hexadecimal();
-        Hexadecimal sum = new Hexadecimal();
-        Hexadecimal tempHex = new Hexadecimal();
-
-        double tempProduct = 0;
-
-        Hexadecimal[] sumArray = new Hexadecimal[(length * 2) + 1];
-
-        System.out.println(length*2 + 1);
-
-        // Populate array with Hexadecimals with value zero
-        Hexadecimal zero = new Hexadecimal();
-        for (int i = 0; i < (length * 2) + 1; i++)
-        {
-            sumArray[i] = zero;
-        }
-
-        int carry = 0;
-
-        for (int i = 0; i < multiplier.hexString.length(); i++)
-        {
-            for (int j = 0; j < multiplicand.hexString.length(); j++)
-            {
-                double a  = hexMap.get(multiplicand.hexString.charAt(j));
-                double b = hexMap.get(multiplier.hexString.charAt(i));
-
-                tempProduct = (a * b) + carry;
-
-                Decimal decimalProduct = new Decimal(tempProduct);
-
-                hexProduct = decimalProduct.decimalToHexadecimal(1);
-
-                // If product has two digits, "carry" first digit and append the second
-                if (hexProduct.hexString.length() > 3 && j != length - 1)
-                {
-                    carry = hexMap.get(hexProduct.hexString.charAt(0));
-
-                    sb.append(hexProduct).deleteCharAt(0);
-
-                    hexProduct.hexString = sb.toString();
-
-                    sb.setLength(0);
-
-                    tempHex = sumArray[j + i];
-
-                    sum = hexProduct.add(tempHex);
-
-                    sumArray[j + i] = sum;
-                }
-
-                else if (hexProduct.hexString.length() > 3 && j == length - 1)
-                {
-                    char secondDigit = hexProduct.hexString.charAt(0);
-
-                    sb.append(hexProduct.hexString.charAt(1)).append(".0");
-
-                    hexProduct.hexString = sb.toString();
-
-                    sb.setLength(0);
-
-                    tempHex = sumArray[j + i];
-
-                    sum = hexProduct.add(tempHex);
-
-                    sumArray[j + i] = sum;
-
-                    sb.append(secondDigit).append(".0");
-
-                    Hexadecimal hexProduct2 = new Hexadecimal(sb.toString());
-
-                    sb.setLength(0);
-
-                    System.out.println("j + i + 1");
-                    System.out.println(j + i + 1);
-
-                    tempHex = sumArray[j + i + 1];
-
-                    sum = hexProduct2.add(tempHex);
-
-                    sumArray[j + i + 1] = sum;
-
-                    carry = 0;
-                }
-
-                else
-                {
-                    carry = 0;
-
-                    tempHex = sumArray[j + i];
-
-                    sum = hexProduct.add(tempHex);
-
-                    sumArray[j + i] = sum;
-                }
-            }
-        }
-
-        for (int i = 0; i < (length * 2) + 1; i++)
-        {
-            System.out.println(sumArray[i]);
-        }
-
-        StringBuilder answerBuilder = new StringBuilder();
-
-        Hexadecimal carryHex = new Hexadecimal();
-
-        for (int i = 0; i < (length * 2); i++)
-        {
-            if (sumArray[i].hexString.length() == 4)
-            {
-                carryHex.hexString = sumArray[i].hexString.charAt(0) + ".0";
-                tempHex.hexString = sumArray[i].hexString.charAt(1) + ".0";
-
-                answerBuilder.append(tempHex).reverse().delete(0, 2).reverse();
-
-                sumArray[i + 1] = sumArray[i + 1].add(carryHex);
-            }
-
-            else
-            {
-                answerBuilder.append(sumArray[i]).reverse().delete(0, 2).reverse();
-            }
-        }
-
-        answer.hexString = answerBuilder.reverse().toString();
-
-        answer = answer.removeTrailingZeroes().removeLeadingZeroes().insertPointFromRight(pointPosition);
-
-        System.out.println("answer");
-        System.out.println(answer);
-
-        // Append a placeholder zero if there are no digits to the right of the radix point
-        if (getPointPosition(answer.hexString) == 0)
-        {
-            answer = answer.appendZero();
-        }
-
-        if (answer.getDigitsBeforePoint() > totalDigitsBeforePoint)
-        {
-            sb.append(answer).delete(0, answer.getDigitsBeforePoint() - totalDigitsBeforePoint);
-
-            answer.hexString = sb.toString();
-        }
-
-        if (negative)
-        {
-            answer = answer.insertNegativeSign();
-        }
-
-        return answer;
-    }
- */
-
-    public Hexadecimal multiply(Hexadecimal inHex)
-    {
-        Hexadecimal answer = new Hexadecimal();
-
-        Hexadecimal multiplicand = new Hexadecimal(this.hexString);
-        Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
+                                getPointPosition(multiplier.hexString);
 
         multiplicand = multiplicand.removePoint();
         multiplier = multiplier.removePoint();
@@ -519,7 +330,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         double doubleTemp = 0;
 
-        Hexadecimal zero = new Hexadecimal();
         Hexadecimal hexProduct = new Hexadecimal();
         Hexadecimal hexCarry = new Hexadecimal();
         Hexadecimal hexSum = new Hexadecimal();
@@ -599,7 +409,14 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             }
         }
 
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
+        }
+
         answer.hexString = sb.reverse().toString();
+
+        answer = answer.insertPointFromRight(pointPosition).removeLeadingZeroes();
 
         return answer;
     }
