@@ -512,11 +512,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         multiplier.hexString = sb.toString();
         sb.setLength(0);
 
-        System.out.println("\nmultiplicand");
-        System.out.println(multiplicand);
-        System.out.println("multiplier");
-        System.out.println(multiplier);
-
         int multiplicandLength = multiplicand.hexString.length();
         int multiplierLength = multiplier.hexString.length();
 
@@ -552,11 +547,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 hexProduct = hexProduct.add(hexCarry);
 
-                System.out.println("\nhexProduct");
-                System.out.println(hexProduct);
-                System.out.println("hexCarry");
-                System.out.println(hexCarry);
-
                 // If the Hexadecimal has two digits in front of the radix point, carry the leading digit
                 if (hexProduct.hexString.length() == 4)
                 {
@@ -581,8 +571,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 if (j == multiplicandLength - 1 && !hexCarry.hexString.equals("0.0"))
                 {
-                    System.out.println(hexCarry);
-
                     hexTemp = sumArray[currentIndex + 1];
                     hexSum = hexTemp.add(hexCarry);
 
@@ -591,20 +579,28 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 currentIndex++;
             }
-
-            System.out.println();
-
-            currentIndex = 0;
-            for (int k = 0; k < sumArray.length; k++)
-            {
-                System.out.println(sumArray[k]);
-            }
-
-            System.out.println("******************************");
         }
 
-        System.out.println();
-        System.out.println();
+        for (int i = 0; i < sumArray.length; i++)
+        {
+            if (sumArray[i].hexString.length() == 4)
+            {
+                hexCarry.hexString = sumArray[i].hexString.charAt(0) + ".0";
+                hexTemp.hexString = sumArray[i].hexString.charAt(1) + ".0";
+
+                sb.append(hexTemp).reverse().delete(0, 2).reverse();
+
+                sumArray[i + 1] = sumArray[i + 1].add(hexCarry);
+            }
+
+            else
+            {
+                sb.append(sumArray[i]).reverse().delete(0, 2).reverse();
+            }
+        }
+
+        answer.hexString = sb.reverse().toString();
+
         return answer;
     }
 
