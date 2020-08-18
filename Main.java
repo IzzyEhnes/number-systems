@@ -854,25 +854,26 @@ public class Main
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2F.0");
         Hexadecimal h3 = new Hexadecimal("A5.1C");
-        Hexadecimal h4 = new Hexadecimal("-4A.1C");
+        Hexadecimal h4 = new Hexadecimal("4A.1C");
         Hexadecimal h5 = new Hexadecimal("15.3");
-        Hexadecimal h6 = new Hexadecimal("-9D4E053.FA5");
-        Hexadecimal h7 = new Hexadecimal("-BC5A.082D1FE67");
+        Hexadecimal h6 = new Hexadecimal("9D4E053.FA5");
+        Hexadecimal h7 = new Hexadecimal("BC5A.082D1FE67");
         Hexadecimal h8 = new Hexadecimal("4E053.FA5");
         Hexadecimal h9 = new Hexadecimal("BC5A.082D1FE");
         Hexadecimal h10 = new Hexadecimal("D2.0");
         Hexadecimal h11 = new Hexadecimal("1200.0");
+        Hexadecimal h12 = new Hexadecimal("12.0");
+        Hexadecimal h13 = new Hexadecimal("59.0");
 
         System.out.println("Begin multiplyHexadecimalTest():");
 
         System.out.println("\nh2.multiplyHexadecimal(h3)");
-        System.out.println("Expected: 1E4D.F");
+        System.out.println("Expected: 1E50.240");
         System.out.print("Returned value: ");
         System.out.print(h3.multiply(h2));
 
-        /*
         System.out.println("\n\nh4.multiplyHexadecimal(h5)");
-        System.out.println("Expected: -622.314");
+        System.out.println("Expected: 622.314");
         System.out.print("Returned value: ");
         System.out.print(h4.multiply(h5));
 
@@ -887,7 +888,7 @@ public class Main
         System.out.print(h1.multiply(h5));
 
         System.out.println("\n\nh8.multiplyHexadecimal(h9)");
-        System.out.println("Expected: EA.0");
+        System.out.println("Expected: 39674B137.6A23F4DAB6");
         System.out.print("Returned value: ");
         System.out.print(h8.multiply(h9));
 
@@ -895,9 +896,12 @@ public class Main
         System.out.println("Expected: EC400.0");
         System.out.print("Returned value: ");
         System.out.print(h10.multiply(h11));
+        
+        System.out.println("\n\nh10.multiplyHexadecimal(h11)");
+        System.out.println("Expected: 642.0");
+        System.out.print("Returned value: ");
+        System.out.print(h13.multiply(h12));
 
-
-         */
         System.out.print("\n\nEnd isHexadecimalTest()\n");
     }
 
@@ -908,14 +912,10 @@ public class Main
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2.0");
         Hexadecimal h3 = new Hexadecimal("E.0");
-        Hexadecimal h4 = new Hexadecimal("12.0");
-        Hexadecimal h5 = new Hexadecimal("EC.0");
-        Hexadecimal h6 = new Hexadecimal("FE58.0");
-        Hexadecimal h7 = new Hexadecimal("5.0");
-        Hexadecimal h8 = new Hexadecimal("ECE46.0");
-        Hexadecimal h9 = new Hexadecimal("01200.0");
-        Hexadecimal h10 = new Hexadecimal("ECE46.0");
-        Hexadecimal h11 = new Hexadecimal("1200.0");
+        Hexadecimal h4 = new Hexadecimal("15B.0");
+        Hexadecimal h5 = new Hexadecimal("F.0");
+        Hexadecimal h6 = new Hexadecimal("1043.0");
+        Hexadecimal h7 = new Hexadecimal("59.0");
 
         System.out.println("Begin getLargestMultiplierTest():");
 
@@ -924,16 +924,18 @@ public class Main
         System.out.print("Returned value: ");
         System.out.print(h2.getLargestMultiplier(h2, h3));
 
+
         System.out.println("\n\nh4.getLargestMultiplier(h5)");
-        System.out.println("Expected: D.0");
+        System.out.println("Expected: 17.0");
         System.out.print("Returned value: ");
-        System.out.print(h4.getLargestMultiplier(h4, h5));
+        System.out.print(h4.getLargestMultiplier(h5, h4));
 
         System.out.println("\n\nh6.getLargestMultiplier(h7)");
-        System.out.println("Expected: 32DE.0");
+        System.out.println("Expected: 2E.0");
         System.out.print("Returned value: ");
         System.out.print(h6.getLargestMultiplier(h7, h6));
 
+        /*
         System.out.println("\n\nh8.getLargestMultiplier(h9)");
         System.out.println("Expected: D2.0");
         System.out.print("Returned value: ");
@@ -943,6 +945,8 @@ public class Main
         System.out.println("Expected: D2.0");
         System.out.print("Returned value: ");
         System.out.print(h8.getLargestMultiplier(h11, h10));
+
+         */
 
         System.out.print("\n\nEnd getLargestMultiplierTest()\n");
     }
