@@ -270,7 +270,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     }
 
 
-
+/*
     public Hexadecimal multiply(Hexadecimal inHex)
     {
         Hexadecimal answer = new Hexadecimal();
@@ -316,11 +316,14 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         int totalDigitsBeforePoint =  multiplicand.getDigitsBeforePoint() + multiplier.getDigitsBeforePoint();
 
-        multiplicand.addPlaceholders(multiplier);
-        multiplier.addPlaceholders(multiplicand);
+        //multiplicand.addPlaceholders(multiplier);
+        //multiplier.addPlaceholders(multiplicand);
 
         multiplicand = multiplicand.removePoint();
         multiplier = multiplier.removePoint();
+
+        //multiplicand = multiplicand.removeLeadingZeroes();
+        //multiplier = multiplier.removeLeadingZeroes();
 
         sb.append(multiplicand).reverse();
 
@@ -344,6 +347,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         Hexadecimal[] sumArray = new Hexadecimal[(length * 2) + 1];
 
+        System.out.println(length*2 + 1);
+
         // Populate array with Hexadecimals with value zero
         Hexadecimal zero = new Hexadecimal();
         for (int i = 0; i < (length * 2) + 1; i++)
@@ -353,9 +358,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         int carry = 0;
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < multiplier.hexString.length(); i++)
         {
-            for (int j = 0; j < length; j++)
+            for (int j = 0; j < multiplicand.hexString.length(); j++)
             {
                 double a  = hexMap.get(multiplicand.hexString.charAt(j));
                 double b = hexMap.get(multiplier.hexString.charAt(i));
@@ -406,6 +411,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                     sb.setLength(0);
 
+                    System.out.println("j + i + 1");
+                    System.out.println(j + i + 1);
+
                     tempHex = sumArray[j + i + 1];
 
                     sum = hexProduct2.add(tempHex);
@@ -426,6 +434,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                     sumArray[j + i] = sum;
                 }
             }
+        }
+
+        for (int i = 0; i < (length * 2) + 1; i++)
+        {
+            System.out.println(sumArray[i]);
         }
 
         StringBuilder answerBuilder = new StringBuilder();
@@ -454,6 +467,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         answer = answer.removeTrailingZeroes().removeLeadingZeroes().insertPointFromRight(pointPosition);
 
+        System.out.println("answer");
+        System.out.println(answer);
+
         // Append a placeholder zero if there are no digits to the right of the radix point
         if (getPointPosition(answer.hexString) == 0)
         {
@@ -472,6 +488,123 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             answer = answer.insertNegativeSign();
         }
 
+        return answer;
+    }
+ */
+
+    public Hexadecimal multiply(Hexadecimal inHex)
+    {
+        Hexadecimal answer = new Hexadecimal();
+
+        Hexadecimal multiplicand = new Hexadecimal(this.hexString);
+        Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
+
+        multiplicand = multiplicand.removePoint();
+        multiplier = multiplier.removePoint();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(multiplicand).reverse();
+        multiplicand.hexString = sb.toString();
+        sb.setLength(0);
+
+        sb.append(multiplier).reverse();
+        multiplier.hexString = sb.toString();
+        sb.setLength(0);
+
+        System.out.println("\nmultiplicand");
+        System.out.println(multiplicand);
+        System.out.println("multiplier");
+        System.out.println(multiplier);
+
+        int multiplicandLength = multiplicand.hexString.length();
+        int multiplierLength = multiplier.hexString.length();
+
+        Hexadecimal[] sumArray = new Hexadecimal[multiplicandLength + multiplierLength];
+
+        double doubleTemp = 0;
+
+        Hexadecimal zero = new Hexadecimal();
+        Hexadecimal hexProduct = new Hexadecimal();
+        Hexadecimal hexCarry = new Hexadecimal();
+        Hexadecimal hexSum = new Hexadecimal();
+        Hexadecimal hexTemp = new Hexadecimal();
+
+        int currentIndex = 0;
+
+        // Initialize all elements in array to the zero Hexadecimal ("0.0")
+        for (int i = 0; i < sumArray.length; i++)
+        {
+            sumArray[i] = zero;
+        }
+
+        for (int i = 0; i < multiplierLength; i++)
+        {
+            currentIndex = i;
+            hexCarry.hexString = "0.0";
+
+            for (int j = 0; j < multiplicandLength; j++)
+            {
+                doubleTemp = hexMap.get(multiplicand.hexString.charAt(j)) * hexMap.get(multiplier.hexString.charAt(i));
+                Decimal decimalProduct = new Decimal(doubleTemp);
+
+                hexProduct = decimalProduct.decimalToHexadecimal(1);
+
+                hexProduct = hexProduct.add(hexCarry);
+
+                System.out.println("\nhexProduct");
+                System.out.println(hexProduct);
+                System.out.println("hexCarry");
+                System.out.println(hexCarry);
+
+                // If the Hexadecimal has two digits in front of the radix point, carry the leading digit
+                if (hexProduct.hexString.length() == 4)
+                {
+                    sb.append(hexProduct.hexString.charAt(0)).append(".0");
+                    hexCarry.hexString = sb.toString();
+                    sb.setLength(0);
+
+                    sb.append(hexProduct).deleteCharAt(0);
+                    hexProduct.hexString = sb.toString();
+                    sb.setLength(0);
+                }
+
+                else
+                {
+                    hexCarry.hexString = "0.0";
+                }
+
+                hexTemp = sumArray[currentIndex];
+                hexSum = hexTemp.add(hexProduct);
+
+                sumArray[currentIndex] = hexSum;
+
+                if (j == multiplicandLength - 1 && !hexCarry.hexString.equals("0.0"))
+                {
+                    System.out.println(hexCarry);
+
+                    hexTemp = sumArray[currentIndex + 1];
+                    hexSum = hexTemp.add(hexCarry);
+
+                    sumArray[currentIndex + 1] = hexSum;
+                }
+
+                currentIndex++;
+            }
+
+            System.out.println();
+
+            currentIndex = 0;
+            for (int k = 0; k < sumArray.length; k++)
+            {
+                System.out.println(sumArray[k]);
+            }
+
+            System.out.println("******************************");
+        }
+
+        System.out.println();
+        System.out.println();
         return answer;
     }
 
@@ -502,8 +635,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             negative = true;
         }
 
-        System.out.println("A");
-
         /*
         if (Double.parseDouble(divisor.hexString) == 0)
         {
@@ -526,26 +657,31 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         divisor = divisor.removePoint();
 
         // Add point to end of dividend and divisor so in Octal format
-        dividend = dividend.insertPoint(0);
-        divisor = divisor.insertPoint(0);
+        dividend = dividend.insertPointFromRight(0);
+        divisor = divisor.insertPointFromRight(0);
 
         // Add a zero to the end of dividend and divisor so in Octal format
         dividend = dividend.appendZero();
         divisor = divisor.appendZero();
 
+        System.out.print("\n\ndivisor: ");
+        System.out.print(divisor);
+        System.out.print("\ndividend: ");
+        System.out.print(dividend);
+
         // Find the biggest base-eight integer that, when multiplied by the divisor,
         // is closest to the dividend
         multiplier = getLargestMultiplier(divisor, dividend);
+
+        System.out.print("\nmultiplier: ");
+        System.out.print(multiplier);
 
         product = multiplier.multiply(divisor);
 
         remainder = dividend.subtract(product);
 
-        System.out.println("remainder");
-        System.out.println(remainder);
-
         // If the divisor divides into the dividend evenly (i.e. remainder is 0)
-        if (Double.parseDouble(remainder.hexString) == 0)
+        if (remainder.hexadecimalToDecimal().getDecimal() == 0)
         {
             quotient = multiplier;
         }
@@ -558,10 +694,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             quotient = quotient.removeTrailingZeroes();
             sb.setLength(0);
 
+            System.out.print("\nquotient: ");
+            System.out.print(quotient);
+
             int digitsAfterPoint = 0;
             // While there is still a remainder and digitsAfterPoint is less
             // than the desired scale of the final answer
-            while (Double.parseDouble(remainder.hexString) != 0 &&
+            while (remainder.hexadecimalToDecimal().getDecimal() != 0 &&
                     digitsAfterPoint < scale)
             {
                 remainder = remainder.shiftPointRightByOne();
@@ -570,7 +709,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
                 // If the divisor doesn't 'fit' into the remainder,
                 // place a zero to the correct place in the quotient
-                if (Double.parseDouble(multiplier.hexString) == 0)
+                if (multiplier.hexadecimalToDecimal().getDecimal() == 0)
                 {
                     sb.append(quotient).append('0');
                     quotient.hexString = sb.toString();
@@ -604,6 +743,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             quotient.hexString = sb.toString();
         }
+
+        System.out.println();
+        System.out.println();
 
         return quotient;
     }
@@ -715,6 +857,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         Hexadecimal product = new Hexadecimal();
 
         product = divisor.multiply(multiplier);
+
+        System.out.println("\ndivisor");
+        System.out.println(divisor);
+        System.out.println("dividend");
+        System.out.println(dividend);
 
         while (product.lessThanHexadecimal(dividend))
         {
