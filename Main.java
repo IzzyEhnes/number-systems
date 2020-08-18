@@ -51,9 +51,9 @@ public class Main
         System.out.println("******************************************");
         multiplyHexadecimalTest();
         System.out.println("******************************************");
-        getLargestMultiplier();
+        //getLargestMultiplier();
         System.out.println("******************************************");
-        hexadecimalToDecimalTest();
+        //hexadecimalToDecimalTest();
         System.out.println("******************************************");
         //divideHexadecimalTest();
         System.out.println("******************************************");
@@ -853,27 +853,30 @@ public class Main
     {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2F.0");
-        Hexadecimal h3 = new Hexadecimal("A5.1");
+        Hexadecimal h3 = new Hexadecimal("A5.1C");
         Hexadecimal h4 = new Hexadecimal("-4A.1C");
         Hexadecimal h5 = new Hexadecimal("15.3");
         Hexadecimal h6 = new Hexadecimal("-9D4E053.FA5");
         Hexadecimal h7 = new Hexadecimal("-BC5A.082D1FE67");
-        Hexadecimal h8 = new Hexadecimal("12.0");
-        Hexadecimal h9 = new Hexadecimal("D.0");
+        Hexadecimal h8 = new Hexadecimal("4E053.FA5");
+        Hexadecimal h9 = new Hexadecimal("BC5A.082D1FE");
+        Hexadecimal h10 = new Hexadecimal("D2.0");
+        Hexadecimal h11 = new Hexadecimal("1200.0");
 
         System.out.println("Begin multiplyHexadecimalTest():");
 
         System.out.println("\nh2.multiplyHexadecimal(h3)");
         System.out.println("Expected: 1E4D.F");
         System.out.print("Returned value: ");
-        System.out.print(h2.multiply(h3));
+        System.out.print(h3.multiply(h2));
 
+        /*
         System.out.println("\n\nh4.multiplyHexadecimal(h5)");
         System.out.println("Expected: -622.314");
         System.out.print("Returned value: ");
         System.out.print(h4.multiply(h5));
 
-        System.out.println("\n\nh3.multiplyHexadecimal(h4)");
+        System.out.println("\n\nh6.multiplyHexadecimal(h7)");
         System.out.println("Expected: 73BC9E4EC00.6F6E58F75163");
         System.out.print("Returned value: ");
         System.out.print(h6.multiply(h7));
@@ -888,6 +891,13 @@ public class Main
         System.out.print("Returned value: ");
         System.out.print(h8.multiply(h9));
 
+        System.out.println("\n\nh10.multiplyHexadecimal(h11)");
+        System.out.println("Expected: EC400.0");
+        System.out.print("Returned value: ");
+        System.out.print(h10.multiply(h11));
+
+
+         */
         System.out.print("\n\nEnd isHexadecimalTest()\n");
     }
 
@@ -902,6 +912,10 @@ public class Main
         Hexadecimal h5 = new Hexadecimal("EC.0");
         Hexadecimal h6 = new Hexadecimal("FE58.0");
         Hexadecimal h7 = new Hexadecimal("5.0");
+        Hexadecimal h8 = new Hexadecimal("ECE46.0");
+        Hexadecimal h9 = new Hexadecimal("01200.0");
+        Hexadecimal h10 = new Hexadecimal("ECE46.0");
+        Hexadecimal h11 = new Hexadecimal("1200.0");
 
         System.out.println("Begin getLargestMultiplierTest():");
 
@@ -919,6 +933,16 @@ public class Main
         System.out.println("Expected: 32DE.0");
         System.out.print("Returned value: ");
         System.out.print(h6.getLargestMultiplier(h7, h6));
+
+        System.out.println("\n\nh8.getLargestMultiplier(h9)");
+        System.out.println("Expected: D2.0");
+        System.out.print("Returned value: ");
+        System.out.print(h8.getLargestMultiplier(h9, h8));
+
+        System.out.println("\n\nh8.getLargestMultiplier(h9)");
+        System.out.println("Expected: D2.0");
+        System.out.print("Returned value: ");
+        System.out.print(h8.getLargestMultiplier(h11, h10));
 
         System.out.print("\n\nEnd getLargestMultiplierTest()\n");
     }
@@ -951,17 +975,13 @@ public class Main
     public static void divideHexadecimalTest()
     {
         Hexadecimal h1 = new Hexadecimal();
-        Hexadecimal h2 = new Hexadecimal("ECE.0");
+        Hexadecimal h2 = new Hexadecimal("ECE.46");
         Hexadecimal h3 = new Hexadecimal("12.0");
-        Hexadecimal h4 = new Hexadecimal("-4A.1C");
-        Hexadecimal h5 = new Hexadecimal("15.3");
-        Hexadecimal h6 = new Hexadecimal("-9D4E053.FA5");
-        Hexadecimal h7 = new Hexadecimal("-BC5A.082D1FE67");
 
         System.out.println("Begin divideHexadecimalTest():");
 
         System.out.println("\nh2.divideHexadecimal(h3)");
-        System.out.println("Expected: 76");
+        System.out.println("Expected: D2.92");
         System.out.print("Returned value: ");
         System.out.print(h2.divide(h3, 5));
 
