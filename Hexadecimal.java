@@ -396,9 +396,10 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             if (sumArray[i].hexString.length() == 4)
             {
                 hexCarry.hexString = sumArray[i].hexString.charAt(0) + ".0";
-                hexTemp.hexString = sumArray[i].hexString.charAt(1) + ".0";
 
-                sb.append(hexTemp).reverse().delete(0, 2).reverse();
+                Hexadecimal tempHex = new Hexadecimal(sumArray[i].hexString.charAt(1) + ".0");
+
+                sb.append(tempHex).reverse().delete(0, 2).reverse();
 
                 sumArray[i + 1] = sumArray[i + 1].add(hexCarry);
             }
@@ -663,18 +664,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
     public Hexadecimal getLargestMultiplier(Hexadecimal divisor, Hexadecimal dividend)
     {
-        Hexadecimal multiplier = new Hexadecimal();
-
+        Hexadecimal product = new Hexadecimal();
+        Hexadecimal multiplier = new Hexadecimal("1.0");
         Hexadecimal one = new Hexadecimal("1.0");
 
-        Hexadecimal product = new Hexadecimal();
-
         product = divisor.multiply(multiplier);
-
-        System.out.println("\ndivisor");
-        System.out.println(divisor);
-        System.out.println("dividend");
-        System.out.println(dividend);
 
         while (product.lessThanHexadecimal(dividend))
         {
@@ -682,15 +676,28 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             product = divisor.multiply(multiplier);
 
+            product = product.removeLeadingZeroes().removeTrailingZeroes();
+            dividend = dividend.removeLeadingZeroes().removeTrailingZeroes();
+
             if (product.hexString.equals(dividend.hexString))
             {
                 multiplier = multiplier.add(one);
-
-                break;
             }
+
+            product = product.appendZero();
+            dividend = dividend.appendZero();
+
+            System.out.println("\nproduct");
+            System.out.println(product);
+            System.out.println("multiplier");
+            System.out.println(multiplier);
+            System.out.println("divisor");
+            System.out.println(divisor);
         }
 
         multiplier = multiplier.subtract(one);
+
+        System.out.println();
 
         return multiplier;
     }
