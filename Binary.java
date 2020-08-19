@@ -166,7 +166,7 @@ public class Binary extends NumberSystem<Binary>
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
-        int pointPosition = multiplicand.getDigitsBeforePoint();
+        int pointPosition = getDigitsBeforePoint(multiplicand.binaryString);
 
         multiplicand = multiplicand.removePoint();
         multiplier = multiplier.removePoint();
@@ -247,7 +247,7 @@ public class Binary extends NumberSystem<Binary>
         }
 
         // How many digits will be in front of the radix point in the final quotient (including placeholder zeroes)
-        int dividendDigitsBeforePoint = dividend.getDigitsBeforePoint();
+        int dividendDigitsBeforePoint = getDigitsBeforePoint(dividend.binaryString);
 
         dividend = dividend.removePoint().insertPointFromRight(0).appendZero();
 
@@ -308,7 +308,7 @@ public class Binary extends NumberSystem<Binary>
             }
 
             // "Bring down" the next digit of the dividend to add to currentDividend, placing it to the left of the radix point
-            currentDividendDigitsBeforePoint = currentDividend.getDigitsBeforePoint();
+            currentDividendDigitsBeforePoint = getDigitsBeforePoint(currentDividend.binaryString);
             dividendBuilder.append(currentDividend);
             dividendBuilder.insert(currentDividendDigitsBeforePoint, dividend.binaryString.charAt(currentIndex));
             currentDividend.binaryString = dividendBuilder.toString();
@@ -653,23 +653,6 @@ public class Binary extends NumberSystem<Binary>
 
 
 
-    public int getDigitsBeforePoint()
-    {
-        int numDigits = 0;
-
-        Binary currentBinary = new Binary(this.binaryString);
-
-        while (numDigits < currentBinary.binaryString.length()
-                && currentBinary.binaryString.charAt(numDigits) != '.')
-        {
-            numDigits++;
-        }
-
-        return numDigits;
-    }
-
-
-
     public void addPlaceholders(Binary inBinary)
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -679,8 +662,8 @@ public class Binary extends NumberSystem<Binary>
         int currentBinaryPointPosition = getPointPosition(currentBinary.binaryString);
         int inBinaryPointPosition = getPointPosition(inBinary.binaryString);
 
-        int aDigitsBeforePoint = currentBinary.getDigitsBeforePoint();
-        int bDigitsBeforePoint = inBinary.getDigitsBeforePoint();
+        int aDigitsBeforePoint = getDigitsBeforePoint(currentBinary.binaryString);
+        int bDigitsBeforePoint = getDigitsBeforePoint(inBinary.binaryString);
         // If needed, add placeholder zeroes so both Binarys
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)

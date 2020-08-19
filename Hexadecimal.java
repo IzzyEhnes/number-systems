@@ -442,12 +442,14 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         dividend = dividend.removePoint().insertPointFromRight(0).appendZero();
         divisor = divisor.removePoint().insertPointFromRight(0).appendZero();
 
-        int quotientRadixPosition = dividend.getDigitsBeforePoint();
+        int quotientRadixPosition = getDigitsBeforePoint(dividend.hexString);
 
-        //System.out.println("\n\ndividend: ");
-        //System.out.println(dividend);
-        //System.out.println("divisor: ");
-        //System.out.println(divisor);
+        /*
+        System.out.println("\n\ndividend: ");
+        System.out.println(dividend);
+        System.out.println("divisor: ");
+        System.out.println(divisor);
+         */
 
         sb.append(dividend.hexString.charAt(0)).append(".0");
         remainder.hexString = sb.toString();
@@ -478,7 +480,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         remainder = remainder.subtract(product);
 
-        //System.out.println("Aremainder: ");
+        //System.out.println("remainder: ");
         //System.out.println(remainder);
 
         Hexadecimal tempRemainder = new Hexadecimal(remainder.hexString);
@@ -488,7 +490,10 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         {
             //System.out.println();
 
-            multiplier = getLargestMultiplier(divisor, remainder);
+            multiplier = getLargestMultiplier(divisor, remainder).removeLeadingZeroes();
+
+            //System.out.println("multiplier");
+            //System.out.println(multiplier);
 
             quotientBuilder.append(multiplier.hexString.charAt(0));
 
@@ -504,14 +509,24 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             int radixPosition = getPointPosition(remainder.hexString);
 
-            sb.append(remainder).reverse().insert(radixPosition + 1,"0").reverse();
+            sb.append(dividend).reverse().insert(radixPosition + 1,"0").reverse();
+            dividend.hexString = sb.toString();
+
+            sb.setLength(0);
+
+            sb.append(remainder).reverse().insert(radixPosition + 1, dividend.hexString.charAt(digitCount + 2)).reverse();
+
+            //System.out.println("remainder charAt: ");
+            //System.out.println(dividend.hexString.charAt(digitCount + 2));
 
             remainder.hexString = sb.toString();
 
             //System.out.println("remainder: ");
             //System.out.println(remainder);
 
-            tempRemainder = remainder.removeLeadingZeroes().removeTrailingZeroes();
+            tempRemainder = remainder;
+
+            tempRemainder = tempRemainder.removeLeadingZeroes().removeTrailingZeroes();
 
             sb.setLength(0);
 
@@ -520,79 +535,14 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         quotient.hexString = quotientBuilder.toString();
 
-        quotient = quotient.insertPointFromLeft(quotientRadixPosition);
+        //quotient = quotient.insertPointFromLeft(quotientRadixPosition);
+
+        //System.out.println("quotient: ");
+        //System.out.println(quotient);
 
         return quotient;
     }
 
-
-/*
-    public Hexadecimal divide(Hexadecimal divisor, int scale)
-    {
-        Hexadecimal dividend = new Hexadecimal(this.hexString);
-        Hexadecimal product = new Hexadecimal();
-        Hexadecimal multiplier = new Hexadecimal();
-        Hexadecimal remainder = new Hexadecimal();
-
-        // Add placeholder zeroes, if needed
-        divisor.addPlaceholders(dividend);
-        dividend.addPlaceholders(divisor);
-
-        // Remove points from both the divisor and dividend to treat as whole numbers
-        dividend = dividend.removePoint();
-        divisor = divisor.removePoint();
-
-        // Add point to end of dividend and divisor so in Octal format
-        dividend = dividend.insertPointFromRight(0);
-        divisor = divisor.insertPointFromRight(0);
-
-        // Add a zero to the end of dividend and divisor so in Octal format
-        dividend = dividend.appendZero();
-        divisor = divisor.appendZero();
-
-        System.out.println("dividend");
-        System.out.println(dividend);
-        System.out.println("divisor");
-        System.out.println(divisor);
-
-        if (dividend.hexString.equals(divisor.hexString))
-        {
-            return new Hexadecimal("1.0");
-        }
-
-        StringBuilder quotientBuilder = new StringBuilder();
-        StringBuilder dividendBuilder = new StringBuilder();
-
-        Hexadecimal currentDividend = new Hexadecimal();
-
-        dividendBuilder.append(dividend.hexString.charAt(0)).append(".0");
-
-        currentDividend.hexString = dividendBuilder.toString();
-
-        if (divisor.lessThanHexadecimal(currentDividend))
-        {
-            multiplier = getLargestMultiplier(divisor, currentDividend);
-
-            multiplier = multiplier.removeTrailingZeroes().removePoint();
-
-            quotientBuilder.append(multiplier);
-
-            product = multiplier.multiply(divisor);
-
-            remainder = product.subtract(dividend);
-        }
-
-        else
-        {
-            quotientBuilder.append("0");
-
-            remainder
-        }
-
-        return new Hexadecimal();
-    }
-
- */
 
 
     public Decimal hexadecimalToDecimal()
@@ -602,7 +552,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         double sum = 0;
         int currentInt = 0;
 
-        int n = this.getDigitsBeforePoint() - 1;
+        int n = getDigitsBeforePoint(this.hexString) - 1;
 
         for (int i = 0; i < inString.length(); i++)
         {
@@ -665,8 +615,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         int aPointPosition = getPointPosition(currentHex.hexString);
         int bPointPosition = getPointPosition(inHex.hexString);
 
-        int aDigitsBeforePoint = currentHex.getDigitsBeforePoint();
-        int bDigitsBeforePoint = inHex.getDigitsBeforePoint();
+        int aDigitsBeforePoint = getDigitsBeforePoint(currentHex.hexString);
+        int bDigitsBeforePoint = getDigitsBeforePoint(inHex.hexString);
         // If needed, add placeholder zeroes so both Hexadecimals
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)
@@ -709,23 +659,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             this.hexString = sb.toString();
         }
-    }
-
-
-
-    public int getDigitsBeforePoint()
-    {
-        int numDigits = 0;
-
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        while (numDigits < currentHex.hexString.length()
-                && currentHex.hexString.charAt(numDigits) != '.')
-        {
-            numDigits++;
-        }
-
-        return numDigits;
     }
 
 
@@ -938,7 +871,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         Hexadecimal currentHex = new Hexadecimal(this.hexString);
 
-        int pointPosition = currentHex.getDigitsBeforePoint();
+        int pointPosition = getDigitsBeforePoint(currentHex.hexString);
         if (pointPosition == currentHex.hexString.length() - 2)
         {
             sb.append(currentHex).append('0');

@@ -578,7 +578,7 @@ public class Octal extends NumberSystem<Octal>
         StringBuilder sb = new StringBuilder();
         sb.append(this);
 
-        int n = this.getDigitsBeforePoint() - 1;
+        int n = getDigitsBeforePoint(this.octal) - 1;
 
         boolean isNegative = false;
         if (sb.charAt(0) == '-')
@@ -774,8 +774,8 @@ public class Octal extends NumberSystem<Octal>
         int aPointPosition = getPointPosition(currentOctal.octal);
         int bPointPosition = getPointPosition(inOctal.octal);
 
-        int aDigitsBeforePoint = currentOctal.getDigitsBeforePoint();
-        int bDigitsBeforePoint = inOctal.getDigitsBeforePoint();
+        int aDigitsBeforePoint = getDigitsBeforePoint(currentOctal.octal);
+        int bDigitsBeforePoint = getDigitsBeforePoint(inOctal.octal);
         // If needed, add placeholder zeroes so both Octals
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)
@@ -858,22 +858,6 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public int getDigitsBeforePoint()
-    {
-        int numDigits = 0;
-
-        Octal currentOctal = new Octal(this.octal);
-
-        while (numDigits < currentOctal.octal.length() && currentOctal.octal.charAt(numDigits) != '.')
-        {
-            numDigits++;
-        }
-
-        return numDigits;
-    }
-
-
-
     public Octal removeLeadingZeroes()
     {
         StringBuilder sb = new StringBuilder();
@@ -935,7 +919,7 @@ public class Octal extends NumberSystem<Octal>
 
         Octal currentOctal = new Octal(this.octal);
 
-        int pointPosition = currentOctal.getDigitsBeforePoint();
+        int pointPosition = getDigitsBeforePoint(currentOctal.octal);
         if (pointPosition == currentOctal.octal.length() - 2)
         {
             sb.append(currentOctal).append('0');
