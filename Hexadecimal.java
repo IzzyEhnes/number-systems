@@ -444,23 +444,10 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         int quotientRadixPosition = getDigitsBeforePoint(dividend.hexString);
 
-        /*
-        System.out.println("\n\ndividend: ");
-        System.out.println(dividend);
-        System.out.println("divisor: ");
-        System.out.println(divisor);
-         */
-
         sb.append(dividend.hexString.charAt(0)).append(".0");
         remainder.hexString = sb.toString();
 
-        //System.out.println("remainder: ");
-        //System.out.println(remainder);
-
         multiplier = getLargestMultiplier(divisor, remainder);
-
-        //System.out.println("multiplier");
-        //System.out.println(multiplier);
 
         product = divisor.multiply(multiplier);
 
@@ -480,30 +467,17 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         remainder = remainder.subtract(product);
 
-        //System.out.println("remainder: ");
-        //System.out.println(remainder);
-
         Hexadecimal tempRemainder = new Hexadecimal(remainder.hexString);
 
         int digitCount = 0;
-        while (!tempRemainder.hexString.equals(".") && digitCount < (scale + quotientRadixPosition))
+        while (digitCount < (scale + quotientRadixPosition))
         {
-            //System.out.println();
-
             multiplier = getLargestMultiplier(divisor, remainder).removeLeadingZeroes();
-
-            //System.out.println("multiplier");
-            //System.out.println(multiplier);
+            multiplier.hexString = fixNakedRadixPoint(multiplier.hexString);
 
             quotientBuilder.append(multiplier.hexString.charAt(0));
 
-            //System.out.println("quotient: ");
-            //System.out.println(quotientBuilder.toString());
-
             product = multiplier.multiply(divisor);
-
-            //System.out.println("product: ");
-            //System.out.println(product);
 
             remainder = remainder.subtract(product);
 
@@ -516,13 +490,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             sb.append(remainder).reverse().insert(radixPosition + 1, dividend.hexString.charAt(digitCount + 2)).reverse();
 
-            //System.out.println("remainder charAt: ");
-            //System.out.println(dividend.hexString.charAt(digitCount + 2));
-
             remainder.hexString = sb.toString();
-
-            //System.out.println("remainder: ");
-            //System.out.println(remainder);
 
             tempRemainder = remainder;
 
@@ -535,10 +503,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         quotient.hexString = quotientBuilder.toString();
 
-        //quotient = quotient.insertPointFromLeft(quotientRadixPosition);
-
-        //System.out.println("quotient: ");
-        //System.out.println(quotient);
+        quotient = quotient.insertPointFromLeft(quotientRadixPosition).removeLeadingZeroes().removeTrailingZeroes();
+        quotient.hexString = fixNakedRadixPoint(quotient.hexString);
 
         return quotient;
     }
