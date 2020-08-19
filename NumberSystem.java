@@ -55,6 +55,23 @@ public abstract class NumberSystem<T>
 
 
 
+    public int getDigitsBeforePoint(String inString)
+    {
+        int numDigits = 0;
+
+        //Hexadecimal currentHex = new Hexadecimal(this.hexString);
+
+        while (numDigits < inString.length()
+                && inString.charAt(numDigits) != '.')
+        {
+            numDigits++;
+        }
+
+        return numDigits;
+    }
+
+
+
     public abstract String toString();
 }
 
