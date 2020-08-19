@@ -72,6 +72,51 @@ public abstract class NumberSystem<T>
 
 
 
+// Places a placeholder zero to the right and/or left of the radix point if it has
+// no other digits on either side ("naked").
+// Precondition: The incoming String contains a radix point
+// Postcondition: One or two zeroes have been added to inString so the radix point has
+//                digits on both sides.
+    public String fixNakedRadixPoint(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        int digitsBeforePoint = getDigitsBeforePoint(inString);
+        int pointPosition = getPointPosition(inString);
+
+        // If the radix point is the only char, place a zero in front and behind it
+        if (digitsBeforePoint == 0 && pointPosition == 0)
+        {
+            sb.insert(0, '0').append('0');
+            return sb.toString();
+        }
+
+        // If the radix point has nothing in front of it, insert a zero in the front
+        else if (digitsBeforePoint == 0)
+        {
+            sb.insert(0, '0');
+            return sb.toString();
+        }
+
+        // If the radix point has nothing behind it, append a zero
+        else if (pointPosition == 0)
+        {
+            sb.append('0');
+            return sb.toString();
+        }
+
+        // If the radix point isn't "naked" in the front or back or inString doesn't
+        // have a radix point, return the original string
+        else
+        {
+            return inString;
+        }
+    }
+
+
+
     public abstract String toString();
 }
 
