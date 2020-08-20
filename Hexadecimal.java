@@ -7,11 +7,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 {
     private String hexString = "0.0";
 
-    //HashMap<Character, Integer> hexMap = new HashMap<>();
+    HashMap<Character, String> hexToBinaryMap = new HashMap<>();
 
 
     public Hexadecimal()
     {
+
     }
 
 
@@ -19,6 +20,23 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     public Hexadecimal(String inString)
     {
         this.hexString = inString;
+
+        hexToBinaryMap.put('0', "0000");
+        hexToBinaryMap.put('1', "0001");
+        hexToBinaryMap.put('2', "0010");
+        hexToBinaryMap.put('3', "0011");
+        hexToBinaryMap.put('4', "0100");
+        hexToBinaryMap.put('5', "0101");
+        hexToBinaryMap.put('6', "0110");
+        hexToBinaryMap.put('7', "0111");
+        hexToBinaryMap.put('8', "1000");
+        hexToBinaryMap.put('9', "1001");
+        hexToBinaryMap.put('A', "1010");
+        hexToBinaryMap.put('B', "1011");
+        hexToBinaryMap.put('C', "1100");
+        hexToBinaryMap.put('D', "1101");
+        hexToBinaryMap.put('E', "1110");
+        hexToBinaryMap.put('F', "1111");
     }
 
 
@@ -535,6 +553,53 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         }
 
         return new Decimal(sum);
+    }
+
+
+
+    public Binary hexadecimalToBinary()
+    {
+        StringBuilder answerBuilder = new StringBuilder();
+
+        StringBuilder integerBuilder = new StringBuilder();
+        StringBuilder fractionalBuilder = new StringBuilder();
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < this.hexString.length(); i++)
+        {
+            if (this.hexString.charAt(i) == '.')
+            {
+                decimalFlag = true;
+                continue;
+            }
+
+            if (!decimalFlag)
+            {
+                integerBuilder.append(this.hexString.charAt(i));
+            }
+
+            else
+            {
+                fractionalBuilder.append(this.hexString.charAt(i));
+            }
+        }
+
+        String integerString = integerBuilder.toString();
+        String fractionString = fractionalBuilder.toString();
+
+        for (int i = 0; i < integerString.length(); i++)
+        {
+            answerBuilder.append(hexToBinaryMap.get(integerString.charAt(i)));
+        }
+
+        answerBuilder.append('.');
+
+        for (int i = 0; i < fractionalBuilder.length(); i++)
+        {
+            answerBuilder.append(hexToBinaryMap.get(fractionalBuilder.charAt(i)));
+        }
+
+        return new Binary(answerBuilder.toString());
     }
 
 
