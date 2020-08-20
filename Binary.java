@@ -636,6 +636,67 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    public Hexadecimal binaryToHexadecimal()
+    {
+        StringBuilder nibbleBuilder = new StringBuilder();
+        StringBuilder answerBuilder = new StringBuilder();
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        boolean negative = false;
+        if (currentBinary.isNegative())
+        {
+            negative = true;
+
+            StringBuilder tempSB = new StringBuilder();
+
+            tempSB.append(currentBinary);
+            tempSB.deleteCharAt(0);
+
+            currentBinary.binaryString = tempSB.toString();
+        }
+
+        currentBinary = currentBinary.makeGroupsOfNibbles();
+
+        int pointPosition = getDigitsBeforePoint(currentBinary.binaryString) / 4;
+
+        currentBinary = currentBinary.removePoint();
+
+        String nibble = "";
+
+        int bitCount = 0;
+        for (int i = 0; i < currentBinary.binaryString.length(); i++)
+        {
+            nibbleBuilder.append(currentBinary.binaryString.charAt(i));
+
+            bitCount++;
+
+            if (bitCount == 4)
+            {
+                nibble = nibbleBuilder.toString();
+
+                answerBuilder.append(binaryToHexMap.get(nibble));
+
+                nibbleBuilder.setLength(0);
+
+                bitCount = 0;
+            }
+        }
+
+        Hexadecimal answer = new Hexadecimal(answerBuilder.toString());
+
+        answer = answer.insertPointFromLeft(pointPosition);
+
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
+        }
+
+        return answer;
+    }
+
+
+
     public Binary removePoint()
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -813,6 +874,21 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    public boolean isNegative()
+    {
+        if (this.binaryString.charAt(0) == '-')
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
+
+
     public Binary shiftPointRightByOne()
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -865,8 +941,6 @@ public class Binary extends NumberSystem<Binary>
     public Binary makeGroupsOfNibbles()
     {
         StringBuilder answerBuilder = new StringBuilder();
-
-        Binary currentBinary = new Binary(this.binaryString);
 
         StringBuilder integerBuilder = new StringBuilder();
         StringBuilder fractionalBuilder = new StringBuilder();
