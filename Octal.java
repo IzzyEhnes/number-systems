@@ -618,19 +618,27 @@ public class Octal extends NumberSystem<Octal>
 
     public Binary octalToBinary()
     {
-        String inOctal = this.octal;
+        Octal currentOctal = new Octal(this.octal);
 
         StringBuilder binaryStringBuilder = new StringBuilder();
 
-        for (int i = 0; i < inOctal.length(); i++)
+        boolean negative = false;
+        if (currentOctal.isNegative())
         {
-            if (inOctal.charAt(i) == '.')
+            currentOctal = currentOctal.removeNegativeSign();
+
+            negative = true;
+        }
+
+        for (int i = 0; i < currentOctal.octal.length(); i++)
+        {
+            if (currentOctal.octal.charAt(i) == '.')
             {
                 binaryStringBuilder.append('.');
                 continue;
             }
 
-            int currentDigit = (inOctal.charAt(i) - '0');
+            int currentDigit = (currentOctal.octal.charAt(i) - '0');
 
             if (currentDigit % 4 < currentDigit)
             {
@@ -671,7 +679,27 @@ public class Octal extends NumberSystem<Octal>
             }
         }
 
-        return new Binary(binaryStringBuilder.toString());
+        Binary answer = new Binary(binaryStringBuilder.toString());
+
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
+        }
+
+        return answer;
+    }
+
+
+
+    public Hexadecimal octalToHexadecimal()
+    {
+        Binary binaryTemp = new Binary();
+
+        binaryTemp = this.octalToBinary();
+
+        Hexadecimal answer = binaryTemp.binaryToHexadecimal();
+
+        return  answer;
     }
 
 
