@@ -2,14 +2,36 @@ package Ehnes.Izzy.NumberSystems;
 
 import java.lang.Math;
 import java.security.InvalidParameterException;
+import java.util.HashMap;
 
 public class Binary extends NumberSystem<Binary>
 {
     private String binaryString = "0.0";
 
+    HashMap<String, Character> binaryToHexMap = new HashMap<>();
+
+
 
     public Binary()
     {
+        binaryToHexMap.put("-", '-');
+        binaryToHexMap.put(".", '.');
+        binaryToHexMap.put("0000", '0');
+        binaryToHexMap.put("0001", '1');
+        binaryToHexMap.put("0010", '2');
+        binaryToHexMap.put("0011", '3');
+        binaryToHexMap.put("0100", '4');
+        binaryToHexMap.put("0101", '5');
+        binaryToHexMap.put("0110", '6');
+        binaryToHexMap.put("0111", '7');
+        binaryToHexMap.put("1000", '8');
+        binaryToHexMap.put("1001", '9');
+        binaryToHexMap.put("1010", 'A');
+        binaryToHexMap.put("1011", 'B');
+        binaryToHexMap.put("1100", 'C');
+        binaryToHexMap.put("1101", 'D');
+        binaryToHexMap.put("1110", 'E');
+        binaryToHexMap.put("1111", 'F');
     }
 
 
@@ -17,6 +39,25 @@ public class Binary extends NumberSystem<Binary>
     public Binary(String inString)
     {
         binaryString = inString;
+
+        binaryToHexMap.put("-", '-');
+        binaryToHexMap.put(".", '.');
+        binaryToHexMap.put("0000", '0');
+        binaryToHexMap.put("0001", '1');
+        binaryToHexMap.put("0010", '2');
+        binaryToHexMap.put("0011", '3');
+        binaryToHexMap.put("0100", '4');
+        binaryToHexMap.put("0101", '5');
+        binaryToHexMap.put("0110", '6');
+        binaryToHexMap.put("0111", '7');
+        binaryToHexMap.put("1000", '8');
+        binaryToHexMap.put("1001", '9');
+        binaryToHexMap.put("1010", 'A');
+        binaryToHexMap.put("1011", 'B');
+        binaryToHexMap.put("1100", 'C');
+        binaryToHexMap.put("1101", 'D');
+        binaryToHexMap.put("1110", 'E');
+        binaryToHexMap.put("1111", 'F');
     }
 
 
@@ -817,6 +858,80 @@ public class Binary extends NumberSystem<Binary>
 
             return true;
         }
+    }
+
+
+
+    public Binary makeGroupsOfNibbles()
+    {
+        StringBuilder answerBuilder = new StringBuilder();
+
+        Binary currentBinary = new Binary(this.binaryString);
+
+        StringBuilder integerBuilder = new StringBuilder();
+        StringBuilder fractionalBuilder = new StringBuilder();
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < this.binaryString.length(); i++)
+        {
+            if (this.binaryString.charAt(i) == '.')
+            {
+                decimalFlag = true;
+                continue;
+            }
+
+            if (!decimalFlag)
+            {
+                integerBuilder.append(this.binaryString.charAt(i));
+            }
+
+            else
+            {
+                fractionalBuilder.append(this.binaryString.charAt(i));
+            }
+        }
+
+        String integerString = integerBuilder.toString();
+        String fractionString = fractionalBuilder.toString();
+
+        // If the integer part is comprised of already defined groups of nibbles
+        if (integerString.length() % 4 == 0)
+        {
+            answerBuilder.append(integerString);
+        }
+
+        else
+        {
+            // While the integer part of the Binary string cannot be broken up
+            // into groups of nibbles, add a placeholder zero(es) to the front
+            while (integerBuilder.toString().length() % 4 != 0)
+            {
+                integerBuilder.insert(0, '0');
+            }
+
+            answerBuilder.append(integerBuilder);
+        }
+
+        answerBuilder.append('.');
+
+        if (fractionString.length() % 4 == 0)
+        {
+            answerBuilder.append(fractionString);
+        }
+
+        else
+        {
+            // While the integer part of the Binary string cannot be broken up
+            // into groups of nibbles, add a placeholder zero(es) to the front
+            while (fractionalBuilder.toString().length() % 4 != 0)
+            {
+                fractionalBuilder.append('0');
+            }
+
+            answerBuilder.append(fractionalBuilder);
+        }
+
+        return new Binary(answerBuilder.toString());
     }
 
 
