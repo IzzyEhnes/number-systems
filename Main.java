@@ -63,11 +63,12 @@ public class Main
         System.out.println("******************************************");
         makeGroupsOfNibblesTest();
         System.out.println("******************************************");
+        hexadecimalToOctalTest();
+        System.out.println("******************************************");
     }
 
 
-    public static void addDecimalTest()
-    {
+    public static void addDecimalTest() {
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(2.5);
         Decimal d3 = new Decimal(9.75);
@@ -94,9 +95,7 @@ public class Main
     }
 
 
-
-    public static void subtractDecimalTest()
-    {
+    public static void subtractDecimalTest() {
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(86.19);
         Decimal d3 = new Decimal(12.463);
@@ -123,9 +122,7 @@ public class Main
     }
 
 
-
-    public static void multiplyDecimalTest()
-    {
+    public static void multiplyDecimalTest() {
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(2.25);
         Decimal d3 = new Decimal(15.64);
@@ -152,9 +149,7 @@ public class Main
     }
 
 
-
-    public static void divideDecimalTest()
-    {
+    public static void divideDecimalTest() {
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(1.25);
         Decimal d3 = new Decimal(63.25);
@@ -181,9 +176,7 @@ public class Main
     }
 
 
-
-    public static void decimalToBinaryTest()
-    {
+    public static void decimalToBinaryTest() {
         Decimal d1 = new Decimal(10.375);
         Decimal d2 = new Decimal(753.0);
         Decimal d3 = new Decimal(92.55);
@@ -209,9 +202,7 @@ public class Main
     }
 
 
-
-    public static void decimalToHexadecimalTest()
-    {
+    public static void decimalToHexadecimalTest() {
         Decimal d1 = new Decimal(7803.0);
         Decimal d2 = new Decimal(36.89);
         Decimal d3 = new Decimal(4018.65312);
@@ -261,9 +252,7 @@ public class Main
     }
 
 
-
-    public static void binaryPointTest()
-    {
+    public static void binaryPointTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("101.101");
         Binary b3 = new Binary("110.010101");
@@ -305,9 +294,7 @@ public class Main
     }
 
 
-
-    public static void addBinaryTest()
-    {
+    public static void addBinaryTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("101.1");
         Binary b3 = new Binary("010.0");
@@ -334,9 +321,7 @@ public class Main
     }
 
 
-
-    public static void subtractBinaryTest()
-    {
+    public static void subtractBinaryTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("101.1");
         Binary b3 = new Binary("010.0");
@@ -363,9 +348,7 @@ public class Main
     }
 
 
-
-    public static void multiplyBinaryTest()
-    {
+    public static void multiplyBinaryTest() {
         Binary b1 = new Binary("0");
         Binary b2 = new Binary("101.0");
         Binary b3 = new Binary("010.0");
@@ -405,9 +388,7 @@ public class Main
     }
 
 
-
-    public static void divideBinaryTest()
-    {
+    public static void divideBinaryTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("11.1");
         Binary b3 = new Binary("10010.011");
@@ -443,9 +424,7 @@ public class Main
     }
 
 
-
-    public static void lessThanBinaryTest()
-    {
+    public static void lessThanBinaryTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("11.1");
         Binary b3 = new Binary("10010.001");
@@ -490,9 +469,7 @@ public class Main
     }
 
 
-
-    public static void binaryToDecimalTest()
-    {
+    public static void binaryToDecimalTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("10110.11");
         Binary b3 = new Binary("1101001011.1011");
@@ -524,9 +501,7 @@ public class Main
     }
 
 
-
-    public static void decimalToOctalTest()
-    {
+    public static void decimalToOctalTest() {
         Decimal d1 = new Decimal();
         Decimal d2 = new Decimal(670.1640625);
         Decimal d3 = new Decimal(-23.0);
@@ -552,9 +527,7 @@ public class Main
     }
 
 
-
-    public static void binaryToOctalTest()
-    {
+    public static void binaryToOctalTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("10011011.00");
         Binary b3 = new Binary("101001101110.001011");
@@ -581,9 +554,7 @@ public class Main
     }
 
 
-
-    public static void binaryToHexadecimalTest()
-    {
+    public static void binaryToHexadecimalTest() {
         Binary b1 = new Binary();
         Binary b2 = new Binary("11.1");
         Binary b3 = new Binary("1011000101.0011100111111");
@@ -610,10 +581,7 @@ public class Main
     }
 
 
-
-
-    public static void octalToDecimalTest()
-    {
+    public static void octalToDecimalTest() {
         Octal b1 = new Octal();
         Octal b2 = new Octal("345.67");
         Octal b3 = new Octal("-12.1");
@@ -645,9 +613,7 @@ public class Main
     }
 
 
-
-    public static void octalToBinaryTest()
-    {
+    public static void octalToBinaryTest() {
         Octal b1 = new Octal();
         Octal b2 = new Octal("305.4");
         Octal b3 = new Octal("12.1");
@@ -679,9 +645,7 @@ public class Main
     }
 
 
-
-    public static void isHexadecimalTest()
-    {
+    public static void isHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("A9.F");
         Hexadecimal h3 = new Hexadecimal("8H6.EBC");
@@ -719,9 +683,7 @@ public class Main
     }
 
 
-
-    public static void hexadecimalPointTest()
-    {
+    public static void hexadecimalPointTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("F52B.9E");
         Hexadecimal h3 = new Hexadecimal("A8.04");
@@ -763,9 +725,7 @@ public class Main
     }
 
 
-
-    public static void addHexadecimalTest()
-    {
+    public static void addHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("4AD.9C2");
         Hexadecimal h3 = new Hexadecimal("F5.B");
@@ -806,9 +766,7 @@ public class Main
     }
 
 
-
-    public static void lessThanHexadecimalTest()
-    {
+    public static void lessThanHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("4AD.9C2");
         Hexadecimal h3 = new Hexadecimal("4AD.9C2");
@@ -849,9 +807,7 @@ public class Main
     }
 
 
-
-    public static void subtractHexadecimalTest()
-    {
+    public static void subtractHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("4AD.9C2");
         Hexadecimal h3 = new Hexadecimal("F5.B");
@@ -884,9 +840,7 @@ public class Main
     }
 
 
-
-    public static void multiplyHexadecimalTest()
-    {
+    public static void multiplyHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2F.0");
         Hexadecimal h3 = new Hexadecimal("A5.1C");
@@ -942,9 +896,7 @@ public class Main
     }
 
 
-
-    public static void getLargestMultiplier()
-    {
+    public static void getLargestMultiplier() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("2.0");
         Hexadecimal h3 = new Hexadecimal("E.0");
@@ -982,9 +934,7 @@ public class Main
     }
 
 
-
-    public static void hexadecimalToDecimalTest()
-    {
+    public static void hexadecimalToDecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("ECF.0");
         Hexadecimal h3 = new Hexadecimal("7D0A.9B");
@@ -1005,9 +955,7 @@ public class Main
     }
 
 
-
-    public static void divideHexadecimalTest()
-    {
+    public static void divideHexadecimalTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("EA.0");
         Hexadecimal h3 = new Hexadecimal("4.0");
@@ -1044,9 +992,7 @@ public class Main
     }
 
 
-
-    public static void hexadecimalToBinaryTest()
-    {
+    public static void hexadecimalToBinaryTest() {
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("EA.53");
         Hexadecimal h3 = new Hexadecimal("6D12F.A04C");
@@ -1079,9 +1025,7 @@ public class Main
     }
 
 
-
-    public static void makeGroupsOfNibblesTest()
-    {
+    public static void makeGroupsOfNibblesTest() {
         Binary h1 = new Binary();
         Binary h2 = new Binary("11.1");
         Binary h3 = new Binary("1011.0110");
@@ -1108,147 +1052,35 @@ public class Main
     }
 
 
+    public static void hexadecimalToOctalTest() {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("48.0");
+        Hexadecimal h3 = new Hexadecimal("AB6.19");
+        Hexadecimal h4 = new Hexadecimal("-8D4F.31EA5");
 
-    /*
-        System.out.println("Tests for Decimal class");
+        System.out.println("Begin hexadecimalToOctalTest():");
 
-        Decimal d1 = new Decimal();
-        Decimal d2 = new Decimal(2.5);
-        Decimal d3 = new Decimal(9.5);
-        Decimal d4 = new Decimal(50.0);
-        Decimal d5 = new Decimal(64.0);
-        Decimal d6 = new Decimal(140.7);
-        Decimal d7 = new Decimal(261.98);
+        System.out.println("\nh2.hexadecimalToOctal()");
+        System.out.println("Expected: 110.0");
+        System.out.print("Returned value: ");
+        System.out.print(h2.hexadecimalToOctal());
 
-        System.out.println(d1);
-        System.out.println(d2);
-        System.out.println(d2.addDecimal(d3));
-        System.out.println(d2.subtractDecimal(d3));
-        System.out.println(d2.multiplyDecimal(d3));
-        System.out.println(d2.divideDecimal(d3));
-        // System.out.println(d2.divideDecimal(d1)); // should throw divide by zero error
+        System.out.println("\n\nh3.hexadecimalToOctal()");
+        System.out.println("Expected: 5266.062");
+        System.out.print("Returned value: ");
+        System.out.print(h3.hexadecimalToOctal());
 
-        System.out.println("\ndecimalToBinary: ");
-        System.out.println(d3.decimalToBinary());
-        System.out.println(d4.decimalToBinary());
-        System.out.println(d5.decimalToBinary());
-        System.out.println(d6.decimalToBinary());
-        System.out.println(d7.decimalToBinary());
+        System.out.println("\n\nh4.hexadecimalToOctal()");
+        System.out.println("Expected: ~ -106517.1436512");
+        System.out.print("Returned value: ");
+        System.out.print(h4.hexadecimalToOctal());
 
+        System.out.println("\n\nh5.hexadecimalToOctal()");
+        System.out.println("Expected: 0.0");
+        System.out.print("Returned value: ");
+        System.out.print(h1.hexadecimalToOctal());
 
-
-
-
-        System.out.println("\nTests for Binary class");
-
-        Binary b1 = new Binary();
-        Binary b2 = new Binary("101");
-        Binary b3 = new Binary("010");
-        Binary b4 = new Binary("100101");
-        Binary b5 = new Binary("10101");
-        Binary b6 = new Binary("1111");
-        Binary b7 = new Binary("1111");
-        Binary b8 = new Binary("11100");
-        Binary b9 = new Binary("0012001");
-
-        System.out.println("\nisBinary: ");
-        System.out.println(b8.isBinary());
-        System.out.println(b9.isBinary());
-
-        System.out.println("\naddBinary: ");
-        System.out.println(b2.addBinary(b3));
-        System.out.println(b5.addBinary(b4));
-        System.out.println(b6.addBinary(b7));
-
-        System.out.println("\nonesComplement: ");
-        System.out.println(b4.onesComplement());
-        System.out.println(b6.onesComplement());
-
-        System.out.println("\ntwosComplement: ");
-        System.out.println(b8.twosComplement());
-        System.out.println(b2.twosComplement());
-        System.out.println(b3.twosComplement());
-        System.out.println(b6.twosComplement());
-
-        System.out.println("\nsubtractBinary: ");
-        System.out.println(b2.subtractBinary(b3));
-        System.out.println(b4.subtractBinary(b5));
-
-        System.out.println("\nmultiplyBinary: ");
-        System.out.println(b2.multiplyBinary(b3));
-        System.out.println(b3.multiplyBinary(b2));
-        System.out.println(b2.multiplyBinary(b8));
-
-        System.out.println("\nbinaryToDecimal: ");
-        System.out.println(b2.binaryToDecimal());
-        System.out.println(b4.binaryToDecimal());
-
-
-
-
-
-        System.out.println("\nTests for Octal class");
-        Octal o1 = new Octal();
-        Octal o2 = new Octal("-40.0");
-        Octal o3 = new Octal("-30.0");
-        //Octal o2 = new Octal("23.14");
-        //Octal o3 = new Octal("6.35");
-        Octal o4 = new Octal("1.0");
-        Octal o5 = new Octal("-13.62");
-        Octal o6 = new Octal("-10.0");
-        Octal o7 = new Octal("-345.0");
-        Octal o8 = new Octal("146.0");
-
-        o1.setOctal("-3.0");
-
-        System.out.println("\nisNegative: ");
-        System.out.println(o1.isNegative());
-        System.out.println(o7.isNegative());
-        System.out.println(o5.isNegative());
-        System.out.println(o8.isNegative());
-
-        System.out.println("\naddOctal: ");
-        System.out.println(o1.addOctal(o2));
-        System.out.println(o4.addOctal(o5));
-        System.out.println(o6.addOctal(o7));
-
-        System.out.println("\nisOctal: ");
-        System.out.println(o1.isOctal());
-        System.out.println(o2.isOctal());
-        System.out.println(o3.isOctal());
-        System.out.println(o8.isOctal());
-
-        //System.out.println("\nsevensComplement: ");
-        //System.out.println(o3);
-        //System.out.println(o3.sevensComplement());
-        //System.out.println(o5);
-        //System.out.println(o5.sevensComplement());
-
-        //System.out.println("\neightsComplement: ");
-        //System.out.println(o3);
-        //System.out.println(o3.eightsComplement());
-        //System.out.println(o5);
-        //System.out.println(o5.eightsComplement());
-
-        System.out.println("\nsubtractOctal: ");
-        System.out.println(o2.subtractOctal(o3));
-        System.out.println(o4.subtractOctal(o5));
-        System.out.println(o7.subtractOctal(o6));
-        System.out.println(o7.subtractOctal(o8));
-
-        System.out.println("\nmultiplyOctal: ");
-        System.out.println(o2.multiplyOctal(o3));
-        System.out.println(o4.multiplyOctal(o5));
-        System.out.println(o7.multiplyOctal(o6));
-        System.out.println(o7.multiplyOctal(o8));
-
-        Octal o9 = new Octal("524.104");
-        Octal o10 = new Octal("23.75");
-
-        //System.out.println("\ndivideOctal: ");
-        //System.out.println(o9.divideOctal(o10, 3));
-
+        System.out.print("\n\nEnd hexadecimalToOctalTest()\n");
     }
 
-     */
 }
