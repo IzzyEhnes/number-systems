@@ -59,6 +59,10 @@ public class Main
         System.out.println("******************************************");
         hexadecimalToBinaryTest();
         System.out.println("******************************************");
+        //binaryToHexadecimalTest();
+        System.out.println("******************************************");
+        makeGroupsOfNibblesTest();
+        System.out.println("******************************************");
     }
 
 
@@ -577,6 +581,31 @@ public class Main
     }
 
 
+/*
+    public static void binaryToHexadecimalTest()
+    {
+        Binary b1 = new Binary();
+        Binary b2 = new Binary("11.1");
+        Binary b3 = new Binary("10010.001");
+
+        System.out.println("Begin binaryToHexadecimalTest():");
+
+        System.out.println("\nb2.binaryToHexadecimal()");
+        System.out.println("Expected: 0011.1000");
+        System.out.print("Returned value: ");
+        System.out.print(b1.binaryToHexadecimal());
+
+        /*
+        System.out.println("\n\nb3.lessThanBinary(b2)");
+        System.out.println("Expected: false");
+        System.out.print("Returned value: ");
+        System.out.print(b3.lessThanBinary(b2));
+         */
+       // System.out.print("\n\nEnd lessThanBinaryTest()\n");
+   // }
+
+
+
 
     public static void octalToDecimalTest()
     {
@@ -1017,7 +1046,7 @@ public class Main
         Hexadecimal h2 = new Hexadecimal("EA.53");
         Hexadecimal h3 = new Hexadecimal("6D12F.A04C");
         Hexadecimal h4 = new Hexadecimal("-B25.80E");
-        Hexadecimal h5 = new Hexadecimal("0.0");
+        Hexadecimal h5 = new Hexadecimal();
 
         System.out.println("Begin hexadecimalToBinaryTest():");
 
@@ -1040,6 +1069,35 @@ public class Main
         System.out.println("Expected: 0000.0000");
         System.out.print("Returned value: ");
         System.out.print(h5.hexadecimalToBinary());
+
+        System.out.print("\n\nEnd divideHexadecimalTest()\n");
+    }
+
+
+
+    public static void makeGroupsOfNibblesTest()
+    {
+        Binary h1 = new Binary();
+        Binary h2 = new Binary("11.1");
+        Binary h3 = new Binary("1011.0110");
+        Binary h4 = new Binary("100010110.1011100011");
+
+        System.out.println("Begin makeGroupsOfNibblesTest():");
+
+        System.out.println("\nh2.makeGroupsOfNibbles()");
+        System.out.println("Expected: 0011.1000");
+        System.out.print("Returned value: ");
+        System.out.print(h2.makeGroupsOfNibbles());
+
+        System.out.println("\n\nh3.makeGroupsOfNibbles()");
+        System.out.println("Expected: 1011.0110");
+        System.out.print("Returned value: ");
+        System.out.print(h3.makeGroupsOfNibbles());
+
+        System.out.println("\n\nh4.makeGroupsOfNibbles()");
+        System.out.println("Expected: 000100010110.101110001100");
+        System.out.print("Returned value: ");
+        System.out.print(h4.makeGroupsOfNibbles());
 
         System.out.print("\n\nEnd divideHexadecimalTest()\n");
     }
