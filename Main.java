@@ -57,6 +57,8 @@ public class Main
         System.out.println("******************************************");
         divideHexadecimalTest();
         System.out.println("******************************************");
+        hexadecimalToBinaryTest();
+        System.out.println("******************************************");
     }
 
 
@@ -267,10 +269,10 @@ public class Main
 
         System.out.println("Begin binaryPointTest():");
 
-        System.out.println("\n\nb4.getDigitsBeforePoint()");
-        System.out.println("Expected: 7");
-        System.out.print("Returned value: ");
-        System.out.print(b4.getDigitsBeforePoint());
+        //System.out.println("\n\nb4.getDigitsBeforePoint()");
+        //System.out.println("Expected: 7");
+        //System.out.print("Returned value: ");
+        //System.out.print(b4.getDigitsBeforePoint());
 
         System.out.println("\n\nb2.AddPlaceholders(b4)");
         System.out.println("Expected: 101.101000");
@@ -695,10 +697,10 @@ public class Main
 
         System.out.println("Begin hexadecimalPointTest():");
 
-        System.out.println("\n\nh4.getDigitsBeforePoint()");
-        System.out.println("Expected: 7");
-        System.out.print("Returned value: ");
-        System.out.print(h4.getDigitsBeforePoint());
+        //System.out.println("\n\nh4.getDigitsBeforePoint()");
+        //System.out.println("Expected: 7");
+        //System.out.print("Returned value: ");
+        //System.out.print(h4.getDigitsBeforePoint());
 
         System.out.println("\n\nh3.removePoint()");
         System.out.println("Expected: A804");
@@ -938,7 +940,7 @@ public class Main
         System.out.print(h6.getLargestMultiplier(h7, h6));
 
         System.out.println("\n\nh6.getLargestMultiplier(h7)");
-        System.out.println("Expected: 2E.0");
+        System.out.println("Expected: 0.0");
         System.out.print("Returned value: ");
         System.out.print(h8.getLargestMultiplier(h8, h9));
 
@@ -977,6 +979,10 @@ public class Main
         Hexadecimal h3 = new Hexadecimal("4.0");
         Hexadecimal h4 = new Hexadecimal("F9.0");
         Hexadecimal h5 = new Hexadecimal("35.0");
+        Hexadecimal h6 = new Hexadecimal("E.570");
+        Hexadecimal h7 = new Hexadecimal("B.A");
+        Hexadecimal h8 = new Hexadecimal("0.2B");
+        Hexadecimal h9 = new Hexadecimal("35FD.916A");
 
         System.out.println("Begin divideHexadecimalTest():");
 
@@ -990,23 +996,50 @@ public class Main
         System.out.print("Returned value: ");
         System.out.print(h4.divide(h5, 10));
 
-        /*
         System.out.println("\n\nh4.divideHexadecimal(h5)");
-        System.out.println("Expected: -622.314");
+        System.out.println("Expected: 1.3BC8F23C8F23");
         System.out.print("Returned value: ");
-        System.out.print(h4.divide(h5));
+        System.out.print(h6.divide(h7, 12));
 
         System.out.println("\n\nh3.divideHexadecimal(h4)");
-        System.out.println("Expected: 73BC9E4EC00.6F6E58F75163");
+        System.out.println("Expected: 0.0000CBE341");
         System.out.print("Returned value: ");
-        System.out.print(h6.divide(h7));
+        System.out.print(h8.divide(h9, 10));
 
-        System.out.println("\n\nh1.divideHexadecimal(h5)");
-        System.out.println("Expected: 0.0");
+        System.out.print("\n\nEnd divideHexadecimalTest()\n");
+    }
+
+
+
+    public static void hexadecimalToBinaryTest()
+    {
+        Hexadecimal h1 = new Hexadecimal();
+        Hexadecimal h2 = new Hexadecimal("EA.53");
+        Hexadecimal h3 = new Hexadecimal("6D12F.A04C");
+        Hexadecimal h4 = new Hexadecimal("B25.80E");
+        Hexadecimal h5 = new Hexadecimal("0.0");
+
+        System.out.println("Begin hexadecimalToBinaryTest():");
+
+        System.out.println("\nh2.hexadecimalToBinary()");
+        System.out.println("Expected: 11101010.01010011");
         System.out.print("Returned value: ");
-        System.out.print(h1.divide(h5));
+        System.out.print(h2.hexadecimalToBinary());
 
-         */
+        System.out.println("\n\nh2.hexadecimalToBinary()");
+        System.out.println("Expected: 1101101000100101111.101000000100110");
+        System.out.print("Returned value: ");
+        System.out.print(h3.hexadecimalToBinary());
+
+        System.out.println("\n\nh4.hexadecimalToBinary()");
+        System.out.println("Expected: 101100100101.1000000011100");
+        System.out.print("Returned value: ");
+        System.out.print(h4.hexadecimalToBinary());
+
+        System.out.println("\n\nh3.hexadecimalToBinary(h4)");
+        System.out.println("Expected: 0000.0000");
+        System.out.print("Returned value: ");
+        System.out.print(h5.hexadecimalToBinary());
 
         System.out.print("\n\nEnd divideHexadecimalTest()\n");
     }
