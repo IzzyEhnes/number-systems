@@ -65,6 +65,8 @@ public class Main
         System.out.println("******************************************");
         hexadecimalToOctalTest();
         System.out.println("******************************************");
+        octalToHexadecimalTest();
+        System.out.println("******************************************");
     }
 
 
@@ -643,6 +645,35 @@ public class Main
 
         System.out.print("\n\nEnd octalToBinaryTest()\n");
     }
+
+
+
+    public static void octalToHexadecimalTest() {
+        Octal b1 = new Octal();
+        Octal b2 = new Octal("561.23");
+        Octal b3 = new Octal("1405.23134");
+        Octal b4 = new Octal("-4206253.0126224");
+
+        System.out.println("Begin octalToHexadecimalTest():");
+
+        System.out.println("\nd2.octalToHexadecimal()");
+        System.out.println("Expected: 171.4C");
+        System.out.print("Returned value: ");
+        System.out.print(b2.octalToHexadecimal());
+
+        System.out.println("\n\nd2.octalToHexadecimal()");
+        System.out.println("Expected: 305.4CB8");
+        System.out.print("Returned value: ");
+        System.out.print(b3.octalToHexadecimal());
+
+        System.out.println("\n\nd4.octalToHexadecimal()");
+        System.out.println("Expected: -110CAB.0564A");
+        System.out.print("Returned value: ");
+        System.out.print(b4.octalToHexadecimal());
+
+        System.out.print("\n\nEnd octalToHexadecimalTest()\n");
+    }
+
 
 
     public static void isHexadecimalTest() {
