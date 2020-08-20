@@ -537,15 +537,22 @@ public class Binary extends NumberSystem<Binary>
 
     public Octal binaryToOctal()
     {
-        String inString = this.binaryString;
-
         StringBuilder wholeBuilder = new StringBuilder();
         StringBuilder fractionalBuilder = new StringBuilder();
 
-        boolean decimalFlag = false;
-        for (int i = 0; i < inString.length(); i++)
+        Binary currentBinary = new Binary(this.binaryString);
+
+        boolean negative = false;
+        if (currentBinary.isNegative())
         {
-            if (inString.charAt(i) == '.')
+            currentBinary = currentBinary.removeNegativeSign();
+            negative = true;
+        }
+
+        boolean decimalFlag = false;
+        for (int i = 0; i < currentBinary.binaryString.length(); i++)
+        {
+            if (currentBinary.binaryString.charAt(i) == '.')
             {
                 decimalFlag = true;
                 continue;
@@ -553,12 +560,12 @@ public class Binary extends NumberSystem<Binary>
 
             if (!decimalFlag)
             {
-                wholeBuilder.append(inString.charAt(i));
+                wholeBuilder.append(currentBinary.binaryString.charAt(i));
             }
 
             else
             {
-                fractionalBuilder.append(inString.charAt(i));
+                fractionalBuilder.append(currentBinary.binaryString.charAt(i));
             }
         }
 
@@ -631,7 +638,14 @@ public class Binary extends NumberSystem<Binary>
 
         answerBuilder.insert(radixPosition, '.');
 
-        return new Octal(answerBuilder.toString());
+        Octal answer = new Octal(answerBuilder.toString());
+
+        if (negative)
+        {
+            answer = answer.insertNegativeSign();
+        }
+
+        return answer;
     }
 
 
@@ -885,6 +899,28 @@ public class Binary extends NumberSystem<Binary>
         {
             return false;
         }
+    }
+
+
+
+    public Binary removeNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).deleteCharAt(0);
+
+        return new Binary(sb.toString());
+    }
+
+
+
+    public Binary insertNegativeSign()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this).insert(0, '-');
+
+        return new Binary(sb.toString());
     }
 
 
