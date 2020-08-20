@@ -21,6 +21,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
     {
         this.hexString = inString;
 
+        hexToBinaryMap.put('-', "-");
         hexToBinaryMap.put('0', "0000");
         hexToBinaryMap.put('1', "0001");
         hexToBinaryMap.put('2', "0010");
@@ -596,7 +597,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         for (int i = 0; i < fractionalBuilder.length(); i++)
         {
-            answerBuilder.append(hexToBinaryMap.get(fractionalBuilder.charAt(i)));
+            answerBuilder.append(hexToBinaryMap.get(fractionString.charAt(i)));
         }
 
         return new Binary(answerBuilder.toString());
