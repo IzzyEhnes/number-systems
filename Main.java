@@ -59,7 +59,7 @@ public class Main
         System.out.println("******************************************");
         hexadecimalToBinaryTest();
         System.out.println("******************************************");
-        //binaryToHexadecimalTest();
+        binaryToHexadecimalTest();
         System.out.println("******************************************");
         makeGroupsOfNibblesTest();
         System.out.println("******************************************");
@@ -581,28 +581,33 @@ public class Main
     }
 
 
-/*
+
     public static void binaryToHexadecimalTest()
     {
         Binary b1 = new Binary();
         Binary b2 = new Binary("11.1");
-        Binary b3 = new Binary("10010.001");
+        Binary b3 = new Binary("1011000101.0011100111111");
+        Binary b4 = new Binary("-010100110000111010000.1100001111011011001100");
 
         System.out.println("Begin binaryToHexadecimalTest():");
 
         System.out.println("\nb2.binaryToHexadecimal()");
-        System.out.println("Expected: 0011.1000");
+        System.out.println("Expected: 3.8");
         System.out.print("Returned value: ");
-        System.out.print(b1.binaryToHexadecimal());
+        System.out.print(b2.binaryToHexadecimal());
 
-        /*
-        System.out.println("\n\nb3.lessThanBinary(b2)");
-        System.out.println("Expected: false");
+        System.out.println("\n\nb3.binaryToHexadecimal()");
+        System.out.println("Expected: 2C5.39F8");
         System.out.print("Returned value: ");
-        System.out.print(b3.lessThanBinary(b2));
-         */
-       // System.out.print("\n\nEnd lessThanBinaryTest()\n");
-   // }
+        System.out.print(b3.binaryToHexadecimal());
+
+        System.out.println("\n\nb4.binaryToHexadecimal()");
+        System.out.println("Expected: -A61D0.C3DB3");
+        System.out.print("Returned value: ");
+        System.out.print(b4.binaryToHexadecimal());
+
+        System.out.print("\n\nEnd lessThanBinaryTest()\n");
+    }
 
 
 
