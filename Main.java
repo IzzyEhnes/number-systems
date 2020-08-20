@@ -1016,7 +1016,7 @@ public class Main
         Hexadecimal h1 = new Hexadecimal();
         Hexadecimal h2 = new Hexadecimal("EA.53");
         Hexadecimal h3 = new Hexadecimal("6D12F.A04C");
-        Hexadecimal h4 = new Hexadecimal("B25.80E");
+        Hexadecimal h4 = new Hexadecimal("-B25.80E");
         Hexadecimal h5 = new Hexadecimal("0.0");
 
         System.out.println("Begin hexadecimalToBinaryTest():");
@@ -1027,12 +1027,12 @@ public class Main
         System.out.print(h2.hexadecimalToBinary());
 
         System.out.println("\n\nh2.hexadecimalToBinary()");
-        System.out.println("Expected: 1101101000100101111.101000000100110");
+        System.out.println("Expected: 1101101000100101111.1010000001001100");
         System.out.print("Returned value: ");
         System.out.print(h3.hexadecimalToBinary());
 
         System.out.println("\n\nh4.hexadecimalToBinary()");
-        System.out.println("Expected: 101100100101.1000000011100");
+        System.out.println("Expected: -101100100101.1000000011100");
         System.out.print("Returned value: ");
         System.out.print(h4.hexadecimalToBinary());
 
