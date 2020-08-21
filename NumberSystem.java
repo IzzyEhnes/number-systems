@@ -174,4 +174,20 @@ public abstract class NumberSystem<T>
 
         return sb.toString();
     }
+
+
+
+    public String removeNegativeSign(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        if (sb.toString().charAt(0) == '-')
+        {
+            sb.deleteCharAt(0);
+        }
+
+        return sb.toString();
+    }
 }

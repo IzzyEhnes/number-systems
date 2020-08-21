@@ -68,13 +68,13 @@ public class Octal extends NumberSystem<Octal>
         {
             negative = true;
 
-            currentOctal = currentOctal.removeNegativeSign();
-            addend = addend.removeNegativeSign();
+            currentOctal.octalString = removeNegativeSign(currentOctal.octalString);
+            addend.octalString = removeNegativeSign(addend.octalString);
         }
 
         else if (currentOctal.isNegative() && !addend.isNegative())
         {
-            currentOctal = currentOctal.removeNegativeSign();
+            currentOctal.octalString = removeNegativeSign(currentOctal.octalString);
 
             if (Double.parseDouble(currentOctal.octalString) > Double.parseDouble(addend.octalString))
             {
@@ -92,7 +92,7 @@ public class Octal extends NumberSystem<Octal>
 
         else if (addend.isNegative() && !currentOctal.isNegative())
         {
-            addend = addend.removeNegativeSign();
+            addend.octalString = removeNegativeSign(addend.octalString);
 
             if (Double.parseDouble(addend.octalString) > Double.parseDouble(currentOctal.octalString))
             {
@@ -194,7 +194,7 @@ public class Octal extends NumberSystem<Octal>
         // If both the minuend and subtrahend are negative
         if (subtrahend.isNegative() && minuend.isNegative())
         {
-            subtrahend = subtrahend.removeNegativeSign();
+            subtrahend.octalString = removeNegativeSign(subtrahend.octalString);
 
             difference = minuend.add(subtrahend);
 
@@ -205,7 +205,7 @@ public class Octal extends NumberSystem<Octal>
         // their difference is -1 * (|minuend| + subtrahend)
         else if (minuend.isNegative() && !subtrahend.isNegative())
         {
-            minuend = minuend.removeNegativeSign();
+            minuend.octalString = removeNegativeSign(minuend.octalString);
 
             difference = minuend.add(subtrahend);
             difference.octalString = insertNegativeSign(difference.octalString);
@@ -218,7 +218,7 @@ public class Octal extends NumberSystem<Octal>
         // their difference is (minuend + |subtrahend|)
         else if (subtrahend.isNegative() && !minuend.isNegative())
         {
-            subtrahend = subtrahend.removeNegativeSign();
+            subtrahend.octalString = removeNegativeSign(subtrahend.octalString);
 
             difference = minuend.add(subtrahend);
 
@@ -291,15 +291,15 @@ public class Octal extends NumberSystem<Octal>
         // be positive, and we can remove the negative signs on both
         if (multiplicand.isNegative() && multiplier.isNegative())
         {
-            multiplicand = multiplicand.removeNegativeSign();
-            multiplier = multiplier.removeNegativeSign();
+            multiplicand.octalString = removeNegativeSign(multiplicand.octalString);
+            multiplier.octalString = removeNegativeSign(multiplier.octalString);
         }
 
         // If the multiplicand is negative and the multiplier is positive their product
         // will be negative, and we can remove the negative sign on the multiplicand
         else if (multiplicand.isNegative() && !multiplier.isNegative())
         {
-            multiplicand = multiplicand.removeNegativeSign();
+            multiplicand.octalString = removeNegativeSign(multiplicand.octalString);
             negative = true;
         }
 
@@ -307,7 +307,7 @@ public class Octal extends NumberSystem<Octal>
         // will be negative, and we can remove the negative sign on the multiplier
         else if (multiplier.isNegative() && !multiplicand.isNegative())
         {
-            multiplier = multiplier.removeNegativeSign();
+            multiplier.octalString = removeNegativeSign(multiplier.octalString);
             negative = true;
         }
 
@@ -626,7 +626,7 @@ public class Octal extends NumberSystem<Octal>
         boolean negative = false;
         if (currentOctal.isNegative())
         {
-            currentOctal = currentOctal.removeNegativeSign();
+            currentOctal.octalString = removeNegativeSign(currentOctal.octalString);
 
             negative = true;
         }
@@ -955,17 +955,6 @@ public class Octal extends NumberSystem<Octal>
         {
             return false;
         }
-    }
-
-
-
-    public Octal removeNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).deleteCharAt(0);
-
-        return new Octal(sb.toString());
     }
 
 

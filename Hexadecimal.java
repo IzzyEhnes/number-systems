@@ -189,7 +189,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         // If both the minuend and subtrahend are negative
         if (subtrahend.isNegative() && minuend.isNegative())
         {
-            subtrahend = subtrahend.removeNegativeSign();
+            subtrahend.hexString = removeNegativeSign(subtrahend.hexString);
 
             difference = minuend.add(subtrahend);
 
@@ -200,7 +200,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         // their difference is -1 * (|minuend| + subtrahend)
         else if (minuend.isNegative() && !subtrahend.isNegative())
         {
-            minuend = minuend.removeNegativeSign();
+            minuend.hexString = removeNegativeSign(minuend.hexString);
 
             difference = minuend.add(subtrahend);
             difference = difference.removeLeadingZeroes();
@@ -213,7 +213,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         // their difference is (minuend + |subtrahend|)
         else if (subtrahend.isNegative() && !minuend.isNegative())
         {
-            subtrahend = subtrahend.removeNegativeSign();
+            subtrahend.hexString = removeNegativeSign(subtrahend.hexString);
 
             difference = minuend.add(subtrahend);
 
@@ -328,20 +328,20 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         {
             negative = true;
 
-            multiplicand = multiplicand.removeNegativeSign();
+            multiplicand.hexString = removeNegativeSign(multiplicand.hexString);
         }
 
         else if (!multiplicand.isNegative() && multiplier.isNegative())
         {
             negative = true;
 
-            multiplier = multiplier.removeNegativeSign();
+            multiplier.hexString = removeNegativeSign(multiplier.hexString);
         }
 
         else if (multiplicand.isNegative() && multiplier.isNegative())
         {
-            multiplicand = multiplicand.removeNegativeSign();
-            multiplier = multiplier.removeNegativeSign();
+            multiplicand.hexString = removeNegativeSign(multiplicand.hexString);
+            multiplier.hexString = removeNegativeSign(multiplier.hexString);
         }
 
         int pointPosition = getPointPosition(multiplicand.hexString) +
@@ -595,7 +595,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         boolean negative = false;
         if (currentHex.isNegative())
         {
-            currentHex = currentHex.removeNegativeSign();
+            currentHex.hexString = removeNegativeSign(currentHex.hexString);
 
             negative = true;
         }
@@ -821,17 +821,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         currentHex.hexString = sb.toString();
 
         return currentHex;
-    }
-
-
-
-    public Hexadecimal removeNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).deleteCharAt(0);
-
-        return new Hexadecimal(sb.toString());
     }
 
 

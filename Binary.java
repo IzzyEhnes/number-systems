@@ -552,7 +552,7 @@ public class Binary extends NumberSystem<Binary>
         boolean negative = false;
         if (currentBinary.isNegative())
         {
-            currentBinary = currentBinary.removeNegativeSign();
+            currentBinary.binaryString = removeNegativeSign(currentBinary.binaryString);
             negative = true;
         }
 
@@ -851,17 +851,6 @@ public class Binary extends NumberSystem<Binary>
         {
             return false;
         }
-    }
-
-
-
-    public Binary removeNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).deleteCharAt(0);
-
-        return new Binary(sb.toString());
     }
 
 
