@@ -140,12 +140,12 @@ public class Binary extends NumberSystem<Binary>
 
         if (currentBinaryPointPosition > addendPointPosition)
         {
-            answer = answer.insertPointFromRight(currentBinaryPointPosition);
+            answer.binaryString = insertPointFromRight(answer.binaryString, currentBinaryPointPosition);
         }
 
         else
         {
-            answer = answer.insertPointFromRight(addendPointPosition);
+            answer.binaryString = insertPointFromRight(answer.binaryString, addendPointPosition);
         }
 
         return answer;
@@ -237,7 +237,8 @@ public class Binary extends NumberSystem<Binary>
         }
 
         answer.binaryString = removePoint(answer.binaryString);
-        answer = answer.insertPointFromRight(pointPosition * 2).removeLeadingZeroes().removeTrailingZeroes();
+        answer.binaryString = insertPointFromRight(answer.binaryString, pointPosition * 2);
+        answer = answer.removeLeadingZeroes().removeTrailingZeroes();
 
         return answer;
     }
@@ -293,7 +294,8 @@ public class Binary extends NumberSystem<Binary>
         int dividendDigitsBeforePoint = getDigitsBeforePoint(dividend.binaryString);
 
         dividend.binaryString = removePoint(dividend.binaryString);
-        dividend = dividend.insertPointFromRight(0).appendZero();
+        dividend.binaryString = insertPointFromRight(dividend.binaryString, 0);
+        dividend = dividend.appendZero();
 
         StringBuilder quotientBuilder = new StringBuilder();
         quotient = quotient.removeLeadingZeroes();
@@ -715,24 +717,6 @@ public class Binary extends NumberSystem<Binary>
 
 
 
-    public Binary insertPointFromRight(int pointPosition)
-    {
-        Binary currentBinary = new Binary(this.binaryString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentBinary);
-
-        // Insert point at pointPosition
-        sb.reverse().insert(pointPosition, '.').reverse();
-
-        currentBinary.binaryString = sb.toString();
-
-        return currentBinary;
-    }
-
-
-
     public Binary insertPointFromLeft(int pointPosition)
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -914,7 +898,7 @@ public class Binary extends NumberSystem<Binary>
         int pointPosition = getPointPosition(currentBinary.binaryString);
 
         currentBinary.binaryString = removePoint(currentBinary.binaryString);
-        currentBinary = currentBinary.insertPointFromRight(pointPosition - 1);
+        currentBinary.binaryString = insertPointFromRight(currentBinary.binaryString, pointPosition - 1);
 
         return currentBinary;
     }

@@ -131,4 +131,20 @@ public abstract class NumberSystem<T>
 
         return outString;
     }
+
+
+
+    public String insertPointFromRight(String inString, int pointPosition)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        // Insert point at pointPosition
+        sb.reverse().insert(pointPosition, '.').reverse();
+
+        String outString = sb.toString();
+
+        return outString;
+    }
 }

@@ -161,7 +161,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         sum.hexString = sumBuilder.reverse().toString();
 
-        sum = sum.insertPointFromRight(radixPosition);
+        sum.hexString = insertPointFromRight(sum.hexString, radixPosition);
 
         return sum;
     }
@@ -295,7 +295,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         difference.hexString = differenceBuilder.reverse().toString();
 
-        difference = difference.insertPointFromRight(radixPosition);
+        difference.hexString = insertPointFromRight(difference.hexString, radixPosition);
 
         if (negative)
         {
@@ -453,7 +453,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         answer.hexString = sb.reverse().toString();
 
-        answer = answer.insertPointFromRight(pointPosition).removeLeadingZeroes();
+        answer.hexString = insertPointFromRight(answer.hexString, pointPosition);
+        answer = answer.removeLeadingZeroes();
 
         return answer;
     }
@@ -475,8 +476,10 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         dividend.addPlaceholders(divisor);
         divisor.addPlaceholders(dividend);
 
-        dividend = dividend.insertPointFromRight(0).appendZero();
-        divisor = divisor.insertPointFromRight(0).appendZero();
+        dividend.hexString = insertPointFromRight(dividend.hexString, 0);
+        divisor.hexString = insertPointFromRight(divisor.hexString, 0);
+        dividend = dividend.appendZero();
+        divisor = divisor.appendZero();
 
         dividend.hexString = removePoint(dividend.hexString);
         divisor.hexString = removePoint(divisor.hexString);
@@ -744,24 +747,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             this.hexString = sb.toString();
         }
-    }
-
-
-
-    public Hexadecimal insertPointFromRight(int pointPosition)
-    {
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentHex);
-
-        // Insert point at pointPosition
-        sb.reverse().insert(pointPosition, '.').reverse();
-
-        currentHex.hexString = sb.toString();
-
-        return currentHex;
     }
 
 

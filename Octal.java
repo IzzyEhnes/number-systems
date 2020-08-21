@@ -269,7 +269,7 @@ public class Octal extends NumberSystem<Octal>
 
             difference.octalString = sb.toString();
 
-            difference = difference.insertPoint(pointPosition);
+            difference.octalString = insertPointFromRight(difference.octalString, pointPosition);
         }
 
         difference = difference.removeLeadingZeroes();
@@ -492,8 +492,8 @@ public class Octal extends NumberSystem<Octal>
         divisor.octalString = removePoint(divisor.octalString);
 
         // Add point to end of dividend and divisor so in Octal format
-        dividend = dividend.insertPoint(0);
-        divisor = divisor.insertPoint(0);
+        dividend.octalString = insertPointFromRight(dividend.octalString, 0);
+        divisor.octalString = insertPointFromRight(divisor.octalString,0);
 
         // Add a zero to the end of dividend and divisor so in Octal format
         dividend = dividend.appendZero();
@@ -755,26 +755,6 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Octal insertPoint(int pointPosition)
-    {
-        Octal currentOctal = this;
-
-        StringBuilder sb = new StringBuilder();
-
-        currentOctal.octalString = removePoint(currentOctal.octalString);
-
-        sb.append(currentOctal);
-
-        // Insert point at pointPosition
-        sb.reverse().insert(pointPosition, '.').reverse();
-
-        currentOctal.octalString = sb.toString();
-
-        return currentOctal;
-    }
-
-
-
     public void addPlaceholders(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
@@ -937,7 +917,7 @@ public class Octal extends NumberSystem<Octal>
             currentOctal.octalString = sb.toString();
         }
 
-        currentOctal.insertPoint(1);
+        currentOctal.octalString = insertPointFromRight(currentOctal.octalString, 1);
 
         return currentOctal;
     }
