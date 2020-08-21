@@ -877,28 +877,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             currentHex.hexString = sb.toString();
         }
 
-        currentHex.insertPoint(1);
-
-        return currentHex;
-    }
-
-
-
-    public Hexadecimal insertPoint(int pointPosition)
-    {
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        StringBuilder sb = new StringBuilder();
-
-        currentHex.hexString = removePoint(currentHex.hexString);
-
-        sb.append(currentHex);
-
-        // Insert point at pointPosition
-        sb.reverse().insert(pointPosition, '.').reverse();
-
-        currentHex.hexString = sb.toString();
-
         return currentHex;
     }
 
