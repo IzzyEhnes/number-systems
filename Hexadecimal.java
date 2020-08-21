@@ -104,8 +104,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         // both currentHex and addend
         int radixPosition = getPointPosition(currentHex.hexString);
 
-        currentHex = currentHex.removePoint();
-        addend = addend.removePoint();
+        currentHex.hexString = removePoint(currentHex.hexString);
+        addend.hexString = removePoint(addend.hexString);
 
         // After addPlaceholders calls, hexString length is the same for
         // both currentHex and addend
@@ -238,8 +238,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         // both currentHex and addend
         int radixPosition = getPointPosition(minuend.hexString);
 
-        minuend = minuend.removePoint();
-        subtrahend = subtrahend.removePoint();
+        minuend.hexString = removePoint(minuend.hexString);
+        subtrahend.hexString = removePoint(subtrahend.hexString);
 
         // After addPlaceholders calls, hexString length is the same for
         // both currentHex and addend
@@ -346,8 +346,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         int pointPosition = getPointPosition(multiplicand.hexString) +
                                 getPointPosition(multiplier.hexString);
 
-        multiplicand = multiplicand.removePoint();
-        multiplier = multiplier.removePoint();
+        multiplicand.hexString = removePoint(multiplicand.hexString);
+        multiplier.hexString = removePoint(multiplier.hexString);
 
         StringBuilder sb = new StringBuilder();
 
@@ -475,8 +475,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         dividend.addPlaceholders(divisor);
         divisor.addPlaceholders(dividend);
 
-        dividend = dividend.removePoint().insertPointFromRight(0).appendZero();
-        divisor = divisor.removePoint().insertPointFromRight(0).appendZero();
+        dividend = dividend.insertPointFromRight(0).appendZero();
+        divisor = divisor.insertPointFromRight(0).appendZero();
+
+        dividend.hexString = removePoint(dividend.hexString);
+        divisor.hexString = removePoint(divisor.hexString);
 
         int quotientRadixPosition = getDigitsBeforePoint(dividend.hexString);
 
@@ -745,24 +748,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
-    public Hexadecimal removePoint()
-    {
-        Hexadecimal currentHex = this;
-
-        int pointPosition = getPointPosition(currentHex.hexString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentHex);
-        sb.reverse().deleteCharAt(pointPosition).reverse();
-
-        currentHex.hexString = sb.toString();
-
-        return currentHex;
-    }
-
-
-
     public Hexadecimal insertPointFromRight(int pointPosition)
     {
         Hexadecimal currentHex = new Hexadecimal(this.hexString);
@@ -974,7 +959,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         StringBuilder sb = new StringBuilder();
 
-        currentHex.removePoint();
+        currentHex.hexString = removePoint(currentHex.hexString);
 
         sb.append(currentHex);
 

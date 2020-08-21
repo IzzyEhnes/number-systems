@@ -242,8 +242,8 @@ public class Octal extends NumberSystem<Octal>
             pointPosition = getPointPosition(minuend.octalString);
 
             // Remove point to treat as whole number
-            minuend = minuend.removePoint();
-            subtrahend = subtrahend.removePoint();
+            minuend.octalString = removePoint(minuend.octalString);
+            subtrahend.octalString = removePoint(subtrahend.octalString);
         }
 
         subtrahend = subtrahend.eightsComplement();
@@ -488,8 +488,8 @@ public class Octal extends NumberSystem<Octal>
         dividend.addPlaceholders(divisor);
 
         // Remove points from both the divisor and dividend to treat as whole numbers
-        dividend = dividend.removePoint();
-        divisor = divisor.removePoint();
+        dividend.octalString = removePoint(dividend.octalString);
+        divisor.octalString = removePoint(divisor.octalString);
 
         // Add point to end of dividend and divisor so in Octal format
         dividend = dividend.insertPoint(0);
@@ -548,7 +548,7 @@ public class Octal extends NumberSystem<Octal>
 
                     remainder = remainder.subtract(product);
 
-                    multiplier = multiplier.removePoint();
+                    multiplier.octalString = removePoint(multiplier.octalString);
                     sb.append(quotient).append(multiplier);
                     quotient.octalString = sb.toString();
                     quotient = quotient.removeTrailingZeroes();
@@ -755,31 +755,13 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Octal removePoint()
-    {
-        Octal currentOctal = this;
-
-        int pointPosition = getPointPosition(currentOctal.octalString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentOctal);
-        sb.reverse().deleteCharAt(pointPosition).reverse();
-
-        currentOctal.octalString = sb.toString();
-
-        return currentOctal;
-    }
-
-
-
     public Octal insertPoint(int pointPosition)
     {
         Octal currentOctal = this;
 
         StringBuilder sb = new StringBuilder();
 
-        currentOctal.removePoint();
+        currentOctal.octalString = removePoint(currentOctal.octalString);
 
         sb.append(currentOctal);
 
