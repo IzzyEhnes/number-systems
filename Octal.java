@@ -5,7 +5,7 @@ import java.security.InvalidParameterException;
 public class Octal extends NumberSystem<Octal>
 {
 
-    private String octal = "0.0";
+    private String octalString = "0.0";
 
 
 
@@ -17,31 +17,31 @@ public class Octal extends NumberSystem<Octal>
 
     public Octal(String inString)
     {
-        this.octal = inString;
+        this.octalString = inString;
     }
 
 
 
     public String getOctal()
     {
-        return this.octal;
+        return this.octalString;
     }
 
 
 
     public void setOctal(String inString)
     {
-        this.octal = inString;
+        this.octalString = inString;
     }
 
 
 
     public boolean isOctal()
     {
-        for (int i = 0; i < this.octal.length(); i++)
+        for (int i = 0; i < this.octalString.length(); i++)
         {
-            if ((this.octal.charAt(i) < '0' || this.octal.charAt(i) > '7')
-                    && this.octal.charAt(i) != '.' && this.octal.charAt(i) != '-')
+            if ((this.octalString.charAt(i) < '0' || this.octalString.charAt(i) > '7')
+                    && this.octalString.charAt(i) != '.' && this.octalString.charAt(i) != '-')
             {
                 return false;
             }
@@ -61,8 +61,8 @@ public class Octal extends NumberSystem<Octal>
 
         // Create local reference to Octals so they can be manipulated
         // without changing original objects
-        Octal currentOctal = new Octal(this.octal);
-        Octal addend = new Octal(inOctal.octal);
+        Octal currentOctal = new Octal(this.octalString);
+        Octal addend = new Octal(inOctal.octalString);
 
         if (currentOctal.isNegative() && addend.isNegative())
         {
@@ -76,7 +76,7 @@ public class Octal extends NumberSystem<Octal>
         {
             currentOctal = currentOctal.removeNegativeSign();
 
-            if (Double.parseDouble(currentOctal.octal) > Double.parseDouble(addend.octal))
+            if (Double.parseDouble(currentOctal.octalString) > Double.parseDouble(addend.octalString))
             {
                 answer = currentOctal.subtract(addend);
                 answer = answer.insertNegativeSign();
@@ -94,7 +94,7 @@ public class Octal extends NumberSystem<Octal>
         {
             addend = addend.removeNegativeSign();
 
-            if (Double.parseDouble(addend.octal) > Double.parseDouble(currentOctal.octal))
+            if (Double.parseDouble(addend.octalString) > Double.parseDouble(currentOctal.octalString))
             {
                 answer = addend.subtract(currentOctal);
                 answer = answer.insertNegativeSign();
@@ -110,8 +110,8 @@ public class Octal extends NumberSystem<Octal>
 
         currentOctal.addPlaceholders(addend);
 
-        int aDecimalPosition = getPointPosition(currentOctal.octal);
-        int bDecimalPosition = getPointPosition(addend.octal);
+        int aDecimalPosition = getPointPosition(currentOctal.octalString);
+        int bDecimalPosition = getPointPosition(addend.octalString);
 
         sb.append(currentOctal);
 
@@ -123,7 +123,7 @@ public class Octal extends NumberSystem<Octal>
         // Reset sb
         sb.setLength(0);
 
-        sb.append(addend.octal);
+        sb.append(addend.octalString);
 
         // Remove decimal point from second Octal
         sb.reverse().deleteCharAt(bDecimalPosition);
@@ -164,7 +164,7 @@ public class Octal extends NumberSystem<Octal>
         // Add decimal place to answer (aDecimalPosition = bDecimalPosition)
         sb.insert(aDecimalPosition, '.');
 
-        answer.octal = sb.reverse().toString();
+        answer.octalString = sb.reverse().toString();
 
         if (negative)
         {
@@ -178,15 +178,15 @@ public class Octal extends NumberSystem<Octal>
 
     public Octal subtract(Octal inOctal)
     {
-        Octal minuend = new Octal(this.octal);
-        Octal subtrahend = new Octal(inOctal.octal);
+        Octal minuend = new Octal(this.octalString);
+        Octal subtrahend = new Octal(inOctal.octalString);
 
         Octal difference = new Octal();
 
         boolean negative = false;
 
         // If the minuend and subtrahend are the same, their difference is zero
-        if (Double.parseDouble(minuend.octal) == Double.parseDouble(subtrahend.octal))
+        if (Double.parseDouble(minuend.octalString) == Double.parseDouble(subtrahend.octalString))
         {
             return new Octal("0.0");
         }
@@ -231,7 +231,7 @@ public class Octal extends NumberSystem<Octal>
 
         int pointPosition = 0;
 
-        if (Double.parseDouble(subtrahend.octal) > Double.parseDouble(minuend.octal))
+        if (Double.parseDouble(subtrahend.octalString) > Double.parseDouble(minuend.octalString))
         {
             negative = true;
         }
@@ -239,7 +239,7 @@ public class Octal extends NumberSystem<Octal>
         else
         {
             // Get final point position (the same value in both the minuend and subtrahend)
-            pointPosition = getPointPosition(minuend.octal);
+            pointPosition = getPointPosition(minuend.octalString);
 
             // Remove point to treat as whole number
             minuend = minuend.removePoint();
@@ -255,19 +255,19 @@ public class Octal extends NumberSystem<Octal>
         if (negative)
         {
             difference = difference.eightsComplement();
-            sb.append('-').append(difference.octal);
-            difference.octal = sb.toString();
+            sb.append('-').append(difference.octalString);
+            difference.octalString = sb.toString();
         }
 
         else
         {
-            sb.append(difference.octal);
+            sb.append(difference.octalString);
             int firstDigit = sb.charAt(0) - '0' - 1;
 
             sb.deleteCharAt(0);
             sb.reverse().append(firstDigit).reverse();
 
-            difference.octal = sb.toString();
+            difference.octalString = sb.toString();
 
             difference = difference.insertPoint(pointPosition);
         }
@@ -281,8 +281,8 @@ public class Octal extends NumberSystem<Octal>
 
     public Octal multiply(Octal inOctal)
     {
-        Octal multiplicand = new Octal(this.octal);
-        Octal multiplier = new Octal(inOctal.octal);
+        Octal multiplicand = new Octal(this.octalString);
+        Octal multiplier = new Octal(inOctal.octalString);
 
         boolean negative = false;
 
@@ -316,12 +316,12 @@ public class Octal extends NumberSystem<Octal>
         multiplicand.addPlaceholders(multiplier);
         multiplier.addPlaceholders(multiplicand);
 
-        int aDecimalPosition = getPointPosition(multiplicand.octal);
-        int bDecimalPosition = getPointPosition(inOctal.octal);
+        int aDecimalPosition = getPointPosition(multiplicand.octalString);
+        int bDecimalPosition = getPointPosition(inOctal.octalString);
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(multiplicand.octal);
+        sb.append(multiplicand.octalString);
 
         // Remove decimal point from first Octal
         sb.reverse().deleteCharAt(aDecimalPosition);
@@ -331,7 +331,7 @@ public class Octal extends NumberSystem<Octal>
         // Reset sb
         sb.setLength(0);
 
-        sb.append(multiplier.octal);
+        sb.append(multiplier.octalString);
 
         // Remove decimal point from second Octal
         sb.reverse().deleteCharAt(bDecimalPosition);
@@ -344,7 +344,7 @@ public class Octal extends NumberSystem<Octal>
         int aLength = a.length();
         int bLength = b.length();
 
-        // Add placeholder zeroes to smaller string so both octal strings are
+        // Add placeholder zeroes to smaller string so both octalString strings are
         // the same size as to avoid out of bounds error
         if (aLength > bLength)
         {
@@ -456,7 +456,7 @@ public class Octal extends NumberSystem<Octal>
 
         Octal quotient = new Octal();
         Octal remainder = new Octal();
-        Octal dividend = new Octal(this.octal);
+        Octal dividend = new Octal(this.octalString);
         Octal multiplier = new Octal();
         Octal product = new Octal();
 
@@ -465,7 +465,7 @@ public class Octal extends NumberSystem<Octal>
             sb.append(divisor);
             sb.deleteCharAt(0);
 
-            divisor.octal = sb.toString();
+            divisor.octalString = sb.toString();
 
             // Reset sb
             sb.setLength(0);
@@ -473,12 +473,12 @@ public class Octal extends NumberSystem<Octal>
             negative = true;
         }
 
-        if (Double.parseDouble(divisor.octal) == 0)
+        if (Double.parseDouble(divisor.octalString) == 0)
         {
             throw new InvalidParameterException("Error: Cannot divide by zero.");
         }
 
-        else if (Double.parseDouble(dividend.octal) < 0)
+        else if (Double.parseDouble(dividend.octalString) < 0)
         {
             throw new InvalidParameterException("Error: Cannot divide a negative Octal.");
         }
@@ -508,7 +508,7 @@ public class Octal extends NumberSystem<Octal>
         remainder = dividend.subtract(product);
 
         // If the divisor divides into the dividend evenly (i.e. remainder is 0)
-        if (Double.parseDouble(remainder.octal) == 0)
+        if (Double.parseDouble(remainder.octalString) == 0)
         {
             quotient = multiplier;
         }
@@ -517,14 +517,14 @@ public class Octal extends NumberSystem<Octal>
         {
             // Place the multiplier in front of the point, removing any trailing zeroes
             sb.append(multiplier);
-            quotient.octal = sb.toString();
+            quotient.octalString = sb.toString();
             quotient = quotient.removeTrailingZeroes();
             sb.setLength(0);
 
             int digitsAfterPoint = 0;
             // While there is still a remainder and digitsAfterPoint is less
             // than the desired scale of the final answer
-            while (Double.parseDouble(remainder.octal) != 0 &&
+            while (Double.parseDouble(remainder.octalString) != 0 &&
                     digitsAfterPoint < scale)
             {
                 remainder = remainder.shiftPointRightByOne();
@@ -533,10 +533,10 @@ public class Octal extends NumberSystem<Octal>
 
                 // If the divisor doesn't 'fit' into the remainder,
                 // place a zero to the correct place in the quotient
-                if (Double.parseDouble(multiplier.octal) == 0)
+                if (Double.parseDouble(multiplier.octalString) == 0)
                 {
                     sb.append(quotient).append('0');
-                    quotient.octal = sb.toString();
+                    quotient.octalString = sb.toString();
 
                     // Reset sb
                     sb.setLength(0);
@@ -550,7 +550,7 @@ public class Octal extends NumberSystem<Octal>
 
                     multiplier = multiplier.removePoint();
                     sb.append(quotient).append(multiplier);
-                    quotient.octal = sb.toString();
+                    quotient.octalString = sb.toString();
                     quotient = quotient.removeTrailingZeroes();
 
                     // Reset sb
@@ -565,7 +565,7 @@ public class Octal extends NumberSystem<Octal>
         {
             sb.append(quotient).insert(0, '-');
 
-            quotient.octal = sb.toString();
+            quotient.octalString = sb.toString();
         }
         
         return quotient;
@@ -573,12 +573,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Decimal octalToDecimal()
+    public Decimal octalStringToDecimal()
     {
         StringBuilder sb = new StringBuilder();
         sb.append(this);
 
-        int n = getDigitsBeforePoint(this.octal) - 1;
+        int n = getDigitsBeforePoint(this.octalString) - 1;
 
         boolean isNegative = false;
         if (sb.charAt(0) == '-')
@@ -616,9 +616,9 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Binary octalToBinary()
+    public Binary octalStringToBinary()
     {
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
         StringBuilder binaryStringBuilder = new StringBuilder();
 
@@ -630,15 +630,15 @@ public class Octal extends NumberSystem<Octal>
             negative = true;
         }
 
-        for (int i = 0; i < currentOctal.octal.length(); i++)
+        for (int i = 0; i < currentOctal.octalString.length(); i++)
         {
-            if (currentOctal.octal.charAt(i) == '.')
+            if (currentOctal.octalString.charAt(i) == '.')
             {
                 binaryStringBuilder.append('.');
                 continue;
             }
 
-            int currentDigit = (currentOctal.octal.charAt(i) - '0');
+            int currentDigit = (currentOctal.octalString.charAt(i) - '0');
 
             if (currentDigit % 4 < currentDigit)
             {
@@ -691,11 +691,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Hexadecimal octalToHexadecimal()
+    public Hexadecimal octalStringToHexadecimal()
     {
         Binary binaryTemp = new Binary();
 
-        binaryTemp = this.octalToBinary();
+        binaryTemp = this.octalStringToBinary();
 
         Hexadecimal answer = binaryTemp.binaryToHexadecimal();
 
@@ -706,32 +706,32 @@ public class Octal extends NumberSystem<Octal>
 
     public Octal sevensComplement()
     {
-        int decimalPosition = getPointPosition(this.octal);
+        int decimalPosition = getPointPosition(this.octalString);
 
         StringBuilder sb = new StringBuilder();
 
         // Append number of 7s that are to the right of the decimal point in final number
         sb.append("7".repeat(decimalPosition));
         // Append number of 7s that are to the left of the decimal point in final number
-        sb.append("7".repeat(this.octal.length() - 1 - decimalPosition));
+        sb.append("7".repeat(this.octalString.length() - 1 - decimalPosition));
 
         String sevens = sb.reverse().toString();
 
         // Reset sb
         sb.setLength(0);
 
-        sb.append(this.octal);
+        sb.append(this.octalString);
         sb.reverse().deleteCharAt(decimalPosition);
 
-        String octalString = sb.reverse().toString();
+        String octalStringString = sb.reverse().toString();
 
         // Reset sb
         sb.setLength(0);
 
-        // Find difference of the digits of 'sevens' and 'octalString'
-        for (int i = 0; i < octalString.length(); i++)
+        // Find difference of the digits of 'sevens' and 'octalStringString'
+        for (int i = 0; i < octalStringString.length(); i++)
         {
-            sb.append((sevens.charAt(i) - '0') - (octalString.charAt(i) - '0'));
+            sb.append((sevens.charAt(i) - '0') - (octalStringString.charAt(i) - '0'));
         }
 
         sb.reverse().insert(decimalPosition, '.');
@@ -759,14 +759,14 @@ public class Octal extends NumberSystem<Octal>
     {
         Octal currentOctal = this;
 
-        int pointPosition = getPointPosition(currentOctal.octal);
+        int pointPosition = getPointPosition(currentOctal.octalString);
 
         StringBuilder sb = new StringBuilder();
 
         sb.append(currentOctal);
         sb.reverse().deleteCharAt(pointPosition).reverse();
 
-        currentOctal.octal = sb.toString();
+        currentOctal.octalString = sb.toString();
 
         return currentOctal;
     }
@@ -786,7 +786,7 @@ public class Octal extends NumberSystem<Octal>
         // Insert point at pointPosition
         sb.reverse().insert(pointPosition, '.').reverse();
 
-        currentOctal.octal = sb.toString();
+        currentOctal.octalString = sb.toString();
 
         return currentOctal;
     }
@@ -797,13 +797,13 @@ public class Octal extends NumberSystem<Octal>
     {
         StringBuilder sb = new StringBuilder();
 
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
-        int aPointPosition = getPointPosition(currentOctal.octal);
-        int bPointPosition = getPointPosition(inOctal.octal);
+        int aPointPosition = getPointPosition(currentOctal.octalString);
+        int bPointPosition = getPointPosition(inOctal.octalString);
 
-        int aDigitsBeforePoint = getDigitsBeforePoint(currentOctal.octal);
-        int bDigitsBeforePoint = getDigitsBeforePoint(inOctal.octal);
+        int aDigitsBeforePoint = getDigitsBeforePoint(currentOctal.octalString);
+        int bDigitsBeforePoint = getDigitsBeforePoint(inOctal.octalString);
         // If needed, add placeholder zeroes so both Octals
         // have same number of digits in front of point
         if (aDigitsBeforePoint > bDigitsBeforePoint)
@@ -811,7 +811,7 @@ public class Octal extends NumberSystem<Octal>
             sb.append("0".repeat(aDigitsBeforePoint - bDigitsBeforePoint));
             sb.append(inOctal);
 
-            inOctal.octal = sb.toString();
+            inOctal.octalString = sb.toString();
 
             sb.setLength(0);
         }
@@ -820,7 +820,7 @@ public class Octal extends NumberSystem<Octal>
             sb.append("0".repeat(bDigitsBeforePoint - aDigitsBeforePoint));
             sb.append(currentOctal);
 
-            currentOctal.octal = sb.toString();
+            currentOctal.octalString = sb.toString();
 
             sb.setLength(0);
         }
@@ -831,20 +831,20 @@ public class Octal extends NumberSystem<Octal>
         // have same number of digits behind point
         if (aPointPosition > bPointPosition)
         {
-            sb.append(inOctal.octal);
+            sb.append(inOctal.octalString);
 
             sb.append("0".repeat(aPointPosition - bPointPosition));
 
-            inOctal.octal = sb.toString();
+            inOctal.octalString = sb.toString();
         }
 
         else
         {
-            sb.append(this.octal);
+            sb.append(this.octalString);
 
             sb.append("0".repeat(bPointPosition - aPointPosition));
 
-            this.octal = sb.toString();
+            this.octalString = sb.toString();
         }
     }
 
@@ -870,16 +870,16 @@ public class Octal extends NumberSystem<Octal>
         int n = 1;
         Octal multiplier = new Octal(Double.toString(n));
 
-        while (Double.parseDouble((multiplier.multiply(divisor).octal)) <=
-                Double.parseDouble(dividend.octal))
+        while (Double.parseDouble((multiplier.multiply(divisor).octalString)) <=
+                Double.parseDouble(dividend.octalString))
         {
             n++;
-            multiplier.octal = Double.toString(n);
+            multiplier.octalString = Double.toString(n);
         }
 
         n--;
 
-        multiplier.octal = Double.toString(n);
+        multiplier.octalString = Double.toString(n);
 
         return multiplier;
     }
@@ -890,7 +890,7 @@ public class Octal extends NumberSystem<Octal>
     {
         StringBuilder sb = new StringBuilder();
 
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
         sb.append(currentOctal);
 
@@ -910,7 +910,7 @@ public class Octal extends NumberSystem<Octal>
                 }
             }
 
-            currentOctal.octal = sb.toString();
+            currentOctal.octalString = sb.toString();
         }
 
         return currentOctal;
@@ -922,7 +922,7 @@ public class Octal extends NumberSystem<Octal>
     {
         StringBuilder sb = new StringBuilder();
 
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
         sb.append(currentOctal).reverse();
 
@@ -934,7 +934,7 @@ public class Octal extends NumberSystem<Octal>
             }
         }
 
-        currentOctal.octal = sb.reverse().toString();
+        currentOctal.octalString = sb.reverse().toString();
 
         return currentOctal;
     }
@@ -945,14 +945,14 @@ public class Octal extends NumberSystem<Octal>
     {
         StringBuilder sb = new StringBuilder();
 
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
-        int pointPosition = getDigitsBeforePoint(currentOctal.octal);
-        if (pointPosition == currentOctal.octal.length() - 2)
+        int pointPosition = getDigitsBeforePoint(currentOctal.octalString);
+        if (pointPosition == currentOctal.octalString.length() - 2)
         {
             sb.append(currentOctal).append('0');
 
-            currentOctal.octal = sb.toString();
+            currentOctal.octalString = sb.toString();
         }
 
         currentOctal.insertPoint(1);
@@ -966,11 +966,11 @@ public class Octal extends NumberSystem<Octal>
     {
         StringBuilder sb = new StringBuilder();
 
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
         sb.append(currentOctal).append('0');
 
-        currentOctal.octal = sb.toString();
+        currentOctal.octalString = sb.toString();
 
         return currentOctal;
     }
@@ -979,9 +979,9 @@ public class Octal extends NumberSystem<Octal>
 
     public boolean isNegative()
     {
-        Octal currentOctal = new Octal(this.octal);
+        Octal currentOctal = new Octal(this.octalString);
 
-        if (currentOctal.octal.charAt(0) == '-')
+        if (currentOctal.octalString.charAt(0) == '-')
         {
             return true;
         }
@@ -1019,6 +1019,6 @@ public class Octal extends NumberSystem<Octal>
     @Override
     public String toString()
     {
-        return this.octal;
+        return this.octalString;
     }
 }
