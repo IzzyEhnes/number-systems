@@ -166,6 +166,21 @@ public abstract class NumberSystem<T>
 
 
 
+    public boolean isNegative(String inString)
+    {
+        if (inString.charAt(0) == '-')
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
+
+
     public String insertNegativeSign(String inString)
     {
         StringBuilder sb = new StringBuilder();
