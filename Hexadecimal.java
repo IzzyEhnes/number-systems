@@ -203,7 +203,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             minuend = minuend.removeNegativeSign();
 
             difference = minuend.add(subtrahend);
-            difference = difference.removeLeadingZeroes().insertNegativeSign();
+            difference = difference.removeLeadingZeroes();
+            difference.hexString = insertNegativeSign(difference.hexString);
 
             return difference;
         }
@@ -299,7 +300,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         if (negative)
         {
-            difference = difference.insertNegativeSign();
+            difference.hexString = insertNegativeSign(difference.hexString);
         }
 
         return difference;
@@ -448,7 +449,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            answer.hexString = insertNegativeSign(answer.hexString);
         }
 
         answer.hexString = sb.reverse().toString();
@@ -634,13 +635,14 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             answerBuilder.append(hexToBinaryMap.get(fractionString.charAt(i)));
         }
 
-        Binary answer = new Binary(answerBuilder.toString());
-
+        String tempString = answerBuilder.toString();
 
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            tempString = insertNegativeSign(tempString);
         }
+
+        Binary answer = new Binary(tempString);
 
         return answer;
     }
@@ -787,17 +789,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             return true;
         }
-    }
-
-
-
-    public Hexadecimal insertNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).insert(0, '-');
-
-        return new Hexadecimal(sb.toString());
     }
 
 

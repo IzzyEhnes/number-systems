@@ -79,7 +79,7 @@ public class Octal extends NumberSystem<Octal>
             if (Double.parseDouble(currentOctal.octalString) > Double.parseDouble(addend.octalString))
             {
                 answer = currentOctal.subtract(addend);
-                answer = answer.insertNegativeSign();
+                answer.octalString = insertNegativeSign(answer.octalString);
             }
 
             else
@@ -97,7 +97,7 @@ public class Octal extends NumberSystem<Octal>
             if (Double.parseDouble(addend.octalString) > Double.parseDouble(currentOctal.octalString))
             {
                 answer = addend.subtract(currentOctal);
-                answer = answer.insertNegativeSign();
+                answer.octalString = insertNegativeSign(answer.octalString);
             }
 
             else
@@ -168,7 +168,7 @@ public class Octal extends NumberSystem<Octal>
 
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            answer.octalString = insertNegativeSign(answer.octalString);
         }
 
         return answer;
@@ -208,7 +208,8 @@ public class Octal extends NumberSystem<Octal>
             minuend = minuend.removeNegativeSign();
 
             difference = minuend.add(subtrahend);
-            difference = difference.removeLeadingZeroes().insertNegativeSign();
+            difference.octalString = insertNegativeSign(difference.octalString);
+            difference = difference.removeLeadingZeroes();
 
             return difference;
         }
@@ -440,7 +441,7 @@ public class Octal extends NumberSystem<Octal>
 
         if (negative)
         {
-            product = product.insertNegativeSign();
+            product.octalString = insertNegativeSign(product.octalString);
         }
 
         return product;
@@ -679,12 +680,14 @@ public class Octal extends NumberSystem<Octal>
             }
         }
 
-        Binary answer = new Binary(binaryStringBuilder.toString());
+        String tempString = binaryStringBuilder.toString();
 
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            tempString = insertNegativeSign(tempString);
         }
+
+        Binary answer = new Binary(tempString);
 
         return answer;
     }
@@ -961,17 +964,6 @@ public class Octal extends NumberSystem<Octal>
         StringBuilder sb = new StringBuilder();
 
         sb.append(this).deleteCharAt(0);
-
-        return new Octal(sb.toString());
-    }
-
-
-
-    public Octal insertNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).insert(0, '-');
 
         return new Octal(sb.toString());
     }

@@ -163,4 +163,15 @@ public abstract class NumberSystem<T>
 
         return outString;
     }
+
+
+
+    public String insertNegativeSign(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString).insert(0, '-');
+
+        return sb.toString();
+    }
 }

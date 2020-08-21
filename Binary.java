@@ -645,12 +645,14 @@ public class Binary extends NumberSystem<Binary>
 
         answerBuilder.insert(radixPosition, '.');
 
-        Octal answer = new Octal(answerBuilder.toString());
+        String tempString = answerBuilder.toString();
 
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            tempString = insertNegativeSign(tempString);
         }
+
+        Octal answer = new Octal(answerBuilder.toString());
 
         return answer;
     }
@@ -707,12 +709,12 @@ public class Binary extends NumberSystem<Binary>
         String tempString = answerBuilder.toString();
         tempString = insertPointFromLeft(tempString, pointPosition);
 
-        Hexadecimal answer = new Hexadecimal(tempString);
-
         if (negative)
         {
-            answer = answer.insertNegativeSign();
+            tempString = insertNegativeSign(tempString);
         }
+
+        Hexadecimal answer = new Hexadecimal(tempString);
 
         return answer;
     }
@@ -858,17 +860,6 @@ public class Binary extends NumberSystem<Binary>
         StringBuilder sb = new StringBuilder();
 
         sb.append(this).deleteCharAt(0);
-
-        return new Binary(sb.toString());
-    }
-
-
-
-    public Binary insertNegativeSign()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this).insert(0, '-');
 
         return new Binary(sb.toString());
     }
