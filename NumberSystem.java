@@ -147,4 +147,20 @@ public abstract class NumberSystem<T>
 
         return outString;
     }
+
+
+
+    public String insertPointFromLeft(String inString, int pointPosition)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        // Insert point at pointPosition
+        sb.insert(pointPosition, '.');
+
+        String outString = sb.toString();
+
+        return outString;
+    }
 }

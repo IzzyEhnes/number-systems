@@ -544,8 +544,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         }
 
         quotient.hexString = quotientBuilder.toString();
+        quotient.hexString = insertPointFromLeft(quotient.hexString, quotientRadixPosition);
 
-        quotient = quotient.insertPointFromLeft(quotientRadixPosition).removeLeadingZeroes().removeTrailingZeroes();
+        quotient = quotient.removeLeadingZeroes().removeTrailingZeroes();
         quotient.hexString = fixNakedRadixPoint(quotient.hexString);
 
         return quotient;
@@ -747,24 +748,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             this.hexString = sb.toString();
         }
-    }
-
-
-
-    public Hexadecimal insertPointFromLeft(int pointPosition)
-    {
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentHex);
-
-        // Insert point at pointPosition
-        sb.insert(pointPosition, '.');
-
-        currentHex.hexString = sb.toString();
-
-        return currentHex;
     }
 
 

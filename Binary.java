@@ -410,7 +410,8 @@ public class Binary extends NumberSystem<Binary>
         }
 
         quotient.binaryString = removePoint(quotient.binaryString);
-        quotient = quotient.insertPointFromLeft(dividendDigitsBeforePoint).removeTrailingZeroes().removeLeadingZeroes();
+        quotient.binaryString = insertPointFromLeft(quotient.binaryString, dividendDigitsBeforePoint);
+        quotient = quotient.removeTrailingZeroes().removeLeadingZeroes();
 
         return quotient;
     }
@@ -703,9 +704,10 @@ public class Binary extends NumberSystem<Binary>
             }
         }
 
-        Hexadecimal answer = new Hexadecimal(answerBuilder.toString());
+        String tempString = answerBuilder.toString();
+        tempString = insertPointFromLeft(tempString, pointPosition);
 
-        answer = answer.insertPointFromLeft(pointPosition);
+        Hexadecimal answer = new Hexadecimal(tempString);
 
         if (negative)
         {
@@ -713,24 +715,6 @@ public class Binary extends NumberSystem<Binary>
         }
 
         return answer;
-    }
-
-
-
-    public Binary insertPointFromLeft(int pointPosition)
-    {
-        Binary currentBinary = new Binary(this.binaryString);
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(currentBinary);
-
-        // Insert point at pointPosition
-        sb.insert(pointPosition, '.');
-
-        currentBinary.binaryString = sb.toString();
-
-        return currentBinary;
     }
 
 
