@@ -205,4 +205,55 @@ public abstract class NumberSystem<T>
 
         return sb.toString();
     }
+
+
+
+    public String removeTrailingZeroes(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString).reverse();
+
+        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+        }
+
+        String outString = sb.reverse().toString();
+
+        return outString;
+    }
+
+
+
+    public String removeLeadingZeroes(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString);
+
+        if (sb.toString().charAt(0) == '0'
+                || sb.toString().charAt(0) == '-')
+        {
+            while (sb.toString().charAt(0) == '0')
+            {
+                sb.deleteCharAt(0);
+            }
+
+            if (sb.toString().charAt(0) == '-')
+            {
+                while (sb.toString().charAt(1) == '0')
+                {
+                    sb.deleteCharAt(1);
+                }
+            }
+        }
+
+        String outString = sb.toString();
+
+        return outString;
+    }
 }

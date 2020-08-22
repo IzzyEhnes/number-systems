@@ -203,7 +203,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
             minuend.hexString = removeNegativeSign(minuend.hexString);
 
             difference = minuend.add(subtrahend);
-            difference = difference.removeLeadingZeroes();
+            difference.hexString = removeLeadingZeroes(difference.hexString);
             difference.hexString = insertNegativeSign(difference.hexString);
 
             return difference;
@@ -317,8 +317,15 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         Hexadecimal multiplicand = new Hexadecimal(this.hexString);
         Hexadecimal multiplier = new Hexadecimal(inHex.hexString);
 
-        if (multiplicand.removeTrailingZeroes().removeLeadingZeroes().hexString.equals(".") ||
-                multiplier.removeTrailingZeroes().removeLeadingZeroes().hexString.equals("."))
+        String multiplicandTemp = multiplicand.hexString;
+        multiplicandTemp = removeTrailingZeroes(multiplicandTemp);
+        multiplicandTemp = removeLeadingZeroes(multiplicandTemp);
+
+        String multiplierTemp = multiplier.hexString;
+        multiplierTemp = removeTrailingZeroes(multiplicandTemp);
+        multiplierTemp = removeLeadingZeroes(multiplierTemp);
+
+        if (multiplicandTemp.equals(".") || multiplierTemp.equals("."))
         {
             return zero;
         }
@@ -455,7 +462,7 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         answer.hexString = sb.reverse().toString();
 
         answer.hexString = insertPointFromRight(answer.hexString, pointPosition);
-        answer = answer.removeLeadingZeroes();
+        answer.hexString = removeLeadingZeroes(answer.hexString);
 
         return answer;
     }
@@ -515,7 +522,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         int digitCount = 0;
         while (digitCount < (scale + quotientRadixPosition))
         {
-            multiplier = getLargestMultiplier(divisor, remainder).removeLeadingZeroes();
+            multiplier = getLargestMultiplier(divisor, remainder);
+            multiplier.hexString = removeLeadingZeroes(multiplier.hexString);
             multiplier.hexString = fixNakedRadixPoint(multiplier.hexString);
 
             quotientBuilder.append(multiplier.hexString.charAt(0));
@@ -537,7 +545,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             tempRemainder = remainder;
 
-            tempRemainder = tempRemainder.removeLeadingZeroes().removeTrailingZeroes();
+            tempRemainder.hexString = removeLeadingZeroes(tempRemainder.hexString);
+            tempRemainder.hexString = removeTrailingZeroes(tempRemainder.hexString);
 
             sb.setLength(0);
 
@@ -546,8 +555,9 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         quotient.hexString = quotientBuilder.toString();
         quotient.hexString = insertPointFromLeft(quotient.hexString, quotientRadixPosition);
+        quotient.hexString = removeLeadingZeroes(quotient.hexString);
+        quotient.hexString = removeTrailingZeroes(quotient.hexString);
 
-        quotient = quotient.removeLeadingZeroes().removeTrailingZeroes();
         quotient.hexString = fixNakedRadixPoint(quotient.hexString);
 
         return quotient;
@@ -678,8 +688,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             product = divisor.multiply(multiplier);
 
-            product = product.removeLeadingZeroes().removeTrailingZeroes();
-            dividend = dividend.removeLeadingZeroes().removeTrailingZeroes();
+            product.hexString = removeLeadingZeroes(product.hexString);
+            product.hexString = removeTrailingZeroes(product.hexString);
+
+            dividend.hexString = removeLeadingZeroes(dividend.hexString);
+            dividend.hexString = removeTrailingZeroes(dividend.hexString);
 
             if (product.hexString.equals(dividend.hexString))
             {
@@ -802,61 +815,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
         sb.append(currentHex).append('0');
 
         currentHex.hexString = sb.toString();
-
-        return currentHex;
-    }
-
-
-
-    public Hexadecimal removeLeadingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        sb.append(currentHex);
-
-        if (sb.toString().charAt(0) == '0'
-                || sb.toString().charAt(0) == '-')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-
-            if (sb.toString().charAt(0) == '-')
-            {
-                while (sb.toString().charAt(1) == '0')
-                {
-                    sb.deleteCharAt(1);
-                }
-            }
-
-            currentHex.hexString = sb.toString();
-        }
-
-        return currentHex;
-    }
-
-
-
-    public Hexadecimal removeTrailingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        sb.append(currentHex).reverse();
-
-        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-        }
-
-        currentHex.hexString = sb.reverse().toString();
 
         return currentHex;
     }

@@ -209,7 +209,7 @@ public class Octal extends NumberSystem<Octal>
 
             difference = minuend.add(subtrahend);
             difference.octalString = insertNegativeSign(difference.octalString);
-            difference = difference.removeLeadingZeroes();
+            difference.octalString = removeLeadingZeroes(difference.octalString);
 
             return difference;
         }
@@ -273,7 +273,7 @@ public class Octal extends NumberSystem<Octal>
             difference.octalString = insertPointFromRight(difference.octalString, pointPosition);
         }
 
-        difference = difference.removeLeadingZeroes();
+        difference.octalString = removeLeadingZeroes(difference.octalString);
 
         return difference;
     }
@@ -437,7 +437,7 @@ public class Octal extends NumberSystem<Octal>
 
         Octal product = new Octal(sb.toString());
 
-        product = product.removeLeadingZeroes();
+        product.octalString = removeLeadingZeroes(product.octalString);
 
         if (negative)
         {
@@ -519,7 +519,7 @@ public class Octal extends NumberSystem<Octal>
             // Place the multiplier in front of the point, removing any trailing zeroes
             sb.append(multiplier);
             quotient.octalString = sb.toString();
-            quotient = quotient.removeTrailingZeroes();
+            quotient.octalString = removeTrailingZeroes(quotient.octalString);
             sb.setLength(0);
 
             int digitsAfterPoint = 0;
@@ -552,7 +552,7 @@ public class Octal extends NumberSystem<Octal>
                     multiplier.octalString = removePoint(multiplier.octalString);
                     sb.append(quotient).append(multiplier);
                     quotient.octalString = sb.toString();
-                    quotient = quotient.removeTrailingZeroes();
+                    quotient.octalString = removeTrailingZeroes(quotient.octalString);
 
                     // Reset sb
                     sb.setLength(0);
@@ -847,61 +847,6 @@ public class Octal extends NumberSystem<Octal>
         multiplier.octalString = Double.toString(n);
 
         return multiplier;
-    }
-
-
-
-    public Octal removeLeadingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Octal currentOctal = new Octal(this.octalString);
-
-        sb.append(currentOctal);
-
-        if (sb.toString().charAt(0) == '0'
-                || sb.toString().charAt(0) == '-')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-
-            if (sb.toString().charAt(0) == '-')
-            {
-                while (sb.toString().charAt(1) == '0')
-                {
-                    sb.deleteCharAt(1);
-                }
-            }
-
-            currentOctal.octalString = sb.toString();
-        }
-
-        return currentOctal;
-    }
-
-
-
-    public Octal removeTrailingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Octal currentOctal = new Octal(this.octalString);
-
-        sb.append(currentOctal).reverse();
-
-        if (sb.toString().charAt(0) == '0' || sb.toString().charAt(0) == '-')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-        }
-
-        currentOctal.octalString = sb.reverse().toString();
-
-        return currentOctal;
     }
 
 

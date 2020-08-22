@@ -175,7 +175,7 @@ public class Binary extends NumberSystem<Binary>
 
         answer.binaryString = sb.toString();
 
-        answer = answer.removeLeadingZeroes();
+        answer.binaryString = removeLeadingZeroes(answer.binaryString);
 
         return answer;
     }
@@ -238,7 +238,8 @@ public class Binary extends NumberSystem<Binary>
 
         answer.binaryString = removePoint(answer.binaryString);
         answer.binaryString = insertPointFromRight(answer.binaryString, pointPosition * 2);
-        answer = answer.removeLeadingZeroes().removeTrailingZeroes();
+        answer.binaryString = removeLeadingZeroes(answer.binaryString);
+        answer.binaryString = removeTrailingZeroes(answer.binaryString);
 
         return answer;
     }
@@ -264,9 +265,9 @@ public class Binary extends NumberSystem<Binary>
         // Add placeholder zeroes behind radix point of dividend so
         // both divisor and dividend have same number of digits after point
         divisor.addPlaceholders(dividend);
-        dividend = dividend.removeLeadingZeroes();
+        dividend.binaryString = removeLeadingZeroes(dividend.binaryString);
 
-        divisor = divisor.removeTrailingZeroes();
+        divisor.binaryString = removeTrailingZeroes(divisor.binaryString);
 
         int divisorPointPosition = getPointPosition(divisor.binaryString);
 
@@ -298,7 +299,7 @@ public class Binary extends NumberSystem<Binary>
         dividend = dividend.appendZero();
 
         StringBuilder quotientBuilder = new StringBuilder();
-        quotient = quotient.removeLeadingZeroes();
+        quotient.binaryString = removeLeadingZeroes(quotient.binaryString);
 
         Binary one = new Binary("1.0");
         Binary zero = new Binary("0.0");
@@ -307,7 +308,8 @@ public class Binary extends NumberSystem<Binary>
 
         // Append first digit of dividend to currentDividend
         Binary currentDividend = new Binary();
-        currentDividend = currentDividend.removeLeadingZeroes().removeTrailingZeroes();
+        currentDividend.binaryString = removeLeadingZeroes(currentDividend.binaryString);
+        currentDividend.binaryString = removeTrailingZeroes(currentDividend.binaryString);
 
         StringBuilder dividendBuilder = new StringBuilder();
         dividendBuilder.append(currentDividend).insert(0, dividend.binaryString.charAt(0));
@@ -325,7 +327,7 @@ public class Binary extends NumberSystem<Binary>
             quotientBuilder.setLength(0);
 
             currentDividend = currentDividend.subtract(product);
-            currentDividend = currentDividend.removeLeadingZeroes();
+            currentDividend.binaryString = removeLeadingZeroes(currentDividend.binaryString);
         }
 
         else
@@ -337,7 +339,7 @@ public class Binary extends NumberSystem<Binary>
             quotientBuilder.setLength(0);
 
             currentDividend = currentDividend.subtract(product);
-            currentDividend = currentDividend.removeLeadingZeroes();
+            currentDividend.binaryString = removeLeadingZeroes(currentDividend.binaryString);
         }
 
         int currentDividendDigitsBeforePoint = 0;
@@ -411,7 +413,8 @@ public class Binary extends NumberSystem<Binary>
 
         quotient.binaryString = removePoint(quotient.binaryString);
         quotient.binaryString = insertPointFromLeft(quotient.binaryString, dividendDigitsBeforePoint);
-        quotient = quotient.removeTrailingZeroes().removeLeadingZeroes();
+        quotient.binaryString = removeTrailingZeroes(quotient.binaryString);
+        quotient.binaryString = removeLeadingZeroes(quotient.binaryString);
 
         return quotient;
     }
@@ -779,52 +782,6 @@ public class Binary extends NumberSystem<Binary>
 
 
 
-    public Binary removeLeadingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Binary currentBinary = new Binary(this.binaryString);
-
-        sb.append(currentBinary);
-
-        if (sb.toString().charAt(0) == '0')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-
-            currentBinary.binaryString = sb.toString();
-        }
-
-        return currentBinary;
-    }
-
-
-
-    public Binary removeTrailingZeroes()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Binary currentBinary = new Binary(this.binaryString);
-
-        sb.append(currentBinary).reverse();
-
-        if (sb.toString().charAt(0) == '0')
-        {
-            while (sb.toString().charAt(0) == '0')
-            {
-                sb.deleteCharAt(0);
-            }
-        }
-
-        currentBinary.binaryString = sb.reverse().toString();
-
-        return currentBinary;
-    }
-
-
-
     public Binary appendZero()
     {
         StringBuilder sb = new StringBuilder();
@@ -858,8 +815,8 @@ public class Binary extends NumberSystem<Binary>
     {
         Binary left = new Binary(this.binaryString);
 
-        left = left.removeLeadingZeroes();
-        right = right.removeLeadingZeroes();
+        left.binaryString = removeLeadingZeroes(left.binaryString);
+        right.binaryString = removeLeadingZeroes(right.binaryString);
 
         left.addPlaceholders(right);
         right.addPlaceholders(left);
