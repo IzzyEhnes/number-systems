@@ -269,4 +269,16 @@ public abstract class NumberSystem<T>
 
         return outString;
     }
+
+
+
+    public String shiftPointRightByOne(String inString)
+    {
+        int pointPosition = getPointPosition(inString);
+
+        inString = removePoint(inString);
+        inString = insertPointFromRight(inString, pointPosition - 1);
+
+        return inString;
+    }
 }

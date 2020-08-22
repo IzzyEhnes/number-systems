@@ -275,7 +275,7 @@ public class Binary extends NumberSystem<Binary>
         int numShifts = 0;
         while (divisorPointPosition != 0)
         {
-            divisor = divisor.shiftPointRightByOne();
+            divisor.binaryString = shiftPointRightByOne(divisor.binaryString);
 
             numShifts++;
 
@@ -288,7 +288,7 @@ public class Binary extends NumberSystem<Binary>
         // Shift the radix point of the dividend to the right numShift times
         for (int i = 0; i < numShifts; i++)
         {
-            dividend = dividend.shiftPointRightByOne();
+            dividend.binaryString = shiftPointRightByOne(dividend.binaryString);
         }
 
         // How many digits will be in front of the radix point in the final quotient (including placeholder zeroes)
@@ -778,20 +778,6 @@ public class Binary extends NumberSystem<Binary>
 
             currentBinary.binaryString = sb.toString();
         }
-    }
-
-
-
-    public Binary shiftPointRightByOne()
-    {
-        Binary currentBinary = new Binary(this.binaryString);
-
-        int pointPosition = getPointPosition(currentBinary.binaryString);
-
-        currentBinary.binaryString = removePoint(currentBinary.binaryString);
-        currentBinary.binaryString = insertPointFromRight(currentBinary.binaryString, pointPosition - 1);
-
-        return currentBinary;
     }
 
 

@@ -806,25 +806,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
-    public Hexadecimal shiftPointRightByOne()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        int pointPosition = getDigitsBeforePoint(currentHex.hexString);
-        if (pointPosition == currentHex.hexString.length() - 2)
-        {
-            sb.append(currentHex).append('0');
-
-            currentHex.hexString = sb.toString();
-        }
-
-        return currentHex;
-    }
-
-
-
     public Object getKeyFromValue(HashMap inMap, Integer inValue)
     {
         for (Object i : inMap.keySet())

@@ -528,7 +528,7 @@ public class Octal extends NumberSystem<Octal>
             while (Double.parseDouble(remainder.octalString) != 0 &&
                     digitsAfterPoint < scale)
             {
-                remainder = remainder.shiftPointRightByOne();
+                remainder.octalString = shiftPointRightByOne(remainder.octalString);
 
                 multiplier = getLargestMultiplier(divisor, remainder);
 
@@ -847,27 +847,6 @@ public class Octal extends NumberSystem<Octal>
         multiplier.octalString = Double.toString(n);
 
         return multiplier;
-    }
-
-
-
-    public Octal shiftPointRightByOne()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Octal currentOctal = new Octal(this.octalString);
-
-        int pointPosition = getDigitsBeforePoint(currentOctal.octalString);
-        if (pointPosition == currentOctal.octalString.length() - 2)
-        {
-            sb.append(currentOctal).append('0');
-
-            currentOctal.octalString = sb.toString();
-        }
-
-        currentOctal.octalString = insertPointFromRight(currentOctal.octalString, 1);
-
-        return currentOctal;
     }
 
 
