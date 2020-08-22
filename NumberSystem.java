@@ -256,4 +256,17 @@ public abstract class NumberSystem<T>
 
         return outString;
     }
+
+
+
+    public String appendZero(String inString)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(inString).append('0');
+
+        String outString = sb.toString();
+
+        return outString;
+    }
 }

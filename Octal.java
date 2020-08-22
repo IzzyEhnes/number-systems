@@ -497,8 +497,8 @@ public class Octal extends NumberSystem<Octal>
         divisor.octalString = insertPointFromRight(divisor.octalString,0);
 
         // Add a zero to the end of dividend and divisor so in Octal format
-        dividend = dividend.appendZero();
-        divisor = divisor.appendZero();
+        dividend.octalString = appendZero(dividend.octalString);
+        divisor.octalString = appendZero(divisor.octalString);
 
         // Find the biggest base-eight integer that, when multiplied by the divisor,
         // is closest to the dividend
@@ -866,21 +866,6 @@ public class Octal extends NumberSystem<Octal>
         }
 
         currentOctal.octalString = insertPointFromRight(currentOctal.octalString, 1);
-
-        return currentOctal;
-    }
-
-
-
-    public Octal appendZero()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Octal currentOctal = new Octal(this.octalString);
-
-        sb.append(currentOctal).append('0');
-
-        currentOctal.octalString = sb.toString();
 
         return currentOctal;
     }

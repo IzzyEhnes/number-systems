@@ -283,7 +283,7 @@ public class Binary extends NumberSystem<Binary>
         }
 
         // Append a zero to the divisor so in Binary form
-        divisor = divisor.appendZero();
+        divisor.binaryString = appendZero(divisor.binaryString);
 
         // Shift the radix point of the dividend to the right numShift times
         for (int i = 0; i < numShifts; i++)
@@ -296,7 +296,7 @@ public class Binary extends NumberSystem<Binary>
 
         dividend.binaryString = removePoint(dividend.binaryString);
         dividend.binaryString = insertPointFromRight(dividend.binaryString, 0);
-        dividend = dividend.appendZero();
+        dividend.binaryString = appendZero(dividend.binaryString);
 
         StringBuilder quotientBuilder = new StringBuilder();
         quotient.binaryString = removeLeadingZeroes(quotient.binaryString);
@@ -348,7 +348,7 @@ public class Binary extends NumberSystem<Binary>
         while (Double.parseDouble(currentDividend.binaryString) != Double.parseDouble(divisor.binaryString) &&
                 currentIndex < (dividendDigitsBeforePoint + scale))
         {
-            dividend = dividend.appendZero();
+            dividend.binaryString = appendZero(dividend.binaryString);
 
             if (dividend.binaryString.charAt(currentIndex) == '.')
             {
@@ -778,21 +778,6 @@ public class Binary extends NumberSystem<Binary>
 
             currentBinary.binaryString = sb.toString();
         }
-    }
-
-
-
-    public Binary appendZero()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Binary currentBinary = new Binary(this.binaryString);
-
-        sb.append(currentBinary).append('0');
-
-        currentBinary.binaryString = sb.toString();
-
-        return currentBinary;
     }
 
 

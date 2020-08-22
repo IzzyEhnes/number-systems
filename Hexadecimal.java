@@ -486,8 +486,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         dividend.hexString = insertPointFromRight(dividend.hexString, 0);
         divisor.hexString = insertPointFromRight(divisor.hexString, 0);
-        dividend = dividend.appendZero();
-        divisor = divisor.appendZero();
+        dividend.hexString = appendZero(dividend.hexString);
+        divisor.hexString = appendZero(divisor.hexString);
 
         dividend.hexString = removePoint(dividend.hexString);
         divisor.hexString = removePoint(divisor.hexString);
@@ -699,8 +699,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
                 multiplier = multiplier.add(one);
             }
 
-            product = product.appendZero();
-            dividend = dividend.appendZero();
+            product.hexString = appendZero(product.hexString);
+            dividend.hexString = appendZero(dividend.hexString);
         }
 
         multiplier = multiplier.subtract(one);
@@ -802,21 +802,6 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
             return true;
         }
-    }
-
-
-
-    public Hexadecimal appendZero()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        Hexadecimal currentHex = new Hexadecimal(this.hexString);
-
-        sb.append(currentHex).append('0');
-
-        currentHex.hexString = sb.toString();
-
-        return currentHex;
     }
 
 
