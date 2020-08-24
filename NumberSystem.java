@@ -4,7 +4,16 @@ import java.util.HashMap;
 
 public abstract class NumberSystem<T>
 {
+    // For mapping Hex values to their corresponding Decimal values
     HashMap<Character, Integer> hexMap = new HashMap<>();
+
+    // For mapping Hex values to their corresponding Binary values
+    HashMap<Character, String> hexToBinaryMap = new HashMap<>();
+
+    // For mapping Binary values to their corresponding Hex values
+    HashMap<String, Character> binaryToHexMap = new HashMap<>();
+
+
 
     NumberSystem()
     {
@@ -24,6 +33,43 @@ public abstract class NumberSystem<T>
         hexMap.put('D', 13);
         hexMap.put('E', 14);
         hexMap.put('F', 15);
+
+        hexToBinaryMap.put('-', "-");
+        hexToBinaryMap.put('0', "0000");
+        hexToBinaryMap.put('1', "0001");
+        hexToBinaryMap.put('2', "0010");
+        hexToBinaryMap.put('3', "0011");
+        hexToBinaryMap.put('4', "0100");
+        hexToBinaryMap.put('5', "0101");
+        hexToBinaryMap.put('6', "0110");
+        hexToBinaryMap.put('7', "0111");
+        hexToBinaryMap.put('8', "1000");
+        hexToBinaryMap.put('9', "1001");
+        hexToBinaryMap.put('A', "1010");
+        hexToBinaryMap.put('B', "1011");
+        hexToBinaryMap.put('C', "1100");
+        hexToBinaryMap.put('D', "1101");
+        hexToBinaryMap.put('E', "1110");
+        hexToBinaryMap.put('F', "1111");
+
+        binaryToHexMap.put("-", '-');
+        binaryToHexMap.put(".", '.');
+        binaryToHexMap.put("0000", '0');
+        binaryToHexMap.put("0001", '1');
+        binaryToHexMap.put("0010", '2');
+        binaryToHexMap.put("0011", '3');
+        binaryToHexMap.put("0100", '4');
+        binaryToHexMap.put("0101", '5');
+        binaryToHexMap.put("0110", '6');
+        binaryToHexMap.put("0111", '7');
+        binaryToHexMap.put("1000", '8');
+        binaryToHexMap.put("1001", '9');
+        binaryToHexMap.put("1010", 'A');
+        binaryToHexMap.put("1011", 'B');
+        binaryToHexMap.put("1100", 'C');
+        binaryToHexMap.put("1101", 'D');
+        binaryToHexMap.put("1110", 'E');
+        binaryToHexMap.put("1111", 'F');
     }
 
     public abstract T add(T addend);

@@ -338,7 +338,7 @@ public class Decimal extends NumberSystem<Decimal>
 
         double thisDouble = tempDecimal - fractionPart;
 
-        int pointPosition = temp.getDigitsBeforePoint();
+        int pointPosition = getDigitsBeforePoint(String.valueOf(this.decimal));
 
         int wholeNum = 0;
         double remainder = 0.0;
@@ -404,14 +404,15 @@ public class Decimal extends NumberSystem<Decimal>
             digitsAfterPoint++;
         }
 
-        Hexadecimal answer = new Hexadecimal(answerBuilder.toString());
-
-        answer = answer.insertPointFromRight(digitsAfterPoint);
+        String tempString = answerBuilder.toString();
+        tempString = insertPointFromRight(tempString, digitsAfterPoint);
 
         if (appendZero)
         {
-            answer = answer.appendZero();
+            tempString = appendZero(tempString);
         }
+
+        Hexadecimal answer = new Hexadecimal(tempString);
 
         return answer;
     }

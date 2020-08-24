@@ -8,30 +8,10 @@ public class Binary extends NumberSystem<Binary>
 {
     private String binaryString = "0.0";
 
-    HashMap<String, Character> binaryToHexMap = new HashMap<>();
-
 
 
     public Binary()
     {
-        binaryToHexMap.put("-", '-');
-        binaryToHexMap.put(".", '.');
-        binaryToHexMap.put("0000", '0');
-        binaryToHexMap.put("0001", '1');
-        binaryToHexMap.put("0010", '2');
-        binaryToHexMap.put("0011", '3');
-        binaryToHexMap.put("0100", '4');
-        binaryToHexMap.put("0101", '5');
-        binaryToHexMap.put("0110", '6');
-        binaryToHexMap.put("0111", '7');
-        binaryToHexMap.put("1000", '8');
-        binaryToHexMap.put("1001", '9');
-        binaryToHexMap.put("1010", 'A');
-        binaryToHexMap.put("1011", 'B');
-        binaryToHexMap.put("1100", 'C');
-        binaryToHexMap.put("1101", 'D');
-        binaryToHexMap.put("1110", 'E');
-        binaryToHexMap.put("1111", 'F');
     }
 
 
@@ -39,25 +19,6 @@ public class Binary extends NumberSystem<Binary>
     public Binary(String inString)
     {
         binaryString = inString;
-
-        binaryToHexMap.put("-", '-');
-        binaryToHexMap.put(".", '.');
-        binaryToHexMap.put("0000", '0');
-        binaryToHexMap.put("0001", '1');
-        binaryToHexMap.put("0010", '2');
-        binaryToHexMap.put("0011", '3');
-        binaryToHexMap.put("0100", '4');
-        binaryToHexMap.put("0101", '5');
-        binaryToHexMap.put("0110", '6');
-        binaryToHexMap.put("0111", '7');
-        binaryToHexMap.put("1000", '8');
-        binaryToHexMap.put("1001", '9');
-        binaryToHexMap.put("1010", 'A');
-        binaryToHexMap.put("1011", 'B');
-        binaryToHexMap.put("1100", 'C');
-        binaryToHexMap.put("1101", 'D');
-        binaryToHexMap.put("1110", 'E');
-        binaryToHexMap.put("1111", 'F');
     }
 
 
