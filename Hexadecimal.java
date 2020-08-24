@@ -444,6 +444,20 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
         Hexadecimal dividend = new Hexadecimal(this.hexString);
 
+        String checkForZeroDivisor = divisor.hexString;
+        checkForZeroDivisor = removeLeadingZeroes(checkForZeroDivisor);
+        checkForZeroDivisor = removeTrailingZeroes(checkForZeroDivisor);
+
+        if (checkForZeroDivisor.equals("."))
+        {
+            throw new InvalidParameterException("Error: Cannot divide by zero.");
+        }
+
+        else if (isNegative(dividend.hexString))
+        {
+            throw new InvalidParameterException("Error: Cannot divide a negative Hexadecimal.");
+        }
+
         dividend.addPlaceholders(divisor);
         divisor.addPlaceholders(dividend);
 
