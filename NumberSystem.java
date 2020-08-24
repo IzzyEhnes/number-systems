@@ -111,7 +111,7 @@ public abstract class NumberSystem<T>
         String a = sb.reverse().toString();
 
         // Find point position with respect to rightmost digit
-        int pointPosition = -1;
+        int pointPosition = 0;
         for (int i = 0; i < a.length(); i++)
         {
             if (a.charAt(i) == '.')
