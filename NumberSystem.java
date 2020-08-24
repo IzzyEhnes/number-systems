@@ -1,3 +1,16 @@
+/**
+ * The NumberSystem class is an abstract class that is the parent
+ * of the Binary, Octal, Decimal, and Hexadecimal classes. Being abstract
+ * it cannot be instantiated, and instead contains both abstract and
+ * non-abstract methods and HashMaps that provide default implementations
+ * utilized by its child classes.
+ *
+ * @ author Izzy Ehnes
+ * @ author https://github.com/IzzyEhnes
+ */
+
+
+
 package Ehnes.Izzy.NumberSystems;
 
 import java.util.HashMap;
@@ -14,7 +27,8 @@ public abstract class NumberSystem<T>
     HashMap<String, Character> binaryToHexMap = new HashMap<>();
 
 
-
+    // The default constructor for the NumberSystem class, which
+    // populates the HexMaps that are used by the child classes.
     NumberSystem()
     {
         hexMap.put('0', 0);
@@ -72,6 +86,7 @@ public abstract class NumberSystem<T>
         binaryToHexMap.put("1111", 'F');
     }
 
+    // Public abstract methods
     public abstract T add(T addend);
     public abstract T subtract(T subtrahend);
     public abstract T multiply(T multiplier);
@@ -79,6 +94,14 @@ public abstract class NumberSystem<T>
     public abstract String toString();
 
 
+
+    /**
+     * getPointPosition returns the index of the radix point with
+     * respect to the rightmost character.
+     *
+     * @param inString The String in which the radix point is being searched for
+     * @return pointPosition The index of the radix point, from the right
+     */
     public int getPointPosition(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -88,7 +111,7 @@ public abstract class NumberSystem<T>
         String a = sb.reverse().toString();
 
         // Find point position with respect to rightmost digit
-        int pointPosition = 0;
+        int pointPosition = -1;
         for (int i = 0; i < a.length(); i++)
         {
             if (a.charAt(i) == '.')
@@ -101,12 +124,16 @@ public abstract class NumberSystem<T>
     }
 
 
-
+    /**
+     * This method gets the number of digits before the radix point,
+     * i.e. the index of the radix point, from the left.
+     *
+     * @param inString The string being parsed
+     * @return numDigits The number of digits in front of the radix point
+     */
     public int getDigitsBeforePoint(String inString)
     {
         int numDigits = 0;
-
-        //Hexadecimal currentHex = new Hexadecimal(this.hexString);
 
         while (numDigits < inString.length()
                 && inString.charAt(numDigits) != '.')
@@ -119,11 +146,14 @@ public abstract class NumberSystem<T>
 
 
 
-// Places a placeholder zero to the right and/or left of the radix point if it has
-// no other digits on either side ("naked").
-// Precondition: The incoming String contains a radix point
-// Postcondition: One or two zeroes have been added to inString so the radix point has
-//                digits on both sides.
+    /**
+     * Places a placeholder zero to the right and/or left of the radix point if it has
+     * no other digits on either side ("naked").
+     *
+     * @param inString The incoming String
+     * @return either a new String made up of the original inString with the added
+     *         placeholders, or the original inString if the radix point was not naked.
+     */
     public String fixNakedRadixPoint(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -164,6 +194,12 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * removePoint deletes the radix point from inString
+     *
+     * @param inString The incoming String from which the radix point will be deleted
+     * @return outString inString with the radix point removed
+     */
     public String removePoint(String inString)
     {
         int pointPosition = getPointPosition(inString);
@@ -180,6 +216,14 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method places a radix point in inString at the index of pointPosition,
+     * with respect to the right.
+     *
+     * @param inString The incoming String in which the radix point will be placed
+     * @param pointPosition The index from the right where the point will be inserted
+     * @return outString The String after the radix point has been inserted
+     */
     public String insertPointFromRight(String inString, int pointPosition)
     {
         StringBuilder sb = new StringBuilder();
@@ -196,6 +240,14 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method places a radix point in inString at the index of pointPosition,
+     * with respect to the left.
+     *
+     * @param inString The incoming String in which the radix point will be placed
+     * @param pointPosition The index from the left where the point will be inserted
+     * @return outString The String after the radix point has been inserted
+     */
     public String insertPointFromLeft(String inString, int pointPosition)
     {
         StringBuilder sb = new StringBuilder();
@@ -212,6 +264,12 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * isNegative determines whether inString is negative (begins with a negative sign) or not.
+     *
+     * @param inString The String whose sign is to be determined
+     * @return 'true' if inString is negative, and 'false' otherwise
+     */
     public boolean isNegative(String inString)
     {
         if (inString.charAt(0) == '-')
@@ -227,17 +285,38 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method places a negative sign in the beginning of inString if
+     * one is not already present.
+     *
+     * @param inString The String in which the negative sign may be placed
+     * @return inString if a negative sign is already present, and -inString otherwise
+     */
     public String insertNegativeSign(String inString)
     {
-        StringBuilder sb = new StringBuilder();
+        if (!isNegative(inString))
+        {
+            StringBuilder sb = new StringBuilder();
 
-        sb.append(inString).insert(0, '-');
+            sb.append(inString).insert(0, '-');
 
-        return sb.toString();
+            return sb.toString();
+        }
+
+        else
+        {
+            return  inString;
+        }
     }
 
 
 
+    /**
+     * removeNegativeSign removes a negative sign in inString, if one is present.
+     *
+     * @param inString The incoming String in which a negative sign may be removed from
+     * @return The String inString without a negative sign is returned
+     */
     public String removeNegativeSign(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -254,6 +333,12 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method removes any placeholder zeroes that are to the right of the radix point.
+     *
+     * @param inString The String from which the trailing zeroes will be removed
+     * @return outString Returns outString, which is inString with the trailing zeroes removed
+     */
     public String removeTrailingZeroes(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -275,6 +360,12 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method removes any placeholder zeroes that are to the left of the radix point.
+     *
+     * @param inString The String from which the leading zeroes will be removed
+     * @return outString Returns outString, which is inString with the leading zeroes removed
+     */
     public String removeLeadingZeroes(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -304,7 +395,12 @@ public abstract class NumberSystem<T>
     }
 
 
-
+    /**
+     * appendZero adds a zero the the end of inString
+     *
+     * @param inString The String in which a zero will be appended to
+     * @return outString The String inString, with an appended zero
+     */
     public String appendZero(String inString)
     {
         StringBuilder sb = new StringBuilder();
@@ -318,13 +414,22 @@ public abstract class NumberSystem<T>
 
 
 
+    /**
+     * This method moves the radix point of inString one index to the right
+     *
+     * @param inString The incoming String whose radix point is to be shifted
+     * @return outString Returns outString, which is inString with the radix point shifted to
+     *                   the right by one
+     */
     public String shiftPointRightByOne(String inString)
     {
         int pointPosition = getPointPosition(inString);
 
-        inString = removePoint(inString);
-        inString = insertPointFromRight(inString, pointPosition - 1);
+        String outString;
 
-        return inString;
+        outString = removePoint(inString);
+        outString = insertPointFromRight(outString, pointPosition - 1);
+
+        return outString;
     }
 }
