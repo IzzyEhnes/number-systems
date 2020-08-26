@@ -1,3 +1,12 @@
+/**
+ * The Hexadecimal class performs calculations on and can modify Hexadecimals. Hexadecimals are made up of
+ * a String, hexString, which is comprised of a radix point surrounded by at least one digit on each side.
+ *
+ *
+ * @ author Izzy Ehnes
+ * @ author https://github.com/IzzyEhnes
+ */
+
 package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
@@ -9,12 +18,20 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * Default constructor initializes new Hexadecimal with the value "0.0".
+     */
     public Hexadecimal()
     {
     }
 
 
 
+    /**
+     * Parameterized constructor creates a Hexadecimal with the specified value.
+     *
+     * @param inString The incoming hexString value
+     */
     public Hexadecimal(String inString)
     {
         this.hexString = inString;
@@ -22,6 +39,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The getter for a Hexadecimal object's hexString.
+     *
+     * @return this.hexString The value of the calling Hexadecimal's hexString
+     */
     public String getHexadecimal()
     {
         return this.hexString;
@@ -29,6 +51,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The setter for a Hexadecimal object's hexString.
+     *
+     * @param inString The calling Hexadecimal object's hexString will be set to inString
+     */
     public void setHexadecimal(String inString)
     {
         this.hexString = inString;
@@ -36,6 +63,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * isHexadecimal checks if the calling object is a valid Hexadecimal, i.e. contains only
+     * the digits 0-9, A-F, a radix point, and possibly a negative sign.
+     *
+     * @return "true" if the calling object is a valid Hexadecimal (see above), and "false" otherwise.
+     */
     public boolean isHexadecimal()
     {
         for (int i = 0; i < this.hexString.length(); i++)
@@ -53,6 +86,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The add method adds two Hexadecimal objects, following the rules of base-sixteen addition
+     * (@see https://mathforum.org/library/drmath/view/66714.html).
+     *
+     * @param inHex The addend that will be added to the calling object
+     * @return sum The sum of the calling object and inHex
+     */
     public Hexadecimal add(Hexadecimal inHex)
     {
         Hexadecimal sum = new Hexadecimal();
@@ -131,6 +171,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * This method allows for the subtraction of two Hexadecimal objects, using the rules for base-sixteen subtraction
+     * (@see https://mathforum.org/library/drmath/view/55943.html).
+     *
+     * @param inHex The subtrahend, i.e. the value that is to be subtracted
+     * @return difference The difference of the calling object and inHex
+     */
     public Hexadecimal subtract(Hexadecimal inHex)
     {
         Hexadecimal difference = new Hexadecimal(this.hexString);
@@ -271,6 +318,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The multiply method can multiply two Hexadecimal object, following the rules of base-sixteen multiplication
+     * (@see https://www.quora.com/How-do-you-multiply-hexadecimal-numbers).
+     *
+     * @param inHex The Hexadecimal object that the calling object is to be multiplied by.
+     * @return answer The product of the calling Hexadecimal object and inHex
+     */
     public Hexadecimal multiply(Hexadecimal inHex)
     {
         Hexadecimal answer = new Hexadecimal();
@@ -432,6 +486,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The divide method allows for the division of two Hexadecimals, following the rules of base-sixteen division.
+     *
+     * @param divisor The Hexadecimal that will be dividing the calling object
+     * @param scale The amount of digits after the radix point
+     * @return quotient The result of the division of the calling Hexadecimal and divisor
+     */
     public Hexadecimal divide(Hexadecimal divisor, int scale)
     {
         StringBuilder sb = new StringBuilder();
@@ -542,6 +603,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * This method converts the calling Hexadecimal (base-sixteen) into a Decimal (base-ten).
+     *
+     * @return new Decimal(sum) The calling object that has been converted to base-ten
+     */
     public Decimal hexadecimalToDecimal()
     {
         String inString = this.hexString;
@@ -570,6 +636,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * This method converts the calling Hexadecimal object (base-sixteen) into Binary (base-two).
+     *
+     * @return answer The calling object in base-two
+     */
     public Binary hexadecimalToBinary()
     {
         StringBuilder answerBuilder = new StringBuilder();
@@ -636,6 +707,11 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The hexadecimalToOctal converts the calling Hexadecimal object (base-sixteen) into an Octal (base-eight).
+     *
+     * @return answer The calling Hexadecimal that has been converted to Octal
+     */
     public Octal hexadecimalToOctal()
     {
         Binary binaryTemp = new Binary();
@@ -651,6 +727,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * The getLargestMultiplier method finds the largest Hexadecimal that fits into both the divisor and dividend.
+     *
+     * @param divisor The number that is to divide the dividend
+     * @param dividend The number that is to be divided by the divisor
+     * @return multiplier The largest Hexadecimal that "fits" into both the divisor and dividend
+     */
     public Hexadecimal getLargestMultiplier(Hexadecimal divisor, Hexadecimal dividend)
     {
         Hexadecimal product = new Hexadecimal();
@@ -687,6 +770,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * addPlaceholders places zeroes in the calling Hexadecimal and/or inHex such that they are the same length, while
+     * maintaining the same values.
+     *
+     * @param inHex The Hexadecimal that is to be compared with the calling Object
+     */
     public void addPlaceholders(Hexadecimal inHex)
     {
         StringBuilder sb = new StringBuilder();
@@ -744,6 +833,12 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * This method compares two Hexadecimals to determine if the calling Hexadecimal is less than inHex.
+     *
+     * @param inHex The Hexadecimal that the calling Hexadecimal is to be compared to
+     * @return "true" if the calling object is less than inHex and "false" otherwise
+     */
     public boolean lessThanHexadecimal(Hexadecimal inHex)
     {
         Hexadecimal left = new Hexadecimal(this.hexString);
@@ -783,6 +878,13 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
 
+    /**
+     * getKeyFromValue returns a key in a HashMap given a value.
+     *
+     * @param inMap The HashMap to be parsed
+     * @param inValue The value whose corresponding key is to be found
+     * @return Either a key that corresponds to inValue or null if the value was not present in inMap
+     */
     public Object getKeyFromValue(HashMap inMap, Integer inValue)
     {
         for (Object i : inMap.keySet())
