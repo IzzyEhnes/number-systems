@@ -637,7 +637,8 @@ public class Octal extends NumberSystem<Octal>
 
 
     /**
-     * This method converts the calling Octal (base-eight) into a Decimal (base-ten).
+     * This method converts the calling Octal (base-eight) into a Decimal (base-ten)
+     * (@see https://www.schoolelectronic.com/2012/01/convert-octal-fraction-to-decimal.html).
      *
      * @return new Decimal(sum) The calling object that has been converted to base-ten
      */
@@ -685,7 +686,8 @@ public class Octal extends NumberSystem<Octal>
 
 
     /**
-     * This method converts the calling Octal (base-eight) into a Binary (base-two).
+     * This method converts the calling Octal (base-eight) into a Binary (base-two)
+     * (@see https://www.educative.io/edpresso/how-to-convert-octal-to-binary).
      *
      * @return new Binary(tempString) The calling object that has been converted to base-two
      */
