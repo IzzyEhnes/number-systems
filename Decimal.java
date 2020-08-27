@@ -149,7 +149,8 @@ public class Decimal extends NumberSystem<Decimal>
 
 
     /**
-     * This method converts the calling Decimal (base-ten) into Binary (base-two).
+     * This method converts the calling Decimal (base-ten) into Binary (base-two)
+     * (@see https://www.wikihow.com/Convert-from-Decimal-to-Binary).
      *
      * @return new Binary(sb.toString()) The calling object that has been converted to base-two
      */
@@ -266,7 +267,8 @@ public class Decimal extends NumberSystem<Decimal>
 
 
     /**
-     * This method converts the calling Decimal (base-ten) into Octal (base-eight).
+     * This method converts the calling Decimal (base-ten) into Octal (base-eight)
+     * (@see https://www.wikihow.com/Convert-from-Decimal-to-Octal).
      *
      * @return new Octal(answer) The calling object that has been converted to base-eight
      */
@@ -382,7 +384,8 @@ public class Decimal extends NumberSystem<Decimal>
 
 
     /**
-     * This method converts the calling Decimal (base-ten) into Hexadecimal (base-sixteen).
+     * This method converts the calling Decimal (base-ten) into Hexadecimal (base-sixteen)
+     * (@see https://www.binaryhexconverter.com/decimal-to-hex-converter).
      *
      * @return answer The calling object that has been converted to base-sixteen
      */
