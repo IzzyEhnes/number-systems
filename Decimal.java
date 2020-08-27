@@ -1,3 +1,12 @@
+/**
+ * The Decimal class performs calculations on and can modify Decimals. Decimals are made up of
+ * a Double, decimal, which is comprised of a radix point surrounded by at least one digit on each side.
+ *
+ *
+ * @ author Izzy Ehnes
+ * @ author https://github.com/IzzyEhnes
+ */
+
 package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
@@ -7,16 +16,25 @@ import java.lang.Math;
 
 public class Decimal extends NumberSystem<Decimal>
 {
+
     private Double decimal = 0.0;
 
 
 
+    /**
+     * Default constructor initializes new Decimal with the value 0.0
+     */
     public Decimal()
     {
     }
 
 
 
+    /**
+     * Parameterized constructor creates an Decimal with the specified value.
+     *
+     * @param inDecimal The incoming decimal value
+     */
     public Decimal(Double inDecimal)
     {
         decimal = inDecimal;
@@ -24,6 +42,11 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * The getter for a Decimal object's decimal.
+     *
+     * @return decimal The value of the calling Decimal's decimal
+     */
     public double getDecimal()
     {
         return decimal;
@@ -31,6 +54,11 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * The setter for a Decimal object's decimal.
+     *
+     * @param inDouble The calling Decimal object's decimal will be set to inDouble
+     */
     public void setDecimal(Double inDouble)
     {
         this.decimal = inDouble;
@@ -38,6 +66,12 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * The add method adds two Decimal objects, following the rules of base-ten addition.
+     *
+     * @param inDecimal The addend that will be added to the calling object
+     * @return answer The sum of the calling object and inDecimal
+     */
     public Decimal add(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
@@ -49,6 +83,12 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * This method allows for the subtraction of two Decimal objects, using the rules for base-ten subtraction.
+     *
+     * @param inDecimal The subtrahend, i.e. the value that is to be subtracted
+     * @return answer The difference of the calling object and inDecimal
+     */
     public Decimal subtract(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
@@ -60,6 +100,12 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * The multiply method can multiply two Decimal object, following the rules of base-ten multiplication.
+     *
+     * @param inDecimal The Decimal object that the calling object is to be multiplied by
+     * @return product The product of the calling Decimal object and inDecimal
+     */
     public Decimal multiply(Decimal inDecimal)
     {
         Decimal answer = new Decimal();
@@ -71,6 +117,13 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * The divide method allows for the division of two Decimals, following the rules of base-ten division.
+     *
+     * @param inDecimal The Decimal that will be dividing the calling object
+     * @param scale The amount of digits after the radix point
+     * @return answer The result of the division of the calling Decimal and inDecimal
+     */
     public Decimal divide(Decimal inDecimal, int scale)
     {
         Decimal answer = new Decimal();
@@ -95,6 +148,11 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * This method converts the calling Decimal (base-ten) into Binary (base-two).
+     *
+     * @return new Binary(sb.toString()) The calling object that has been converted to base-two
+     */
     public Binary decimalToBinary(int scale)
     {
         StringBuilder sb = new StringBuilder();
@@ -207,6 +265,11 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * This method converts the calling Decimal (base-ten) into Octal (base-eight).
+     *
+     * @return new Octal(answer) The calling object that has been converted to base-eight
+     */
     public Octal decimalToOctal(int scale)
     {
         StringBuilder sb = new StringBuilder();
@@ -318,6 +381,11 @@ public class Decimal extends NumberSystem<Decimal>
 
 
 
+    /**
+     * This method converts the calling Decimal (base-ten) into Hexadecimal (base-sixteen).
+     *
+     * @return answer The calling object that has been converted to base-sixteen
+     */
     public Hexadecimal decimalToHexadecimal(int scale)
     {
         StringBuilder answerBuilder = new StringBuilder();
@@ -337,8 +405,6 @@ public class Decimal extends NumberSystem<Decimal>
         }
 
         double thisDouble = tempDecimal - fractionPart;
-
-        int pointPosition = getDigitsBeforePoint(String.valueOf(this.decimal));
 
         int wholeNum = 0;
         double remainder = 0.0;
