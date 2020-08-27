@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class Hexadecimal extends NumberSystem<Hexadecimal>
 {
+
     private String hexString = "0.0";
 
 
@@ -604,7 +605,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
     /**
-     * This method converts the calling Hexadecimal (base-sixteen) into a Decimal (base-ten).
+     * This method converts the calling Hexadecimal (base-sixteen) into a Decimal (base-ten)
+     * (@see https://owlcation.com/stem/Convert-Hex-to-Decimal.
      *
      * @return new Decimal(sum) The calling object that has been converted to base-ten
      */
@@ -637,7 +639,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
 
     /**
-     * This method converts the calling Hexadecimal object (base-sixteen) into Binary (base-two).
+     * This method converts the calling Hexadecimal object (base-sixteen) into Binary (base-two)
+     * (@see https://owlcation.com/stem/How-to-Convert-Hex-to-Binary-and-Binary-to-Hexadecimal).
      *
      * @return answer The calling object in base-two
      */
@@ -709,6 +712,8 @@ public class Hexadecimal extends NumberSystem<Hexadecimal>
 
     /**
      * The hexadecimalToOctal converts the calling Hexadecimal object (base-sixteen) into an Octal (base-eight).
+     * Direct conversion from base-sixteen to base-eight is not possible, so a conversion to base-two is
+     * required as a medial step.
      *
      * @return answer The calling Hexadecimal that has been converted to Octal
      */
