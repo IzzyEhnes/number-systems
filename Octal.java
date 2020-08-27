@@ -1,3 +1,12 @@
+/**
+ * The Octal class performs calculations on and can modify Octals. Octals are made up of
+ * a String, octalString, which is comprised of a radix point surrounded by at least one digit on each side.
+ *
+ *
+ * @ author Izzy Ehnes
+ * @ author https://github.com/IzzyEhnes
+ */
+
 package Ehnes.Izzy.NumberSystems;
 
 import java.security.InvalidParameterException;
@@ -9,12 +18,20 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * Default constructor initializes new Octal with the value "0.0".
+     */
     public Octal()
     {
     }
 
 
 
+    /**
+     * Parameterized constructor creates an Octal with the specified value.
+     *
+     * @param inString The incoming octalString value
+     */
     public Octal(String inString)
     {
         this.octalString = inString;
@@ -22,6 +39,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The getter for a Octal object's octalString.
+     *
+     * @return this.octalString The value of the calling Octal's octalString
+     */
     public String getOctal()
     {
         return this.octalString;
@@ -29,6 +51,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The setter for a Octal object's octalString.
+     *
+     * @param inString The calling Octal object's octalString will be set to inString
+     */
     public void setOctal(String inString)
     {
         this.octalString = inString;
@@ -36,6 +63,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * isOctal checks if the calling object is a valid Octal, i.e. contains only
+     * the digits 0-7, a radix point, and possibly a negative sign.
+     *
+     * @return "true" if the calling object is a valid Octal (see above), and "false" otherwise.
+     */
     public boolean isOctal()
     {
         for (int i = 0; i < this.octalString.length(); i++)
@@ -52,6 +85,13 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The add method adds two Octal objects, following the rules of base-eight addition
+     * (@see https://www.math-only-math.com/addition-and-subtraction-of-octal-numbers.html).
+     *
+     * @param inOctal The addend that will be added to the calling object
+     * @return answer The sum of the calling object and inOctal
+     */
     public Octal add(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
@@ -176,6 +216,13 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * This method allows for the subtraction of two Octal objects, using the rules for base-eight subtraction
+     * (@see https://mathforum.org/library/drmath/view/55943.html).
+     *
+     * @param inOctal The subtrahend, i.e. the value that is to be subtracted
+     * @return difference The difference of the calling object and inOctal
+     */
     public Octal subtract(Octal inOctal)
     {
         Octal minuend = new Octal(this.octalString);
@@ -280,6 +327,13 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The multiply method can multiply two Octal object, following the rules of base-eight multiplication
+     * (@see http://numbersystemoperations.blogspot.com/2009/12/octal-multiplication.html).
+     *
+     * @param inOctal The Octal object that the calling object is to be multiplied by
+     * @return product The product of the calling Octal object and inOctal
+     */
     public Octal multiply(Octal inOctal)
     {
         Octal multiplicand = new Octal(this.octalString);
@@ -449,6 +503,14 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The divide method allows for the division of two Octals, following the rules of base-eight division
+     * (@see https://basicelectronicsguide.blogspot.com/2018/05/octal-division.html).
+     *
+     * @param divisor The Octal that will be dividing the calling object
+     * @param scale The amount of digits after the radix point
+     * @return quotient The result of the division of the calling Octal and divisor
+     */
     public Octal divide(Octal divisor, int scale)
     {
         StringBuilder sb = new StringBuilder();
@@ -574,7 +636,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
-    public Decimal octalStringToDecimal()
+    /**
+     * This method converts the calling Octal (base-eight) into a Decimal (base-ten).
+     *
+     * @return new Decimal(sum) The calling object that has been converted to base-ten
+     */
+    public Decimal octalToDecimal()
     {
         StringBuilder sb = new StringBuilder();
         sb.append(this);
@@ -617,6 +684,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * This method converts the calling Octal (base-eight) into a Binary (base-two).
+     *
+     * @return new Binary(tempString) The calling object that has been converted to base-two
+     */
     public Binary octalStringToBinary()
     {
         Octal currentOctal = new Octal(this.octalString);
@@ -694,6 +766,11 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * This method converts the calling Octal (base-eight) into a Hexadecimal (base-sixteen).
+     *
+     * @return answer The calling object that has been converted to base-sixteen
+     */
     public Hexadecimal octalStringToHexadecimal()
     {
         Binary binaryTemp = new Binary();
@@ -702,11 +779,17 @@ public class Octal extends NumberSystem<Octal>
 
         Hexadecimal answer = binaryTemp.binaryToHexadecimal();
 
-        return  answer;
+        return answer;
     }
 
 
 
+    /**
+     * This method finds the seven's complement of the calling Octal
+     * (@see https://atozmath.com/example/NumberSubComp.aspx?he=e&q=7#)
+     *
+     * @return new Octal(sb.reverse().toString()) The seven's complement of the calling object
+     */
     public Octal sevensComplement()
     {
         int decimalPosition = getPointPosition(this.octalString);
@@ -744,6 +827,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * This method finds the eight's complement of the calling Octal
+     * (@see https://atozmath.com/example/NumberSubComp.aspx?he=e&q=8)
+     *
+     * @return new Octal(sb.toString()) The eight's complement of the calling object
+     */
     public Octal eightsComplement()
     {
         StringBuilder sb = new StringBuilder();
@@ -758,6 +847,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * addPlaceholders places zeroes in the calling Octal and/or inOctal such that they are the same length, while
+     * maintaining the same values.
+     *
+     * @param inOctal The Octal that is to be compared with the calling object
+     */
     public void addPlaceholders(Octal inOctal)
     {
         StringBuilder sb = new StringBuilder();
@@ -815,6 +910,12 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * This method finds the largest power of eight that fits into inInt.
+     *
+     * @param inInt The incoming integer
+     * @return n The largest power of eight such that 8 * n is the closest to inInt
+     */
     public int getClosestPowerOfEight(int inInt)
     {
         int n = 1;
@@ -830,6 +931,13 @@ public class Octal extends NumberSystem<Octal>
 
 
 
+    /**
+     * The getLargestMultiplier method finds the largest Octal that fits into both the divisor and dividend.
+     *
+     * @param divisor The number that is to divide the dividend
+     * @param dividend The number that is to be divided by the divisor
+     * @return multiplier The largest Octal that "fits" into both the divisor and dividend
+     */
     public Octal getLargestMultiplier(Octal divisor, Octal dividend)
     {
         int n = 1;
