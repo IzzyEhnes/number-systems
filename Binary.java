@@ -1,33 +1,62 @@
+/**
+ * The Binary class performs calculations on and can modify Binaries. Binary objects are made up of
+ * a String, binaryString, which is comprised of a radix point surrounded by at least one digit on each side.
+ *
+ *
+ * @ author Izzy Ehnes
+ * @ author https://github.com/IzzyEhnes
+ */
+
 package Ehnes.Izzy.NumberSystems;
 
 import java.lang.Math;
 import java.security.InvalidParameterException;
-import java.util.HashMap;
 
 public class Binary extends NumberSystem<Binary>
 {
+
     private String binaryString = "0.0";
 
 
 
+    /**
+     * Default constructor initializes new Binary with the value "0.0".
+     */
     public Binary()
     {
     }
 
 
 
+    /**
+     * Parameterized constructor creates a Binary with the specified value.
+     *
+     * @param inString The incoming binaryString value
+     */
     public Binary(String inString)
     {
         binaryString = inString;
     }
 
 
+
+    /**
+     * The getter for a Binary object's binaryString.
+     *
+     * @return binaryString The value of the calling Binary object's binaryString
+     */
     public String getBinary()
     {
         return binaryString;
     }
 
 
+
+    /**
+     * The setter for a Binary object's binaryString.
+     *
+     * @param inString The calling Binary object's binaryString will be set to inString
+     */
     public void setBinaryString(String inString)
     {
         binaryString = inString;
@@ -35,13 +64,20 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * isBinary checks if the calling object is a valid Binary, i.e. contains only
+     * the digits 0 and 1, a radix point, and possibly a negative sign.
+     *
+     * @return "true" if the calling object is a valid Binary (see above), and "false" otherwise.
+     */
     public boolean isBinary()
     {
         for (int i = 0; i < this.binaryString.length(); i++)
         {
             if (this.binaryString.charAt(i) != '0'
                     && this.binaryString.charAt(i) != '1'
-                    && this.binaryString.charAt(i) != '.')
+                    && this.binaryString.charAt(i) != '.'
+                    && this.binaryString.charAt(i) != '-')
             {
                 return false;
             }
@@ -52,6 +88,13 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * The add method adds two Binary objects, following the rules of base-two addition
+     * (@see https://medium.com/@malaybiswas/binary-addition-multiplication-subtraction-and-division-55ad8d27ff02).
+     *
+     * @param inBinary The addend that will be added to the calling object
+     * @return answer The sum of the calling object and inOctal
+     */
     public Binary add(Binary inBinary)
     {
         Binary answer = new Binary();
@@ -113,6 +156,14 @@ public class Binary extends NumberSystem<Binary>
     }
 
 
+
+    /**
+     * This method allows for the subtraction of two Binary objects, using the rules for base-two subtraction
+     * (@see https://medium.com/@malaybiswas/binary-addition-multiplication-subtraction-and-division-55ad8d27ff02).
+     *
+     * @param inBinary The subtrahend, i.e. the value that is to be subtracted
+     * @return answer The difference of the calling object and inBinary
+     */
     public Binary subtract(Binary inBinary)
     {
         Binary answer = new Binary();
@@ -142,6 +193,14 @@ public class Binary extends NumberSystem<Binary>
     }
 
 
+
+    /**
+     * The multiply method can multiply two Binary objects, following the rules of base-two multiplication
+     * (@see https://medium.com/@malaybiswas/binary-addition-multiplication-subtraction-and-division-55ad8d27ff02).
+     *
+     * @param inBinary The Binary object that the calling object is to be multiplied by
+     * @return product The product of the calling Binary object and inBinary
+     */
     public Binary multiply(Binary inBinary)
     {
         Binary answer = new Binary();
@@ -207,6 +266,14 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * The divide method allows for the division of two Binary, following the rules of base-two division
+     * (@see https://medium.com/@malaybiswas/binary-addition-multiplication-subtraction-and-division-55ad8d27ff02).
+     *
+     * @param divisor The Binary that will be dividing the calling object
+     * @param scale The amount of digits after the radix point
+     * @return quotient The result of the division of the calling Binary and divisor
+     */
     public Binary divide(Binary divisor, int scale)
     {
         Binary quotient = new Binary();
@@ -382,6 +449,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * The onesComplement method finds the one's complement of the calling Binary object
+     * (@see https://www.tutorialspoint.com/one-s-complement).
+     *
+     * @return new Binary(sb.toString()) The one's complement of the calling Binary
+     */
     public Binary onesComplement()
     {
         int binaryLength = this.binaryString.length();
@@ -410,6 +483,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * The twosComplement method finds the two's complement of the calling Binary object
+     * (@see https://www.tutorialspoint.com/two-s-complement).
+     *
+     * @return answer The two's complement of the calling Binary
+     */
     public Binary twosComplement()
     {
         StringBuilder sb = new StringBuilder();
@@ -431,6 +510,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * This method converts the calling Binary (base-two) into a Decimal (base-ten)
+     * (@see https://www.wikihow.com/Convert-from-Binary-to-Decimal).
+     *
+     * @return new Decimal(integerSum) The calling object that has been converted to base-ten
+     */
     public Decimal binaryToDecimal()
     {
         StringBuilder sb = new StringBuilder();
@@ -506,6 +591,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * This method converts the calling Binary (base-two) into an Octal (base-eight)
+     * (@see https://www.tutorialspoint.com/how-to-convert-binary-to-octal).
+     *
+     * @return answer The calling object that has been converted to base-eight
+     */
     public Octal binaryToOctal()
     {
         StringBuilder wholeBuilder = new StringBuilder();
@@ -623,6 +714,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * This method converts the calling Binary (base-two) into a Hexadecimal (base-sixteen)
+     * (@see https://www.wikihow.com/Convert-Binary-to-Hexadecimal).
+     *
+     * @return answer The calling object that has been converted to base-sixteen
+     */
     public Hexadecimal binaryToHexadecimal()
     {
         StringBuilder nibbleBuilder = new StringBuilder();
@@ -685,6 +782,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * addPlaceholders places zeroes in the calling Binary and/or inBinary such that they are the same length, while
+     * maintaining the same values.
+     *
+     * @param inBinary The Binary that is to be compared with the calling object
+     */
     public void addPlaceholders(Binary inBinary)
     {
         Binary currentBinary = new Binary(this.binaryString);
@@ -743,6 +846,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * This method compares two Binary to determine if the calling Binary is less than right.
+     *
+     * @param right The Binary that the calling Binary is to be compared to
+     * @return "true" if the calling object is less than right and "false" otherwise
+     */
     public boolean lessThanBinary(Binary right)
     {
         Binary left = new Binary(this.binaryString);
@@ -779,6 +888,12 @@ public class Binary extends NumberSystem<Binary>
 
 
 
+    /**
+     * The makeGroupsOfNibbles method alters the calling Binary object such that the bits can be made into groups of
+     * four, from left to right, adding zeroes when necessary while maintaining the same value of the original Binary.
+     *
+     * @returnc new Binary(answerBuilder.toString()) The Binary object that can now be broken up into nibbles
+     */
     public Binary makeGroupsOfNibbles()
     {
         StringBuilder answerBuilder = new StringBuilder();
