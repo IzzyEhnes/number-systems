@@ -5,11 +5,11 @@ A Java program to perform mathematical calculations and conversions of the decim
 - [Project Description](#project-description)
 - [Motivation](#motivation)
 - [Technologies](#technologies)
-- [The Number System Class](#number-system-class)
-- [The Binary Class](#binary-class)
-- [The Octal Class](#octal-class)
-- [The Decimal Class](#decimal-class)
-- [The Hexadecimal Class](#hexadecimal-class)
+- [The Number System Class](#the-number-system-class)
+- [The Binary Class](#the-binary-class)
+- [The Octal Class](#the-octal-class)
+- [The Decimal Class](#the-decimal-class)
+- [The Hexadecimal Class](#the-hexadecimal-class)
 
 ## Project Description
 This project contains classes that represent the four major types of number systems: binary (base-2), octal (base-8), decimal (base-10), and hexadecimal (base-16). These classes allow for the addition, subtraction, multiplication, and division of Binary, Octal, Decimal, and Hexadecimal objects, as well as the conversion of objects to and from these number systems.
